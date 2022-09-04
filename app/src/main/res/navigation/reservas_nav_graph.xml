@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reservas_nav_graph"
+    app:startDestination="@id/reservas_fecha_dest">
+
+    <fragment
+        android:id="@+id/reservas_fecha_dest"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.FechaFragment"
+        android:label="fragment_reservas_fecha"
+        tools:layout="@layout/fragment_reservas_fecha" >
+        <action
+            android:id="@+id/action_fechaFragment_to_mesaFragment"
+            app:destination="@id/reservas_mesa_dest" />
+    </fragment>
+    <fragment
+        android:id="@+id/reservas_mesa_dest"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.MesaFragment"
+        android:label="fragment_reservas_mesa"
+        tools:layout="@layout/fragment_reservas_mesa" >
+        <action
+            android:id="@+id/action_mesaFragment_to_finFragment"
+            app:destination="@id/reservas_fin_dest" />
+        <argument
+            android:name="passAllowed"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_reservas_mesa_dest_to_salaPlanFragment"
+            app:destination="@id/salaPlanFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reservas_fin_dest"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.FinFragment"
+        android:label="fragment_reservas_fin"
+        tools:layout="@layout/fragment_reservas_fin" >
+        <argument
+            android:name="passAllowed"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/salaPlanFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.SalaPlanFragment"
+        android:label="fragment_sala_plan"
+        tools:layout="@layout/fragment_sala_plan" />
+</navigation>

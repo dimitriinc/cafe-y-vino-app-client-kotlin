@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.carta.carta_display.ItemsFragment"
+    android:background="@drawable/bkg_items"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginVertical="15dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabItemsParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_expand"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabItemsHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabItemsCanasta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_canasta"
+        app:layout_constraintBottom_toTopOf="@+id/fabItemsParent"
+        app:layout_constraintEnd_toEndOf="@+id/fabItemsParent"
+        app:layout_constraintStart_toStartOf="@+id/fabItemsParent"
+        android:visibility="gone"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabItemsInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_info_canasta"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/fabItemsCanasta"
+        app:layout_constraintEnd_toEndOf="@+id/fabItemsCanasta"
+        app:layout_constraintStart_toStartOf="@+id/fabItemsCanasta"
+        app:maxImageSize="50dp" />
+
+    <TextView
+        android:id="@+id/txtItemsInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/shape_fab_txt"
+        android:fontFamily="@font/aladin"
+        android:padding="10dp"
+        android:text="@string/info"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/fabItemsInfo"
+        app:layout_constraintEnd_toStartOf="@+id/fabItemsInfo"
+        app:layout_constraintTop_toTopOf="@+id/fabItemsInfo" />
+
+    <TextView
+        android:id="@+id/txtItemsCanasta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aladin"
+        android:text="@string/canasta"
+        android:padding="10dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fabItemsCanasta"
+        app:layout_constraintEnd_toStartOf="@+id/fabItemsCanasta"
+        app:layout_constraintTop_toTopOf="@+id/fabItemsCanasta"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_fab_txt"
+        android:visibility="gone"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

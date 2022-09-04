@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/carta_nav_graph"
+    app:startDestination="@id/categoriesFragment">
+
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.CategoriesFragment"
+        android:label="fragment_categories"
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_itemsFragment"
+            app:destination="@id/itemsFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_vinosFragment"
+            app:destination="@id/vinosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemsFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.ItemsFragment"
+        android:label="fragment_items"
+        tools:layout="@layout/fragment_items" >
+        <action
+            android:id="@+id/action_itemsFragment_to_itemSpecsActivity"
+            app:destination="@id/itemSpecsActivity" />
+        <action
+            android:id="@+id/action_itemsFragment_to_canastaFragment"
+            app:destination="@id/canastaFragment" />
+        <argument
+            android:name="categoryPath"
+            app:argType="string" />
+    </fragment>
+    <activity
+        android:id="@+id/itemSpecsActivity"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsActivity"
+        android:label="activity_item_specs"
+        tools:layout="@layout/activity_item_specs" >
+        <argument
+            android:name="bundleWithItemsCollection"
+            app:argType="android.os.Bundle" />
+        <argument
+            android:name="nameOfInitialItem"
+            app:argType="string" />
+    </activity>
+    <fragment
+        android:id="@+id/canastaFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.CanastaFragment"
+        android:label="fragment_canasta"
+        tools:layout="@layout/fragment_canasta" >
+        <action
+            android:id="@+id/action_canastaFragment_to_cuentaFragment"
+            app:destination="@id/cuentaFragment" />
+        <action
+            android:id="@+id/action_canastaFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cuentaFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.CuentaFragment"
+        android:label="fragment_cuenta"
+        tools:layout="@layout/fragment_cuenta" >
+        <action
+            android:id="@+id/action_cuentaFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemSpecsFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsFragment"
+        android:label="fragment_item_specs"
+        tools:layout="@layout/fragment_item_specs" >
+        <action
+            android:id="@+id/action_itemSpecsFragment_to_canastaFragment"
+            app:destination="@id/canastaFragment" />
+        <argument
+            android:name="item"
+            app:argType="com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.ItemMenu" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+        <argument
+            android:name="setSize"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_itemSpecsFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vinosFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.VinosFragment"
+        android:label="fragment_vinos"
+        tools:layout="@layout/fragment_vinos" >
+        <action
+            android:id="@+id/action_vinosFragment_to_itemsFragment"
+            app:destination="@id/itemsFragment" />
+    </fragment>
+</navigation>
