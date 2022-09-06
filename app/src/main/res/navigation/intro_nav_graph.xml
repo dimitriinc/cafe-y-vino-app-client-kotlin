@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/intro_nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/intro_nav_graph"
+    app:startDestination="@id/bienvenidoFragment">
 
+    <fragment
+        android:id="@+id/bienvenidoFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.BienvenidoFragment"
+        android:label="fragment_bienvenido"
+        tools:layout="@layout/fragment_bienvenido" >
+        <action
+            android:id="@+id/action_bienvenidoFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_bienvenidoFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/walkthroughFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.walkthrough.WalkthroughFragment"
+        android:label="fragment_walkthrough"
+        tools:layout="@layout/fragment_walkthrough" >
+        <action
+            android:id="@+id/action_walkthroughFragment_to_bienvenidoFragment"
+            app:destination="@id/bienvenidoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

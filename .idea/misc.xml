@@ -3,14 +3,34 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-land-night/fragment_bienvenido.xml" value="0.3963541666666667" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-land-night/fragment_cuenta.xml" value="0.3963541666666667" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-land-night/fragment_login.xml" value="0.21875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-land-night/fragment_registration.xml" value="0.21875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-land/fragment_bienvenido.xml" value="0.3963541666666667" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-land/fragment_cuenta.xml" value="0.3963541666666667" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-land/fragment_login.xml" value="0.21875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-land/fragment_registration.xml" value="0.21875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-land/fragment_walkthrough.xml" value="0.21875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-long-night/fragment_bienvenido.xml" value="0.188671875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-long-night/fragment_login.xml" value="0.188671875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-long-night/fragment_registration.xml" value="0.188671875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-long/fragment_bienvenido.xml" value="0.188671875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-long/fragment_login.xml" value="0.188671875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-long/fragment_registration.xml" value="0.188671875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-long/fragment_walkthrough.xml" value="0.188671875" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-night/fragment_bienvenido.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-night/fragment_cuenta.xml" value="0.2515625" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-night/fragment_registration.xml" value="0.5128205128205128" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-sw600dp-night/fragment_cuenta.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-sw600dp/fragment_cuenta.xml" value="0.2515625" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_bienvenido.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_canasta.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_cuenta.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_item_specs.xml" value="0.2515625" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_login.xml" value="0.2515625" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_registration.xml" value="0.2515625" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_walkthrough.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/list_item_cuenta.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client/app/src/main/res/layout-land-night/fragment_canasta.xml" value="0.21875" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client/app/src/main/res/layout-land-night/fragment_categories.xml" value="0.21875" />

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
+    tools:context=".ui.introduction.LoginFragment"
     android:background="@drawable/bkg_login">
 
     <EditText
@@ -54,8 +54,8 @@
         android:textAllCaps="false"
         android:textSize="18sp"
         app:cornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="@+id/btnRestablecer"
-        app:layout_constraintStart_toStartOf="@+id/btnRestablecer"
+        app:layout_constraintEnd_toEndOf="@+id/edtPassLogin"
+        app:layout_constraintStart_toStartOf="@+id/edtPassLogin"
         app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
     <ProgressBar
@@ -63,11 +63,10 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="70dp"
         android:indeterminateTint="@color/pastel"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/btnRestablecer"
-        app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="@+id/btnRestablecer"
         app:layout_constraintTop_toBottomOf="@+id/btnRestablecer" />
 
@@ -90,14 +89,14 @@
         android:id="@+id/btnRestablecer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="70dp"
         android:backgroundTint="@color/pastel_dark"
         android:fontFamily="@font/aladin"
         android:text="@string/restablecer_contrasena"
         android:textAllCaps="false"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.632"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
