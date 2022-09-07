@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
-        android:background="@drawable/rounded_corners_for_edt"
+        android:background="@drawable/shape_rounded_corners_for_edt"
         android:ems="10"
         android:fontFamily="@font/aladin"
         android:hint="@string/cuenta_nombre"
@@ -32,7 +32,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:background="@drawable/rounded_corners_for_edt"
+        android:background="@drawable/shape_rounded_corners_for_edt"
         android:ems="10"
         android:fontFamily="@font/aladin"
         android:hint="@string/telefono"
@@ -49,7 +49,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:background="@drawable/rounded_corners_for_edt"
+        android:background="@drawable/shape_rounded_corners_for_edt"
         android:ems="10"
         android:fontFamily="@font/aladin"
         android:hint="@string/email"
@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtFechaNacimiento" />
+        app:layout_constraintTop_toBottomOf="@+id/edtPhone" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edtPass"
@@ -67,7 +67,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:background="@drawable/rounded_corners_for_edt"
+        android:background="@drawable/shape_rounded_corners_for_edt"
         android:ems="10"
         android:fontFamily="@font/aladin"
         android:hint="@string/contraseña"
@@ -90,26 +90,24 @@
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPass" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxAge" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="64dp"
         android:layout_height="68dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
         android:indeterminateTint="@color/pastel"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.67"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBoxPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="false"
         android:fontFamily="@font/aladin"
         android:text="@string/mostrar"
         android:textColorLink="@color/light_green"
@@ -120,21 +118,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtPass" />
 
-    <EditText
-        android:id="@+id/edtFechaNacimiento"
-        android:layout_width="0dp"
+    <CheckBox
+        android:id="@+id/checkBoxAge"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/rounded_corners_for_edt"
-        android:ems="10"
+        android:text="@string/requireAge"
         android:fontFamily="@font/aladin"
-        android:hint="@string/fecha_nacimiento"
-        android:inputType="date"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPhone" />
+        android:buttonTint="@color/dark_olive"
+        android:textColorLink="@color/light_green"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/edtPass"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

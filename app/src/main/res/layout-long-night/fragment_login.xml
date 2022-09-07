@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginEnd="70dp"
-        android:background="@drawable/rounded_corners_for_edt"
+        android:background="@drawable/shape_rounded_corners_for_edt"
         android:ems="10"
         android:fontFamily="@font/aladin"
         android:hint="@string/email"
@@ -33,7 +33,7 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="70dp"
-        android:background="@drawable/rounded_corners_for_edt"
+        android:background="@drawable/shape_rounded_corners_for_edt"
         android:ems="10"
         android:hint="@string/contraseña"
         android:inputType="textPassword"
@@ -56,7 +56,7 @@
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="@+id/edtPassLogin"
         app:layout_constraintStart_toStartOf="@+id/edtPassLogin"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxPassword" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnRestablecer" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBoxPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="false"

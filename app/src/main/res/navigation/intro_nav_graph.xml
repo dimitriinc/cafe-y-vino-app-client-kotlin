@@ -19,9 +19,9 @@
     </fragment>
     <fragment
         android:id="@+id/walkthroughFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.walkthrough.WalkthroughFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.walkthrough.OnBoardingFragment"
         android:label="fragment_walkthrough"
-        tools:layout="@layout/fragment_walkthrough" >
+        tools:layout="@layout/fragment_on_boarding" >
         <action
             android:id="@+id/action_walkthroughFragment_to_bienvenidoFragment"
             app:destination="@id/bienvenidoFragment" />

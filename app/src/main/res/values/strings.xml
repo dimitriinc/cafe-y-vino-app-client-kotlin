@@ -148,6 +148,12 @@
     <string name="reservas_fecha">Fecha</string>
     <string name="reservas_mesa">Mesa</string>
     <string name="reservas_fin">Fin</string>
+    <string name="privacy_msg">Permítenos recopilar y almacenar los datos entrados</string>
+    <string name="requireAge">Tengo 18 años o más</string>
+    <string name="age_restriction">Tienes que cumplir 18 años antes de continuar</string>
+    <string name="privacy_saber">Saber más</string>
+    <string name="permitir">Permitir</string>
+    <string name="rechazar">Rechazar</string>
 
     <string-array name="pager_headings">
         <item>Haz pedidos</item>
