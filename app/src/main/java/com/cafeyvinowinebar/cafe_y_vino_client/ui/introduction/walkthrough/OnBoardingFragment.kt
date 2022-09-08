@@ -1,6 +1,5 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.walkthrough
 
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View

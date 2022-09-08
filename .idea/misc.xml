@@ -23,6 +23,7 @@
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-night/alert_privacy.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-night/fragment_bienvenido.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-night/fragment_cuenta.xml" value="0.2515625" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-night/fragment_privacy_policy.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-night/fragment_registration.xml" value="0.5128205128205128" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-sw600dp-night/fragment_cuenta.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout-sw600dp/fragment_cuenta.xml" value="0.2515625" />
@@ -32,6 +33,7 @@
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_cuenta.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_item_specs.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_login.xml" value="0.2515625" />
+        <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_privacy_policy.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_registration.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/fragment_walkthrough.xml" value="0.2515625" />
         <entry key="..\:/cafe_y_vino_app/kotlin/cafe-y-vino-client-kotlin/app/src/main/res/layout/list_item_cuenta.xml" value="0.2515625" />
