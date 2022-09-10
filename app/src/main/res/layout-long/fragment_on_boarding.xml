@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bkg_slider"
-    tools:context=".ui.introduction.walkthrough.OnBoardingFragment">
+    tools:context=".ui.introduction.onboarding.OnBoardingFragment">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slidePager"

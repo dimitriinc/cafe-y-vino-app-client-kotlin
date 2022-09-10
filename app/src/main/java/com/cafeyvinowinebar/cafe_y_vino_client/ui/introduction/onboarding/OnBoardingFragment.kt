@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.walkthrough
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.onboarding
 
 import android.graphics.Color
 import android.os.Bundle

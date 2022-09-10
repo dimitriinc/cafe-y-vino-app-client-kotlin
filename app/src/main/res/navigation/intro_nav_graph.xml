@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/walkthroughFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.walkthrough.OnBoardingFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.onboarding.OnBoardingFragment"
         android:label="fragment_walkthrough"
         tools:layout="@layout/fragment_on_boarding" >
         <action
@@ -30,10 +30,19 @@
         android:id="@+id/registrationFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" />
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_privacyFragment"
+            app:destination="@id/privacyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/privacyFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.PrivacyFragment"
+        android:label="fragment_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
 </navigation>

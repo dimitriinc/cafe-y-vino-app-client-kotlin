@@ -1,8 +1,7 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.walkthrough
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.onboarding
 
 import android.content.Context
 import android.content.res.Resources
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

@@ -162,12 +162,12 @@
         El nombre, el número de teléfono, el email y la fecha de nacimiento.\n\n
 
         <b>¿Para que los utilizan?</b>\n
-        Email - la autarización en el sistema\n
-        Nombre y teléfono - la identificación personal de los clientes y de las reservas\n
-        Fecha de nacimiento - la identificación de la edad, no servimos los tragos alcohólicos a los menores\n\n
+        Email - la autarización en el sistema.\n
+        Nombre y teléfono - la identificación personal de los clientes y de las reservas.\n
+        Fecha de nacimiento - la identificación de la edad, no servimos los tragos alcohólicos a los menores.\n\n
 
         <b>¿Donde están almacenados los datos?</b>\n
-        En el banco de datos Firebase Firestore, poseido por el Google\n\n
+        En el banco de datos Firebase Firestore, poseido por el Google.\n\n
 
         <b>¿Por cuanto tiempo los almacenan?</b>\n
         A lo largo que usted mantenga la app en su dispositivo. Al borrar la app, los datos serán borrados del banco de datos.\n\n
