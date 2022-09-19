@@ -7,6 +7,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.asFlow
 import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.ItemPedido
 import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.PedidoMetaDoc
 import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.Reserva
+import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.User
 import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
 import com.cafeyvinowinebar.cafe_y_vino_client.getCurrentDate
 import com.google.firebase.firestore.DocumentSnapshot
@@ -124,6 +125,18 @@ class FirebaseFirestoreSource @Inject constructor(
                 .document(metaDocId)
                 .collection("pedido")
                 .add(it)
+        }
+    }
+
+    suspend fun storeUserDoc(
+        user: User,
+        userId: String
+    ): Boolean {
+        return try {
+            fStore.collection("usuarios").document(userId).set(user).await()
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 

@@ -14,6 +14,8 @@ class FirebaseMessagingSource @Inject constructor(
     private val fStoreRepo: FirebaseFirestoreSource
 ) {
 
+    suspend fun getToken() = fMessaging.token.await()
+
     suspend fun sendReservaMessage(reserva: Reserva) {
         val userToken = fMessaging.token.await()
         val adminTokens = fStoreRepo.getAdminTokens()

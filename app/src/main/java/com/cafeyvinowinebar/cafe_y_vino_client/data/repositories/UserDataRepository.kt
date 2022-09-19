@@ -1,20 +1,71 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
-class UserDataRepository {
+import android.content.res.Resources
+import com.cafeyvinowinebar.cafe_y_vino_client.R
+import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.User
+import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseAuthSource
+import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
+import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-    fun authenticateUser(
-        email: String,
-        password: String
-    ) {
+class UserDataRepository @Inject constructor(
+    private val fAuthSource: FirebaseAuthSource,
+    private val fMessagingSource: FirebaseMessagingSource,
+    private val fStoreSource: FirebaseFirestoreSource
+) {
+
+
+    val errorMessageFlow: Flow<String?> = fAuthSource.errorFlow.map {
+        when (it) {
+            null -> null
+            is FirebaseAuthUserCollisionException -> Resources.getSystem().getString(R.string.email_collision)
+            is FirebaseAuthInvalidUserException -> Resources.getSystem().getString(R.string.wrong_email)
+            else -> Resources.getSystem().getString(R.string.error)
+        }
 
     }
 
-    fun registerUser(
+    suspend fun authenticateUser(
+        email: String,
+        password: String,
         name: String,
         phone: String,
-        email: String,
         birthdate: String
-    ) {
+    ): Boolean {
+        val authenticated = fAuthSource.authenticateUser(email, password)
+        if (authenticated) {
+            val token = fMessagingSource.getToken()
+            val user = User(
+                nombre = name,
+                telefono = phone,
+                fechaDeNacimiento = birthdate,
+                email = email,
+                isPresent = false,
+                mesa = "00",
+                token = token,
+                bonos = 0
+            )
+            return storeUserDoc(user)
+        } else {
+            return false
+        }
+    }
 
+
+    private suspend fun storeUserDoc(user: User): Boolean {
+        val userId = fAuthSource.getUserId()
+        return fStoreSource.storeUserDoc(user, userId)
+    }
+
+    suspend fun resetPassword(email: String) {
+        fAuthSource.resetPassword(email)
+    }
+
+    suspend fun loginUser(email: String, password: String): Boolean {
+        return fAuthSource.loginUser(email, password)
     }
 }

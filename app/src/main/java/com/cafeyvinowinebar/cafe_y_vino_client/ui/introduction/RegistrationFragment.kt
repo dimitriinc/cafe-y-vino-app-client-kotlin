@@ -8,12 +8,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.AlertPrivacyBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentRegistrationBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import kotlinx.android.synthetic.main.fragment_bienvenido.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
@@ -93,7 +98,10 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
                             viewModel.authenticateUser(
                                 email,
-                                password
+                                password,
+                                name,
+                                phone,
+                                birthdate
                             )
                         }
                     }
@@ -101,7 +109,22 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
 
                 } else {
-                    Toast.makeText(requireContext(), R.string.no_connection, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), R.string.no_connection, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    if (it.isRegistered) {
+                        binding.progressBar.visibility = View.INVISIBLE
+                        // TODO: navigate to the main fragment
+                    }
+                    if (it.errorMessage != null) {
+                        binding.progressBar.visibility = View.INVISIBLE
+                        Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }
