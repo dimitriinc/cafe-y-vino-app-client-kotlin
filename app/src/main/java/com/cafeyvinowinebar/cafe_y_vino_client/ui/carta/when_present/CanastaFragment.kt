@@ -20,8 +20,10 @@ import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentCanastaBindin
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnCanastaListener
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.adapters.CanastaAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
 
     private val viewModel: CanastaCuentaViewModel by viewModels()
@@ -45,7 +47,7 @@ class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
                 findNavController().navigate(action)
             }
             fabInicio.setOnClickListener {
-                // TODO: navigate to the main fragment
+                findNavController().navigate(R.id.main_nav_graph)
             }
             fabInfo.setOnClickListener {
                 val infoView = layoutInflater.inflate(R.layout.alert_info, null)
@@ -99,7 +101,8 @@ class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
                     }
 
                     if (!it.isPresent) {
-                        // TODO: navigate to the main fragment
+                        // with a popup
+                        findNavController().navigate(R.id.main_nav_graph)
                     }
 
                     if (it.areCanastaFabsExpanded) {

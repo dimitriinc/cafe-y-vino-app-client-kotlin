@@ -23,6 +23,9 @@ class CartaDisplayViewModel @Inject constructor(
     private val canastaDao: CanastaDao
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow(CartaDisplayUiState())
+    val uiState: StateFlow<CartaDisplayUiState> = _uiState.asStateFlow()
+
     init {
         viewModelScope.launch {
             fStore.userPresence.collect { isPresent ->
@@ -32,9 +35,6 @@ class CartaDisplayViewModel @Inject constructor(
             }
         }
     }
-
-    private val _uiState = MutableStateFlow(CartaDisplayUiState())
-    val uiState: StateFlow<CartaDisplayUiState> = _uiState.asStateFlow()
 
     fun addItemToCanastaDb(document: DocumentSnapshot) = viewModelScope.launch {
         val item = ItemCanasta(

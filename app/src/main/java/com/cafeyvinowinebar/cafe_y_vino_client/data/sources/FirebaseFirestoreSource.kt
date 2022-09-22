@@ -4,10 +4,7 @@ import android.os.Bundle
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_HAPPY_DAYS
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_HAPPY_HOURS
 import com.cafeyvinowinebar.cafe_y_vino_client.asFlow
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.ItemPedido
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.PedidoMetaDoc
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.Reserva
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.User
+import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.*
 import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
 import com.cafeyvinowinebar.cafe_y_vino_client.getCurrentDate
 import com.google.firebase.firestore.DocumentSnapshot
@@ -85,6 +82,23 @@ class FirebaseFirestoreSource @Inject constructor(
         return admins.map {
             it.getString("token")!!
         }
+    }
+
+    suspend fun getUtilsDoc(): UtilsHoras {
+        val snapshot = fStore.collection("utils")
+            .document("horas")
+            .get()
+            .await()
+        return UtilsHoras(
+            diasDeDescanso = snapshot.get("dias de descanso") as List<String>,
+            diasDeHappyHour = snapshot.get("dias de happy hour") as List<String>,
+            horasDeAtencion = snapshot.get("horas de atencion") as List<Long>,
+            horasDeHappyHour = snapshot.get("horas de happy hour") as List<Long>,
+            horasDeReservaDia = snapshot.get("horas de reserva (dia)") as List<String>,
+            horasDeReservaNoche = snapshot.get("horas de reserva (noche)") as List<String>,
+            horasDiaNoche = snapshot.get("horas dia_noche") as List<String>
+
+        )
     }
 
     suspend fun setReservaDoc(

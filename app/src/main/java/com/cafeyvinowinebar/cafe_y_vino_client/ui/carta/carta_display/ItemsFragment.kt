@@ -127,7 +127,7 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
                 findNavController().navigate(action)
             }
             fabItemsHome.setOnClickListener {
-                // TODO: navigate to the main fragment
+                findNavController().navigate(R.id.main_nav_graph)
 
             }
         }

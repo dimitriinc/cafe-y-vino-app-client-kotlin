@@ -63,7 +63,8 @@
             app:destination="@id/categoriesFragment" />
         <action
             android:id="@+id/action_canastaFragment_to_main_nav_graph"
-            app:destination="@id/main_nav_graph" />
+            app:destination="@id/main_nav_graph"
+            app:popUpTo="@id/main_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/cuentaFragment"
@@ -75,7 +76,8 @@
             app:destination="@id/categoriesFragment" />
         <action
             android:id="@+id/action_cuentaFragment_to_main_nav_graph"
-            app:destination="@id/main_nav_graph" />
+            app:destination="@id/main_nav_graph"
+            app:popUpTo="@id/main_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/itemSpecsFragment"

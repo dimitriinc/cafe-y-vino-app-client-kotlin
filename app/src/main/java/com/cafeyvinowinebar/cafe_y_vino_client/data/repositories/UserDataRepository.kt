@@ -8,7 +8,9 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSou
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -22,12 +24,19 @@ class UserDataRepository @Inject constructor(
     val errorMessageFlow: Flow<String?> = fAuthSource.errorFlow.map {
         when (it) {
             null -> null
-            is FirebaseAuthUserCollisionException -> Resources.getSystem().getString(R.string.email_collision)
-            is FirebaseAuthInvalidUserException -> Resources.getSystem().getString(R.string.wrong_email)
+            is FirebaseAuthUserCollisionException -> Resources.getSystem()
+                .getString(R.string.email_collision)
+            is FirebaseAuthInvalidUserException -> Resources.getSystem()
+                .getString(R.string.wrong_email)
             else -> Resources.getSystem().getString(R.string.error)
         }
 
     }
+
+    val userPresenceFlow: Flow<Boolean>  = fStoreSource.userPresence.map { it!! }
+
+    fun getUserObject(): FirebaseUser? =
+        fAuthSource.getUserObject()
 
     suspend fun authenticateUser(
         email: String,

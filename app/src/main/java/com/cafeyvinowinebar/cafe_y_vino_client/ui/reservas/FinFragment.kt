@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentReservasFinBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isDarkThemeOn
@@ -146,8 +147,8 @@ class FinFragment : Fragment() {
                         }
                     }
 
-                    if (uiState.isReservaSent == true) {
-                        // TODO: navigate to the main fragment
+                    if (uiState.isReservaSent) {
+                        findNavController().navigate(R.id.main_nav_graph)
                     }
 
                 }

@@ -43,7 +43,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickLi
 
         binding.apply {
             fabHome.setOnClickListener {
-                // TODO: navigate to the main fragment
+                findNavController().navigate(R.id.main_nav_graph)
             }
             recCategories.apply {
                 adapter = adapter

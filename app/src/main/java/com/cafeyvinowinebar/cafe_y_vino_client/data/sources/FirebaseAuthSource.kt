@@ -1,10 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.sources
 
-import android.content.res.Resources
-import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -16,9 +13,13 @@ class FirebaseAuthSource @Inject constructor(
     private val _errorFlow: MutableStateFlow<Throwable?> = MutableStateFlow(null)
     val errorFlow: StateFlow<Throwable?> = _errorFlow.asStateFlow()
 
-    fun getUserId(): String {
-        return fAuth.currentUser!!.uid
-    }
+    fun getUserObject(): FirebaseUser? =
+        fAuth.currentUser
+
+
+    fun getUserId(): String =
+        fAuth.currentUser!!.uid
+
 
     suspend fun authenticateUser(
         email: String,

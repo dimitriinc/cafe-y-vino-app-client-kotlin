@@ -39,10 +39,15 @@
             android:name="passAllowed"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_reservas_fin_dest_to_main_nav_graph"
+            app:destination="@id/main_nav_graph"
+            app:popUpTo="@id/main_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/salaPlanFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.SalaPlanFragment"
         android:label="fragment_sala_plan"
         tools:layout="@layout/fragment_sala_plan" />
+    <include app:graph="@navigation/main_nav_graph" />
 </navigation>

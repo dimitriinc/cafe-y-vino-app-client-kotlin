@@ -26,7 +26,7 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
 
         binding.apply {
             fabItemSpecsHome.setOnClickListener {
-                // TODO: navigate to the main fragment
+                findNavController().navigate(R.id.main_nav_graph)
             }
             fabMainMenu.setOnClickListener {
                 val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToCategoriesFragment()

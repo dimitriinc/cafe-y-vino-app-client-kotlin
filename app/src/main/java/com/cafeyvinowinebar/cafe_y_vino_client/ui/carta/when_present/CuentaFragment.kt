@@ -19,9 +19,11 @@ import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.adapters.CuentaAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
 
     private val viewModel: CanastaCuentaViewModel by viewModels()
@@ -36,7 +38,8 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
 
         binding.apply {
             fabCuentaHome.setOnClickListener {
-                // TODO: navigate to the main fragment
+                // w/o a popup
+                findNavController().navigate(R.id.main_nav_graph)
             }
             fabCuentaMenu.setOnClickListener {
                 val action = CuentaFragmentDirections.actionCuentaFragmentToCategoriesFragment()
@@ -63,7 +66,8 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     if (!uiState.isPresent) {
-                        // TODO: navigate to the main fragment
+                        // with a popup
+                        findNavController().navigate(R.id.main_nav_graph)
                         viewModel.updateCanSendPedido(true)
                     }
 
