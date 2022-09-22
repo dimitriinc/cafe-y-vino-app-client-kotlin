@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bkg_user_data"
-    tools:context=".UserDataActivity">
+    tools:context=".ui.main.UserDataFragment">
 
     <TextView
         android:id="@+id/textView2"
@@ -26,7 +26,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/wellfleet"
         android:text="@string/cuenta_nombre"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/amita"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -50,7 +50,7 @@
         android:fontFamily="@font/wellfleet"
         android:text="@string/btn_data_nombre"
         android:textAllCaps="false"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/txtInfoName" />
@@ -62,7 +62,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/wellfleet"
         android:text="@string/data_email"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/btnNombre" />
@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/amita"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -86,7 +86,7 @@
         android:fontFamily="@font/wellfleet"
         android:text="@string/btn_data_email"
         android:textAllCaps="false"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/txtInfoEmail" />
@@ -98,7 +98,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/wellfleet"
         android:text="@string/data_telefono"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/btnEmail" />
@@ -109,7 +109,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/amita"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -122,7 +122,7 @@
         android:fontFamily="@font/wellfleet"
         android:text="@string/btn_data_telefono"
         android:textAllCaps="false"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/txtInfoTelefono" />

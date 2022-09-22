@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <include app:graph="@navigation/carta_nav_graph" />
+    <include app:graph="@navigation/reservas_nav_graph" />
+    <include app:graph="@navigation/intro_nav_graph" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_intro_nav_graph"
+            app:destination="@id/intro_nav_graph" />
+        <action
+            android:id="@+id/action_mainFragment_to_reservas_nav_graph"
+            app:destination="@id/reservas_nav_graph" />
+        <action
+            android:id="@+id/action_mainFragment_to_carta_nav_graph"
+            app:destination="@id/carta_nav_graph" />
+        <action
+            android:id="@+id/action_mainFragment_to_giftshopFragment"
+            app:destination="@id/giftshopFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_userDataFragment"
+            app:destination="@id/userDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/giftshopFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.GiftshopFragment"
+        android:label="fragment_giftshop"
+        tools:layout="@layout/fragment_giftshop" />
+    <fragment
+        android:id="@+id/userDataFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.UserDataFragment"
+        android:label="fragment_user_data"
+        tools:layout="@layout/fragment_user_data" />
+</navigation>

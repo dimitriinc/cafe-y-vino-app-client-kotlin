@@ -22,8 +22,7 @@ import java.lang.Exception as LangException
 
 class FirebaseFirestoreSource @Inject constructor(
     private val fStore: FirebaseFirestore,
-    private val fAuth: FirebaseAuthSource,
-    @ApplicationScope private val applicationScope: CoroutineScope
+    fAuth: FirebaseAuthSource
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)

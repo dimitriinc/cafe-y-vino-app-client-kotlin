@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_categoriesFragment_to_vinosFragment"
             app:destination="@id/vinosFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/itemsFragment"
@@ -31,6 +34,9 @@
         <argument
             android:name="categoryPath"
             app:argType="string" />
+        <action
+            android:id="@+id/action_itemsFragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph" />
     </fragment>
     <activity
         android:id="@+id/itemSpecsActivity"
@@ -55,6 +61,9 @@
         <action
             android:id="@+id/action_canastaFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_canastaFragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/cuentaFragment"
@@ -64,6 +73,9 @@
         <action
             android:id="@+id/action_cuentaFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_cuentaFragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/itemSpecsFragment"
@@ -85,6 +97,9 @@
         <action
             android:id="@+id/action_itemSpecsFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_itemSpecsFragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/vinosFragment"
@@ -95,4 +110,5 @@
             android:id="@+id/action_vinosFragment_to_itemsFragment"
             app:destination="@id/itemsFragment" />
     </fragment>
+    <include app:graph="@navigation/main_nav_graph" />
 </navigation>

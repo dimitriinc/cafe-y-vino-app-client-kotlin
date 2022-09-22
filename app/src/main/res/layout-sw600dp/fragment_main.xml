@@ -5,17 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bkg_main"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.main.MainFragment">
 
 
     <ImageView
         android:id="@+id/imgBtnMenu"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.745"
-        app:tint="@color/cream"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.178"
@@ -23,12 +22,11 @@
 
     <ImageView
         android:id="@+id/imgBtnReserv"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:tint="@color/cream"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.432"
@@ -36,13 +34,12 @@
 
     <ImageView
         android:id="@+id/imgBtnGiftshop"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.247"
         app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/cream"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.697"
         app:srcCompat="@drawable/btn_giftshop" />
@@ -51,16 +48,19 @@
         android:id="@+id/fabPuerta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:scrollbarSize="4dp"
         android:src="@drawable/ic_door"
         android:visibility="visible"
         app:elevation="20dp"
         app:fabCustomSize="95dp"
+        app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toEndOf="@+id/imgBtnGiftshop"
         app:layout_constraintTop_toBottomOf="@+id/imgBtnReserv"
-        app:layout_constraintVertical_bias="0.091"
+        app:layout_constraintVertical_bias="0.178"
         app:maxImageSize="60dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
