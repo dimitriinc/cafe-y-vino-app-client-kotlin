@@ -59,4 +59,8 @@ class FirebaseAuthSource @Inject constructor(
             false
         }
     }
+
+    fun logout() {
+        fAuth.signOut()
+    }
 }

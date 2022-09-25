@@ -2,7 +2,6 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.sources
 
 import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.Reserva
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.User
 import com.cafeyvinowinebar.cafe_y_vino_client.getFirebaseMessageId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.remoteMessage
@@ -11,14 +10,14 @@ import javax.inject.Inject
 
 class FirebaseMessagingSource @Inject constructor(
     private val fMessaging: FirebaseMessaging,
-    private val fStoreRepo: FirebaseFirestoreSource
+    private val fStore: FirebaseFirestoreSource
 ) {
 
-    suspend fun getToken() = fMessaging.token.await()
+    suspend fun getToken(): String = fMessaging.token.await()
 
     suspend fun sendReservaMessage(reserva: Reserva) {
         val userToken = fMessaging.token.await()
-        val adminTokens = fStoreRepo.getAdminTokens()
+        val adminTokens = fStore.getAdminTokens()
         adminTokens.forEach {
             fMessaging.send(remoteMessage("$SENDER_ID@fcm.googleapis.com") {
                 messageId = getFirebaseMessageId()
@@ -45,7 +44,7 @@ class FirebaseMessagingSource @Inject constructor(
         userNombre: String,
     ) {
         val userToken = fMessaging.token.await()
-        val adminTokens = fStoreRepo.getAdminTokens()
+        val adminTokens = fStore.getAdminTokens()
         adminTokens.forEach { adminToken ->
             fMessaging.send(remoteMessage("$SENDER_ID@fcm.googleapis.com") {
                 messageId = getFirebaseMessageId()
@@ -67,7 +66,7 @@ class FirebaseMessagingSource @Inject constructor(
         mesa: String
     ) {
         val userToken = fMessaging.token.await()
-        val adminTokens = fStoreRepo.getAdminTokens()
+        val adminTokens = fStore.getAdminTokens()
         adminTokens.forEach { adminToken ->
             fMessaging.send(remoteMessage("$SENDER_ID@fcm.googleapis.com") {
                 messageId = getFirebaseMessageId()
@@ -78,6 +77,25 @@ class FirebaseMessagingSource @Inject constructor(
                 addData(KEY_MODO, payMode)
                 addData(KEY_MESA, mesa)
                 addData(KEY_NOMBRE, userNombre)
+            })
+        }
+    }
+
+    suspend fun sendEntryRequest(
+        userId: String,
+        userToken: String,
+        userName: String
+    ) {
+        val adminTokens = fStore.getAdminTokens()
+        adminTokens.forEach { adminToken ->
+            fMessaging.send(remoteMessage("$SENDER_ID@fcm.googleapis.com") {
+                messageId = getFirebaseMessageId()
+                addData(KEY_TOKEN, userToken)
+                addData(KEY_ADMIN_TOKEN, adminToken)
+                addData(KEY_ACTION, ACTION_PUERTA)
+                addData(KEY_TYPE, TO_ADMIN_NEW)
+                addData(KEY_NOMBRE, userName)
+                addData(KEY_USER_ID, userId)
             })
         }
     }

@@ -38,5 +38,10 @@
         android:id="@+id/userDataFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.UserDataFragment"
         android:label="fragment_user_data"
-        tools:layout="@layout/fragment_user_data" />
+        tools:layout="@layout/fragment_user_data" >
+        <action
+            android:id="@+id/action_userDataFragment_to_intro_nav_graph"
+            app:destination="@id/intro_nav_graph"
+            app:popUpTo="@id/intro_nav_graph" />
+    </fragment>
 </navigation>

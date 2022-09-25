@@ -8,6 +8,5 @@ data class User(
     val mesa: String,
     val isPresent: Boolean,
     val bonos: Long,
-    val fechaDeNacimiento: String
-) {
+    val fechaDeNacimiento: String) {
 }

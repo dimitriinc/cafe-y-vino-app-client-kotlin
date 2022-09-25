@@ -32,6 +32,7 @@ const val KEY_PRECIO = "precio"
 const val KEY_ICON = "icon"
 const val KEY_META_ID = "metaDocId"
 const val KEY_MODO = "modo"
+const val KEY_USER_ID = "userId"
 
 const val TO_ADMIN_NEW = "toAdminNew"
 
@@ -50,6 +51,7 @@ const val ACTION_CUENTA_ACK = "cuenta_ack"
 const val ACTION_RESERVA = "reserva"
 const val ACTION_PEDIDO = "pedido"
 const val ACTION_CUENTA = "cuenta"
+const val ACTION_PUERTA = "puerta"
 
 const val SENDER_ID = "1096226926741"
 

@@ -9,7 +9,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +24,7 @@ import kotlinx.coroutines.launch
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var entryRequestDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +41,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
+
                     if (!it.isUserPresent) {
                         binding.apply {
                             fabCanastaMain.visibility = GONE
@@ -54,6 +55,27 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                             fabCuentaMain.visibility = VISIBLE
                             fabPuerta.visibility = GONE
                             fabUserData.visibility = GONE
+                        }
+                    }
+
+                    require(it.canUserSendEntryRequest != null) {
+                        if (it.canUserSendEntryRequest == true) {
+                            viewModel.sendEntryRequest()
+                            entryRequestDialog.dismiss()
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.main_request_puerta,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            viewModel.nullifyEntryRequest()
+                        } else {
+                            entryRequestDialog.dismiss()
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.main_we_closed,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            viewModel.nullifyEntryRequest()
                         }
                     }
                 }
@@ -87,22 +109,27 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 val btnNegative = requestView.findViewById<Button>(R.id.btnRequestNegative)
                 val progressBar = requestView.findViewById<ProgressBar>(R.id.pbEntry)
 
-                val dialog = AlertDialog.Builder(requireContext())
+                entryRequestDialog = AlertDialog.Builder(requireContext())
                     .setView(requestView)
                     .create()
 
-                btnPositive.setOnClickListener { 
+                btnPositive.setOnClickListener {
                     if (!isOnline(requireContext())) {
-                        Toast.makeText(requireContext(), R.string.no_connection, Toast.LENGTH_LONG).show()
-                        dialog.dismiss()
+                        Toast.makeText(requireContext(), R.string.no_connection, Toast.LENGTH_LONG)
+                            .show()
+                        entryRequestDialog.dismiss()
                     } else {
-
+                        alertMessage.visibility = INVISIBLE
+                        btnNegative.visibility = INVISIBLE
+                        btnPositive.visibility = INVISIBLE
+                        progressBar.visibility = VISIBLE
+                        viewModel.setEntryRequestStatus()
                     }
                 }
                 btnNegative.setOnClickListener {
-                    dialog.dismiss()
+                    entryRequestDialog.dismiss()
                 }
-                dialog.show()
+                entryRequestDialog.show()
             }
         }
     }

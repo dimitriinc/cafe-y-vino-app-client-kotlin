@@ -33,10 +33,32 @@ class UserDataRepository @Inject constructor(
 
     }
 
-    val userPresenceFlow: Flow<Boolean>  = fStoreSource.userPresence.map { it!! }
+    val userPresenceFlow: Flow<Boolean> = fStoreSource.userPresence.map { it!! }
 
     fun getUserObject(): FirebaseUser? =
         fAuthSource.getUserObject()
+
+    fun getUserId(): String =
+        getUserObject()!!.uid
+
+
+    suspend fun getUser(): User? {
+        val userDocSnapshot = getUserObject()?.let { fStoreSource.getUserDocById(it.uid) }
+        return if (userDocSnapshot != null) {
+            User(
+                nombre = userDocSnapshot.getString("nombre")!!,
+                telefono = userDocSnapshot.getString("telefono")!!,
+                email = userDocSnapshot.getString("email")!!,
+                token = userDocSnapshot.getString("token")!!,
+                mesa = userDocSnapshot.getString("mesa")!!,
+                isPresent = userDocSnapshot.getBoolean("isPresent")!!,
+                bonos = userDocSnapshot.getLong("bonos")!!,
+                fechaDeNacimiento = userDocSnapshot.getString("fecha de nacimiento")!!
+            )
+        } else {
+            null
+        }
+    }
 
     suspend fun authenticateUser(
         email: String,
@@ -76,5 +98,9 @@ class UserDataRepository @Inject constructor(
 
     suspend fun loginUser(email: String, password: String): Boolean {
         return fAuthSource.loginUser(email, password)
+    }
+
+    fun logout() {
+        fAuthSource.logout()
     }
 }
