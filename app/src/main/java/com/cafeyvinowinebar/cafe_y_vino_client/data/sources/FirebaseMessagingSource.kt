@@ -99,4 +99,23 @@ class FirebaseMessagingSource @Inject constructor(
             })
         }
     }
+
+    suspend fun sendGiftMessage(
+        regalo: String,
+        mesa: String,
+        nombre: String
+    ) {
+        val adminTokens = fStore.getAdminTokens()
+        adminTokens.forEach { adminToken ->
+            fMessaging.send(remoteMessage("$SENDER_ID@fcm.googleapis.com") {
+                messageId = getFirebaseMessageId()
+                addData(KEY_REGALO, regalo)
+                addData(KEY_ACTION, ACTION_REGALO)
+                addData(KEY_MESA, mesa)
+                addData(KEY_ADMIN_TOKEN, adminToken)
+                addData(KEY_TYPE, TO_ADMIN_NEW)
+                addData(KEY_NOMBRE, nombre)
+            })
+        }
+    }
 }

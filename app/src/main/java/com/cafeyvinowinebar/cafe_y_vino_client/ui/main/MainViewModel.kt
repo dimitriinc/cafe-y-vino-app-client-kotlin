@@ -1,8 +1,12 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.main
 
+import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cafeyvinowinebar.cafe_y_vino_client.GMT
+import com.cafeyvinowinebar.cafe_y_vino_client.R
+import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.Gift
+import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.ProductsDataRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UserDataRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UtilsRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
@@ -17,7 +21,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val utilsRepo: UtilsRepository,
     private val userDataRepo: UserDataRepository,
-    private val fMessaging: FirebaseMessagingSource
+    private val fMessaging: FirebaseMessagingSource,
+    private val productsRepo: ProductsDataRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MainUiState())
@@ -34,10 +39,23 @@ class MainViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+
+            _uiState.update {
+                it.copy(
+                    userName = userDataRepo.getUser()?.nombre!!
+                )
+            }
             userDataRepo.userPresenceFlow.collect { isPresent ->
                 _uiState.update {
                     it.copy(
                         isUserPresent = isPresent
+                    )
+                }
+            }
+            userDataRepo.userBonosFlow.collect { bonos ->
+                _uiState.update {
+                    it.copy(
+                        bonos = bonos
                     )
                 }
             }
@@ -97,9 +115,81 @@ class MainViewModel @Inject constructor(
         userDataRepo.logout()
     }
 
-    fun updateEmail(email: String) {
-        TODO("Not yet implemented")
+    fun updateEmail(email: String)  = viewModelScope.launch {
+        val emailUpdated = userDataRepo.updateEmail(email)
+        if (emailUpdated) {
+            _uiState.update {
+                it.copy(
+                    message = Resources.getSystem().getString(R.string.email_update_success)
+                )
+            }
+        } else {
+            _uiState.update {
+                it.copy(
+                    message = Resources.getSystem().getString(R.string.email_update_failure)
+                )
+            }
+        }
     }
 
+    fun updateNombre(nombre: String) = viewModelScope.launch {
+        val nombreUpdated = userDataRepo.updateNombre(nombre)
+        if (nombreUpdated) {
+            _uiState.update {
+                it.copy(
+                    message = Resources.getSystem().getString(R.string.nombre_update_success)
+                )
+            }
+        } else {
+            _uiState.update {
+                it.copy(
+                    message = Resources.getSystem().getString(R.string.nombre_update_failure)
+                )
+            }
+        }
+    }
+
+    fun updateTelefono(telefono: String) = viewModelScope.launch {
+        val telefonoUpdated = userDataRepo.updateTelefono(telefono)
+        if (telefonoUpdated) {
+            _uiState.update {
+                it.copy(
+                    message = Resources.getSystem().getString(R.string.telefono_update_success)
+                )
+            }
+        } else {
+            _uiState.update {
+                it.copy(
+                    message = Resources.getSystem().getString(R.string.telefono_update_failure)
+                )
+            }
+        }
+    }
+
+    fun nullifyMessage() {
+        _uiState.update {
+            it.copy(
+                message = null
+            )
+        }
+    }
+
+    fun sendGiftRequest(gift: Gift) = viewModelScope.launch {
+        val userMesa = userDataRepo.getUser()?.mesa!!
+        val userId = userDataRepo.getUserId()
+        productsRepo.storeGift(
+            gift.nombre,
+            gift.precio.toLong(),
+            userMesa,
+            userId,
+            _uiState.value.userName
+        )
+        fMessaging.sendGiftMessage(
+            gift.nombre,
+            userMesa,
+            _uiState.value.userName
+        )
+        userDataRepo.updateBonos(_uiState.value.bonos - gift.precio.toLong())
+    }
 
 }

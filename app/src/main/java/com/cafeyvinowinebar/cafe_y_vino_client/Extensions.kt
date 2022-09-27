@@ -17,12 +17,11 @@ fun Context.isDarkThemeOn(): Boolean {
     return resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 }
 
-@ExperimentalCoroutinesApi
 fun DocumentReference.snapshotAsFlow(
     coroutineContext: CoroutineContext = Dispatchers.IO
 ): Flow<DocumentSnapshot?> = callbackFlow {
     try {
-        val listener = EventListener<DocumentSnapshot> {snapshot, error ->
+        val listener = EventListener<DocumentSnapshot> { snapshot, error ->
             if (error != null) {
                 close(error)
                 return@EventListener
@@ -38,11 +37,16 @@ fun DocumentReference.snapshotAsFlow(
     }
 }.flowOn(coroutineContext)
 
-@ExperimentalCoroutinesApi
-fun DocumentReference.asFlow(
+fun DocumentReference.asPresenceFlow(
     coroutineContext: CoroutineContext = Dispatchers.IO
 ): Flow<Boolean?> = snapshotAsFlow(coroutineContext).map {
     it?.getBoolean("isPresent")
+}
+
+fun DocumentReference.asBonosFlow(
+    coroutineContext: CoroutineContext = Dispatchers.IO
+): Flow<Long?> = snapshotAsFlow(coroutineContext).map {
+    it?.getLong("bonos")
 }
 
 fun Query.snapshotAsFlow(

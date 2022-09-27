@@ -7,9 +7,9 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes
  */
 
 class Gift(
-    private val nombre: String,
-    private val precio: String,
-    private val imagen: String,
-    private val isPresent: Boolean
+    val nombre: String,
+    val precio: String,
+    val imagen: String,
+    val isPresent: Boolean
 ) {
 }

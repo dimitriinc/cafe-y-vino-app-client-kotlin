@@ -1,16 +1,11 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.sources
 
 import android.os.Bundle
-import com.cafeyvinowinebar.cafe_y_vino_client.KEY_HAPPY_DAYS
-import com.cafeyvinowinebar.cafe_y_vino_client.KEY_HAPPY_HOURS
-import com.cafeyvinowinebar.cafe_y_vino_client.asFlow
+import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.*
-import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
-import com.cafeyvinowinebar.cafe_y_vino_client.getCurrentDate
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
@@ -19,13 +14,16 @@ import java.lang.Exception as LangException
 
 class FirebaseFirestoreSource @Inject constructor(
     private val fStore: FirebaseFirestore,
-    fAuth: FirebaseAuthSource
+    private val fAuth: FirebaseAuthSource
 ) {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     val userPresence: Flow<Boolean?> = fStore.collection("usuarios")
         .document(fAuth.getUserId())
-        .asFlow()
+        .asPresenceFlow()
+
+    val userBonos: Flow<Long?> = fStore.collection("usuarios")
+        .document(fAuth.getUserId())
+        .asBonosFlow()
 
     private suspend fun getUtilsDocument(): DocumentSnapshot = fStore.collection("utils")
         .document("horas")
@@ -36,7 +34,7 @@ class FirebaseFirestoreSource @Inject constructor(
         return try {
             val snapshot = getUtilsDocument()
             snapshot.get("horas dia noche") as List<String>
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             listOf("[14:00 - 18:00]", "[18:00 - 22:00]")
         }
     }
@@ -148,9 +146,46 @@ class FirebaseFirestoreSource @Inject constructor(
         return try {
             fStore.collection("usuarios").document(userId).set(user).await()
             true
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             false
         }
+    }
+
+    suspend fun updateNombre(nombre: String): Boolean {
+        return try {
+            fStore.collection("usuarios")
+                .document(fAuth.getUserId())
+                .update("nombre", nombre)
+                .await()
+            true
+        } catch (e: Throwable) {
+            false
+        }
+    }
+
+    suspend fun updateTelefono(telefono: String): Boolean {
+        return try {
+            fStore.collection("usuarios")
+                .document(fAuth.getUserId())
+                .update("telefono", telefono)
+                .await()
+            true
+        } catch (e: Throwable) {
+            false
+        }
+    }
+
+    fun storeGift(gift: GiftToSend) {
+        fStore.collection("pedidos")
+            .document(getCurrentDate())
+            .collection("regalos")
+            .add(gift)
+    }
+
+    fun updateBonos(newBonos: Long) {
+        fStore.collection("usuarios")
+            .document(fAuth.getUserId())
+            .update("bonos", newBonos)
     }
 
 }

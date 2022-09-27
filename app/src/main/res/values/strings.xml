@@ -188,6 +188,12 @@
         No.
 
     </string>
+    <string name="email_update_success">El email está actualizado</string>
+    <string name="email_update_failure">No se pudo actualizar el email</string>
+    <string name="nombre_update_success">El nombre está actualizado</string>
+    <string name="nombre_update_failure">No se pudo actulizar el nombre</string>
+    <string name="telefono_update_success">El teléfono está actualizado</string>
+    <string name="telefono_update_failure">No se pudo actualizar el teléfono</string>
 
     <string-array name="pager_headings">
         <item>Haz pedidos</item>

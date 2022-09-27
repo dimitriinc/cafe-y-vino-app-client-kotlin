@@ -35,6 +35,8 @@ class UserDataRepository @Inject constructor(
 
     val userPresenceFlow: Flow<Boolean> = fStoreSource.userPresence.map { it!! }
 
+    val userBonosFlow: Flow<Long> = fStoreSource.userBonos.map { it!! }
+
     fun getUserObject(): FirebaseUser? =
         fAuthSource.getUserObject()
 
@@ -103,4 +105,13 @@ class UserDataRepository @Inject constructor(
     fun logout() {
         fAuthSource.logout()
     }
+
+    suspend fun updateEmail(email: String) = fAuthSource.updateEmail(email)
+    suspend fun updateNombre(nombre: String) = fStoreSource.updateNombre(nombre)
+    suspend fun updateTelefono(telefono: String) = fStoreSource.updateTelefono(telefono)
+
+    fun updateBonos(newBonos: Long) {
+        fStoreSource.updateBonos(newBonos)
+    }
+
 }

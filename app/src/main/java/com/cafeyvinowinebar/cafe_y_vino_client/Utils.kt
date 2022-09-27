@@ -9,12 +9,9 @@ import java.util.*
 import kotlin.random.Random
 
 const val KEY_NOMBRE = "nombre"
-const val KEY_TELEFONO = "telefono"
 const val KEY_IS_PRESENT = "isPresent"
 const val KEY_MESA = "mesa"
 const val KEY_TOKEN = "token"
-const val KEY_BONOS = "bonos"
-const val KEY_EMAIL = "email"
 const val KEY_ACTION = "action"
 const val KEY_FECHA = "fecha"
 const val KEY_HORA = "hora"
@@ -33,6 +30,7 @@ const val KEY_ICON = "icon"
 const val KEY_META_ID = "metaDocId"
 const val KEY_MODO = "modo"
 const val KEY_USER_ID = "userId"
+const val KEY_REGALO = "regalo"
 
 const val TO_ADMIN_NEW = "toAdminNew"
 
@@ -52,6 +50,7 @@ const val ACTION_RESERVA = "reserva"
 const val ACTION_PEDIDO = "pedido"
 const val ACTION_CUENTA = "cuenta"
 const val ACTION_PUERTA = "puerta"
+const val ACTION_REGALO = "regalo"
 
 const val SENDER_ID = "1096226926741"
 

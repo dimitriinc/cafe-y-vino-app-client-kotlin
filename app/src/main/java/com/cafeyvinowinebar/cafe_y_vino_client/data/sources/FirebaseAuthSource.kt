@@ -63,4 +63,14 @@ class FirebaseAuthSource @Inject constructor(
     fun logout() {
         fAuth.signOut()
     }
+
+    suspend fun updateEmail(email: String): Boolean {
+        return try {
+            val user = getUserObject()
+            user?.updateEmail(email)?.await()
+            true
+        } catch (e: Throwable) {
+            false
+        }
+    }
 }
