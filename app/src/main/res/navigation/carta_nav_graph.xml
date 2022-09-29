@@ -54,7 +54,7 @@
         android:id="@+id/canastaFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.CanastaFragment"
         android:label="fragment_canasta"
-        tools:layout="@layout/fragment_canasta" >
+        tools:layout="@layout/fragment_canasta">
         <action
             android:id="@+id/action_canastaFragment_to_cuentaFragment"
             app:destination="@id/cuentaFragment" />
@@ -64,20 +64,28 @@
         <action
             android:id="@+id/action_canastaFragment_to_main_nav_graph"
             app:destination="@id/main_nav_graph"
-            app:popUpTo="@id/main_nav_graph" />
+            app:popUpTo="@id/main_nav_graph"
+            app:popUpToInclusive="true" />
+        <deepLink
+            android:id="@+id/deepLinkCanasta"
+            app:action="ACTION_CANASTA" />
     </fragment>
     <fragment
         android:id="@+id/cuentaFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.CuentaFragment"
         android:label="fragment_cuenta"
-        tools:layout="@layout/fragment_cuenta" >
+        tools:layout="@layout/fragment_cuenta">
         <action
             android:id="@+id/action_cuentaFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
         <action
             android:id="@+id/action_cuentaFragment_to_main_nav_graph"
             app:destination="@id/main_nav_graph"
-            app:popUpTo="@id/main_nav_graph" />
+            app:popUpTo="@id/main_nav_graph"
+            app:popUpToInclusive="true" />
+        <deepLink
+            android:id="@+id/deepLink2"
+            app:action="ACTION_CUENTA" />
     </fragment>
     <fragment
         android:id="@+id/itemSpecsFragment"

@@ -1,6 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -9,6 +10,7 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
+@Keep
 class ItemMenu(
     val nombre: String,
     val categoria: String,

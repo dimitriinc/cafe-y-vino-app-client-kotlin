@@ -11,17 +11,15 @@
         android:roundIcon="@mipmap/logo_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.CafeYVino">
-        <activity
-            android:name=".ReservasActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <nav-graph android:value="@navigation/main_nav_graph"/>
         </activity>
 
         <service

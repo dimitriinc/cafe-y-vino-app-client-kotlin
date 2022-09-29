@@ -13,6 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavDeepLink
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentMainBinding
@@ -96,10 +98,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 findNavController().navigate(R.id.userDataFragment)
             }
             fabCanastaMain.setOnClickListener {
-                findNavController().navigate(R.id.canastaFragment)
+                val request = NavDeepLinkRequest.Builder.fromAction("ACTION_CANASTA").build()
+                findNavController().navigate(request)
             }
             fabCuentaMain.setOnClickListener {
-                findNavController().navigate(R.id.cuentaFragment)
+                val request = NavDeepLinkRequest.Builder.fromAction("ACTION_CUENTA").build()
+                findNavController().navigate(request)
             }
             fabPuerta.setOnClickListener {
 

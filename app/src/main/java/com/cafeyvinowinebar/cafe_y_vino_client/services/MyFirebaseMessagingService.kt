@@ -17,14 +17,14 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 @AndroidEntryPoint
-class MyFirebaseMessagingService @Inject constructor(
-    private val preferencesManager: PreferencesManager
-) : FirebaseMessagingService() {
+class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     @Inject
     lateinit var fAuth: FirebaseAuth
     @Inject
     lateinit var fStore: FirebaseFirestore
+    @Inject
+    lateinit var preferencesManager: PreferencesManager
 
     lateinit var manager: NotificationManagerCompat
 

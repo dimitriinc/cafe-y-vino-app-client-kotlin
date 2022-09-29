@@ -15,19 +15,29 @@
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_intro_nav_graph"
-            app:destination="@id/intro_nav_graph" />
+            app:destination="@id/intro_nav_graph"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_mainFragment_to_reservas_nav_graph"
-            app:destination="@id/reservas_nav_graph" />
+            app:destination="@id/reservas_nav_graph"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_mainFragment_to_carta_nav_graph"
-            app:destination="@id/carta_nav_graph" />
+            app:destination="@id/carta_nav_graph"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_mainFragment_to_giftshopFragment"
-            app:destination="@id/giftshopFragment" />
+            app:destination="@id/giftshopFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_mainFragment_to_userDataFragment"
-            app:destination="@id/userDataFragment" />
+            app:destination="@id/userDataFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/giftshopFragment"
@@ -42,6 +52,9 @@
         <action
             android:id="@+id/action_userDataFragment_to_intro_nav_graph"
             app:destination="@id/intro_nav_graph"
-            app:popUpTo="@id/intro_nav_graph" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popUpTo="@id/intro_nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
