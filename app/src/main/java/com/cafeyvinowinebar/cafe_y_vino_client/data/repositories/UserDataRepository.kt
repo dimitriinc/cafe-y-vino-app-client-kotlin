@@ -3,7 +3,8 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 import android.content.res.Resources
 import androidx.datastore.core.DataStore
 import com.cafeyvinowinebar.cafe_y_vino_client.*
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.User
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.UserFirestore
+import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.User
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseAuthSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
@@ -13,12 +14,14 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * A repository for the operations that manipulate the data stored in the user document in the 'usuarios' collection in the Firestore
+ */
 class UserDataRepository @Inject constructor(
     private val fAuthSource: FirebaseAuthSource,
     private val fMessagingSource: FirebaseMessagingSource,
@@ -29,6 +32,8 @@ class UserDataRepository @Inject constructor(
 ) {
 
     init {
+
+        // inside the application scope we listen to the user document and update the object stored in the Proto DataStore
         appScope.launch {
             fStoreSource.userFlow.collect { userSnapshot ->
                 updateUserData(userSnapshot!!)
@@ -50,37 +55,45 @@ class UserDataRepository @Inject constructor(
 
     }
 
+    /**
+     * Gets the flow from the Proto DataStore, converts it to a flow of the isPresent property for its exposure to the UI layer
+     */
     val userPresenceFlow: Flow<Boolean> = userDataStore.data.map {
         it.isPresent
     }
 
+    /**
+     * Gets the flow from the Proto DataStore, converts it to a flow of the bonos property for its exposure to the UI layer
+     */
     val userBonosFlow: Flow<Long> = userDataStore.data.map {
         it.bonos
     }
 
+    /**
+     * Returns an Auth object for the start destination to decided if the user is logged in
+     */
     fun getUserObject(): FirebaseUser? =
         fAuthSource.getUserObject()
 
     fun getUserId(): String =
         getUserObject()!!.uid
 
-
-    suspend fun getUser(): User? {
-        val userDocSnapshot = getUserObject()?.let { fStoreSource.getUserDocById(it.uid) }
-        return if (userDocSnapshot != null) {
-            User(
-                nombre = userDocSnapshot.getString("nombre")!!,
-                telefono = userDocSnapshot.getString("telefono")!!,
-                email = userDocSnapshot.getString("email")!!,
-                token = userDocSnapshot.getString("token")!!,
-                mesa = userDocSnapshot.getString("mesa")!!,
-                isPresent = userDocSnapshot.getBoolean("isPresent")!!,
-                bonos = userDocSnapshot.getLong("bonos")!!,
-                fechaDeNacimiento = userDocSnapshot.getString("fecha de nacimiento")!!
-            )
-        } else {
-            null
-        }
+    /**
+     * Gets the object from the Proto DataStore
+     * Converts it to an instance of the User class, designed to be exposed to the UI layer
+     * Returns the instance
+     */
+    suspend fun getUser(): User {
+        val userData = userDataStore.data.first()
+        return User(
+            nombre = userData.nombre,
+            telefono = userData.telefono,
+            email = userData.email,
+            token = userData.token,
+            mesa = userData.mesa,
+            isPresent = userData.isPresent,
+            bonos = userData.bonos
+        )
     }
 
     suspend fun authenticateUser(
@@ -93,7 +106,7 @@ class UserDataRepository @Inject constructor(
         val authenticated = fAuthSource.authenticateUser(email, password)
         if (authenticated) {
             val token = fMessagingSource.getToken()
-            val user = User(
+            val user = UserFirestore(
                 nombre = name,
                 telefono = phone,
                 fechaDeNacimiento = birthdate,
@@ -110,7 +123,7 @@ class UserDataRepository @Inject constructor(
     }
 
 
-    private suspend fun storeUserDoc(user: User): Boolean {
+    private suspend fun storeUserDoc(user: UserFirestore): Boolean {
         val userId = fAuthSource.getUserId()
         return fStoreSource.storeUserDoc(user, userId)
     }
@@ -137,6 +150,9 @@ class UserDataRepository @Inject constructor(
         }
     }
 
+    /**
+     * With a user document snapshot from the fStore flow we update the Proto DataStore object
+     */
     private suspend fun updateUserData(userSnapshot: DocumentSnapshot) {
         userDataStore.updateData { user ->
             user.toBuilder()

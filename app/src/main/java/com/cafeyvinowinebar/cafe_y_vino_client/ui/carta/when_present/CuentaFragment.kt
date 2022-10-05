@@ -12,7 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.ItemCuenta
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemCuenta
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentCuentaBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.getCurrentDate
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline

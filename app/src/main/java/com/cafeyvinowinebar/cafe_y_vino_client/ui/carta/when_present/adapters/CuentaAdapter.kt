@@ -3,7 +3,7 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.ItemCuenta
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemCuenta
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ListItemCuentaBinding
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions

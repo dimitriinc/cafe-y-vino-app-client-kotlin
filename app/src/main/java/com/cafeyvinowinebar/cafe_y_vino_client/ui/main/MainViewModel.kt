@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cafeyvinowinebar.cafe_y_vino_client.GMT
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.Gift
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.ProductsDataRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UserDataRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UtilsRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
+import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.Gift
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -17,6 +17,9 @@ import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * A view model scoped to the main to the main nav graph
+ */
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val utilsRepo: UtilsRepository,
@@ -30,6 +33,8 @@ class MainViewModel @Inject constructor(
 
     init {
 
+        // first of all we set the logged in value to true if the user is logged in
+        // otherwise the user will be sent to the intro nav graph
         if (userDataRepo.getUserObject() != null) {
             _uiState.update {
                 it.copy(
@@ -38,13 +43,18 @@ class MainViewModel @Inject constructor(
             }
         }
 
+
         viewModelScope.launch {
 
+            // the name of the user will be displayed at the giftshop screen
             _uiState.update {
                 it.copy(
                     userName = userDataRepo.getUser()?.nombre!!
                 )
             }
+
+            // we listen to the presence status of the user
+            // the value decides whats on display in main fragment + if the user can see the gifts menu
             userDataRepo.userPresenceFlow.collect { isPresent ->
                 _uiState.update {
                     it.copy(
@@ -52,6 +62,7 @@ class MainViewModel @Inject constructor(
                     )
                 }
             }
+            // we listen to the bonos amount (displayed at giftshop, decides if user can afford gifts)
             userDataRepo.userBonosFlow.collect { bonos ->
                 _uiState.update {
                     it.copy(
@@ -62,7 +73,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun nullifyEntryRequest() {
+    /**
+     * After each time we check if the user can send an entry request, we set the value to null
+     * So that the fragment reacts appropriately to when the value is not null
+     */
+    fun nullifyEntryRequestStatus() {
         _uiState.update {
             it.copy(
                 canUserSendEntryRequest = null
@@ -70,6 +85,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    /**
+     * We get related to entry requests values from the utils Room table
+     * and check the current time against them to set the entry status
+     */
     fun setEntryRequestStatus() = viewModelScope.launch {
         val utils = utilsRepo.getUtilsForEntryRequest()
         val day = LocalDate.now().dayOfWeek.name
@@ -101,8 +120,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Gathers necessary data for an entry request message
+     * Calls the appropriate messaging source function
+     */
     fun sendEntryRequest() = viewModelScope.launch {
-        val user = userDataRepo.getUser()!!
+        val user = userDataRepo.getUser()
         val userId = userDataRepo.getUserId()
         fMessaging.sendEntryRequest(
             userId,
@@ -111,10 +134,19 @@ class MainViewModel @Inject constructor(
         )
     }
 
+    /**
+     * Closes the current session from the user
+     */
     fun logout() {
         userDataRepo.logout()
     }
 
+    /**
+     * Next three functions update different user properties
+     * Nombre and telefono in the Firestore DB, and email in the Authentication system
+     * A call to the data layer returns a boolean that represents a success or a failure of the update
+     * According to the result we update the message property of the UI state
+     */
     fun updateEmail(email: String)  = viewModelScope.launch {
         val emailUpdated = userDataRepo.updateEmail(email)
         if (emailUpdated) {
@@ -131,7 +163,6 @@ class MainViewModel @Inject constructor(
             }
         }
     }
-
     fun updateNombre(nombre: String) = viewModelScope.launch {
         val nombreUpdated = userDataRepo.updateNombre(nombre)
         if (nombreUpdated) {
@@ -148,7 +179,6 @@ class MainViewModel @Inject constructor(
             }
         }
     }
-
     fun updateTelefono(telefono: String) = viewModelScope.launch {
         val telefonoUpdated = userDataRepo.updateTelefono(telefono)
         if (telefonoUpdated) {
@@ -166,6 +196,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    /**
+     * After the message is displayed to the user, we set the value of the property back to null
+     * So that the fragment can keep reacting to when the value is not null
+     */
     fun nullifyMessage() {
         _uiState.update {
             it.copy(
@@ -174,8 +208,14 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Gathers necessary data to send a message to admin to notify them about a new gift to serve, and to store the gift in the Firestore DB
+     * Calls the products repo's function to store the gift
+     * Calls the appropriate messaging source function
+     * Subtracts the gift's price from the total user bonos, and passes the value to the repo's fun to update the user's bonos
+     */
     fun sendGiftRequest(gift: Gift) = viewModelScope.launch {
-        val userMesa = userDataRepo.getUser()?.mesa!!
+        val userMesa = userDataRepo.getUser().mesa
         val userId = userDataRepo.getUserId()
         productsRepo.storeGift(
             gift.nombre,

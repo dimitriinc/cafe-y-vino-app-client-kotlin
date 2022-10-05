@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes
+package com.cafeyvinowinebar.cafe_y_vino_client.data.data_models
 
 /**
  * Represent an item the bill consists of

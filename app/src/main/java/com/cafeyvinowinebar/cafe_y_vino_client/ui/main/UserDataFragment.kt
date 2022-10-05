@@ -16,6 +16,11 @@ import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentUserDataBinding
 import kotlinx.coroutines.launch
 
+/**
+ * Displays the user data
+ * Allows the user to modify it
+ * And to log out
+ */
 class UserDataFragment : Fragment(R.layout.fragment_user_data) {
 
     private val viewModel: MainViewModel by viewModels()
@@ -26,10 +31,18 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
         val binding = FragmentUserDataBinding.bind(view)
 
         binding.apply {
+
+            // log out of the session
+            // navigate to the intro nav graph
             btnLogOut.setOnClickListener {
                 viewModel.logout()
                 findNavController().popBackStack(R.id.intro_nav_graph, false)
+                // TODO: pop up the main graph
             }
+
+            // for each pressed button we create an alert dialog, using the same layout resource, and configuring its edit text's hind
+            // and input type
+            // the implementation of the positive button is slightly different, calling different view model functions
             btnEmail.setOnClickListener {
                 val emailView = layoutInflater.inflate(R.layout.user_data_et, null)
                 val editText = emailView.findViewById<EditText>(R.id.edtUserEt)
@@ -87,6 +100,10 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
+
+                    // as a response to updating the user data, a message should appear on the screen
+                    // without updating the message value is null
+                    // and it returns to null right after displaying a message
                     if (it.message != null) {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                         viewModel.nullifyMessage()

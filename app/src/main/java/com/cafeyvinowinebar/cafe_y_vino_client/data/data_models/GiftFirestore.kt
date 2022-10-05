@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes
+package com.cafeyvinowinebar.cafe_y_vino_client.data.data_models
 
 /**
  * Represents a gift shop item as it's stored in the FirestoreDB
@@ -6,7 +6,7 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes
  * Model for the AdapterGiftshop
  */
 
-class Gift(
+class GiftFirestore(
     val nombre: String,
     val precio: String,
     val imagen: String,

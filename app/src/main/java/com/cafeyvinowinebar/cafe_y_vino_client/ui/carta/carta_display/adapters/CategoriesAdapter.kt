@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.MenuCategory
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.MenuCategory
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ListItemMenuBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemClickListener

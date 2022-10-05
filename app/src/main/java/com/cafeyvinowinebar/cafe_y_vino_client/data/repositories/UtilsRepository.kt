@@ -1,9 +1,8 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
-import android.speech.tts.UtteranceProgressListener
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.UtilsEntryRequest
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.UtilsHappyHour
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.UtilsReservas
+import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.UtilsEntryRequest
+import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.UtilsHappyHour
+import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.UtilsReservas
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.utils_data.UtilsDao
 import com.cafeyvinowinebar.cafe_y_vino_client.data.utils_data.UtilsEntity

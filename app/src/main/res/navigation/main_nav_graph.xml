@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/giftshopFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.GiftshopFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.giftshop.GiftshopFragment"
         android:label="fragment_giftshop"
         tools:layout="@layout/fragment_giftshop" />
     <fragment

@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.main
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.main.giftshop
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,14 +12,20 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_IS_PRESENT
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.Gift
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.GiftFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnGiftClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
+import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.Gift
+import com.cafeyvinowinebar.cafe_y_vino_client.ui.main.MainViewModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * Displays the gifts menu in form of a recycler view
+ * By pressing an item, the user purchases it with their bonus points (if sufficient)
+ */
 @AndroidEntryPoint
 class GiftshopMenuFragment : DialogFragment(), OnGiftClickListener {
 
@@ -35,10 +41,12 @@ class GiftshopMenuFragment : DialogFragment(), OnGiftClickListener {
         savedInstanceState: Bundle?
     ): View {
 
+        // build a recycler view and return it as the fragment's view
+
         val recycleView = RecyclerView(requireContext())
         val query = fStore.collection("regalos").whereEqualTo(KEY_IS_PRESENT, true)
-        val options = FirestoreRecyclerOptions.Builder<Gift>()
-            .setQuery(query, Gift::class.java)
+        val options = FirestoreRecyclerOptions.Builder<GiftFirestore>()
+            .setQuery(query, GiftFirestore::class.java)
             .build()
         adapterGifts = GiftshopMenuAdapter(options, this)
         recycleView.apply {

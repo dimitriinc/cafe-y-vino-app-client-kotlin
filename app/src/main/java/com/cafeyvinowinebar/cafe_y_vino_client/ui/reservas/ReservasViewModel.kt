@@ -13,7 +13,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.DATE_FORMAT
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseAuthSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.Reserva
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.Reserva
 import com.google.firebase.Timestamp
 import kotlinx.coroutines.flow.*
 

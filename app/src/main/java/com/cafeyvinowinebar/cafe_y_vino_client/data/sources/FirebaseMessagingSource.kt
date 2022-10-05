@@ -1,7 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.sources
 
 import com.cafeyvinowinebar.cafe_y_vino_client.*
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.Reserva
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.Reserva
 import com.cafeyvinowinebar.cafe_y_vino_client.getFirebaseMessageId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.remoteMessage

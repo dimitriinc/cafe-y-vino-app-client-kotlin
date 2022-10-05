@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_ITEMS
 import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.CanastaDao
 import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.ItemCanasta
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.ItemMenu
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenu
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import dagger.hilt.android.lifecycle.HiltViewModel

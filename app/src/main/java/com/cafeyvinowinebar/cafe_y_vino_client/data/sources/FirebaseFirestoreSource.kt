@@ -1,84 +1,33 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.sources
 
-import android.os.Bundle
 import com.cafeyvinowinebar.cafe_y_vino_client.*
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.*
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import java.lang.Exception as LangException
 
+/**
+ * Reads and writes from the Firestore DB
+ */
 class FirebaseFirestoreSource @Inject constructor(
     private val fStore: FirebaseFirestore,
     private val fAuth: FirebaseAuthSource
 ) {
 
-    val userPresence: Flow<Boolean?> = fStore.collection("usuarios")
-        .document(fAuth.getUserId())
-        .asPresenceFlow()
-
-    val userBonos: Flow<Long?> = fStore.collection("usuarios")
-        .document(fAuth.getUserId())
-        .asBonosFlow()
-
+    /**
+     * Transmits the user's document snapshot as a flow
+     */
     val userFlow: Flow<DocumentSnapshot?> = fStore.collection("usuarios")
         .document(fAuth.getUserId())
         .snapshotAsFlow()
 
 
-    private suspend fun getUtilsDocument(): DocumentSnapshot = fStore.collection("utils")
-        .document("horas")
-        .get()
-        .await()
-
-    suspend fun getPartHoras(): List<String> {
-        return try {
-            val snapshot = getUtilsDocument()
-            snapshot.get("horas dia noche") as List<String>
-        } catch (e: Throwable) {
-            listOf("[14:00 - 18:00]", "[18:00 - 22:00]")
-        }
-    }
-
-    suspend fun getSetOfReservas(date: String?, part: String?): QuerySnapshot? {
-
-        return when (part) {
-            "dia" -> fStore.collection("reservas")
-                .document(date!!)
-                .collection("dia")
-                .get()
-                .await()
-            "noche" -> fStore.collection("reservas")
-                .document(date!!)
-                .collection("noche")
-                .get()
-                .await()
-            else -> null
-
-        }
-    }
-
-    suspend fun getHappyHourData(): Bundle {
-        val snapshot = getUtilsDocument()
-        val happyDays = snapshot.get("dias de happy hour") as CharArray
-        val happyHours = snapshot.get("horas de happy hour") as LongArray
-        val bundle = Bundle()
-        bundle.putCharArray(KEY_HAPPY_DAYS, happyDays)
-        bundle.putLongArray(KEY_HAPPY_HOURS, happyHours)
-        return bundle
-    }
-
-    suspend fun getSetOfAvailableReservaHours(part: String?): List<String> {
-        val horasSnapshot = getUtilsDocument()
-        return horasSnapshot.get("horas de reserva ($part)") as List<String>
-    }
-
-    suspend fun getUserDocById(uid: String): DocumentSnapshot =
-        fStore.collection("usuarios").document(uid).get().await()
-
+    /**
+     * Gets a list of admin tokens as strings for the messaging source to send them messages
+     */
     suspend fun getAdminTokens(): List<String> {
         val admins = fStore.collection("administradores").get().await()
         return admins.map {
@@ -86,6 +35,9 @@ class FirebaseFirestoreSource @Inject constructor(
         }
     }
 
+    /**
+     * One-off operation to get the utils doc, so that the utils repo can store it in a Room table at the beginning of the app's process
+     */
     suspend fun getUtilsDoc(): DocumentSnapshot? {
         return try {
             fStore.collection("utils")
@@ -139,7 +91,7 @@ class FirebaseFirestoreSource @Inject constructor(
     }
 
     suspend fun storeUserDoc(
-        user: User,
+        user: UserFirestore,
         userId: String
     ): Boolean {
         return try {
@@ -174,17 +126,20 @@ class FirebaseFirestoreSource @Inject constructor(
         }
     }
 
+    fun updateBonos(newBonos: Long) {
+        fStore.collection("usuarios")
+            .document(fAuth.getUserId())
+            .update("bonos", newBonos)
+    }
+
+    /**
+     * Receives an instance of a Gift class and stores to the "pedidos" collection
+     */
     fun storeGift(gift: GiftToSend) {
         fStore.collection("pedidos")
             .document(getCurrentDate())
             .collection("regalos")
             .add(gift)
-    }
-
-    fun updateBonos(newBonos: Long) {
-        fStore.collection("usuarios")
-            .document(fAuth.getUserId())
-            .update("bonos", newBonos)
     }
 
 }

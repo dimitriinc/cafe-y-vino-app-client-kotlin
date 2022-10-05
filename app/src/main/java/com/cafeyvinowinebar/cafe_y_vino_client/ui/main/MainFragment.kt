@@ -21,6 +21,12 @@ import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+/**
+ * Entry point to the app
+ * Directs to the nested graphs
+ * Sends entry requests
+ */
+
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main) {
 
@@ -29,8 +35,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // check if the user is logged in
+        // if not, direct to the log in flow
         if (!viewModel.uiState.value.isLoggedIn) {
             findNavController().navigate(R.id.intro_nav_graph)
+            // TODO: you have to pop up the main graph somehow
         }
     }
 
@@ -43,6 +53,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
 
+                    // what fabs to display depends on the presence status of the user
                     if (!it.isUserPresent) {
                         binding.apply {
                             fabCanastaMain.visibility = GONE
@@ -59,6 +70,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                         }
                     }
 
+                    // the initial value of the UI state property is null
+                    // when the user tries to send the request, the view model decides if they're allowed to do it
+                    // when the decision is made, it sets the value to true or false
+                    // and this block is supposed to react to this action
+                    // after the appropriate reaction, the view model is asked to set the value to null again
                     require(it.canUserSendEntryRequest != null) {
                         if (it.canUserSendEntryRequest == true) {
                             viewModel.sendEntryRequest()
@@ -68,7 +84,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                                 R.string.main_request_puerta,
                                 Toast.LENGTH_SHORT
                             ).show()
-                            viewModel.nullifyEntryRequest()
+                            viewModel.nullifyEntryRequestStatus()
                         } else {
                             entryRequestDialog.dismiss()
                             Toast.makeText(
@@ -76,7 +92,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                                 R.string.main_we_closed,
                                 Toast.LENGTH_SHORT
                             ).show()
-                            viewModel.nullifyEntryRequest()
+                            viewModel.nullifyEntryRequestStatus()
                         }
                     }
                 }
@@ -84,6 +100,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
 
         binding.apply {
+
+            // simple navigation to destinations
             imgBtnGiftshop.setOnClickListener {
                 findNavController().navigate(R.id.giftshopFragment)
             }
@@ -96,6 +114,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             fabUserData.setOnClickListener {
                 findNavController().navigate(R.id.userDataFragment)
             }
+
+            // deep links to the destinations from the carta nav graph, that are not start destinations (canasta and cuenta)
             fabCanastaMain.setOnClickListener {
                 val request = NavDeepLinkRequest.Builder.fromAction("ACTION_CANASTA").build()
                 findNavController().navigate(request)
@@ -104,6 +124,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 val request = NavDeepLinkRequest.Builder.fromAction("ACTION_CUENTA").build()
                 findNavController().navigate(request)
             }
+
+            // before sending an entry request we show a dialog that explains the function of the button
             fabPuerta.setOnClickListener {
 
                 val requestView = layoutInflater.inflate(R.layout.alert_entry_request, null)
@@ -116,6 +138,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     .setView(requestView)
                     .create()
 
+                // if the user wants to send a request, we don't do it right away
+                // we need to make sure the time is right (inside the attendance hours)
+                // so we tell the view model to set the request status
                 btnPositive.setOnClickListener {
                     if (!isOnline(requireContext())) {
                         Toast.makeText(requireContext(), R.string.no_connection, Toast.LENGTH_LONG)

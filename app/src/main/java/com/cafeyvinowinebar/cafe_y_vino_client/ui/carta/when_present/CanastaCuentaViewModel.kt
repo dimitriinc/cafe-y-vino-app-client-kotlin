@@ -8,8 +8,8 @@ import com.cafeyvinowinebar.cafe_y_vino_client.KEY_NOMBRE
 import com.cafeyvinowinebar.cafe_y_vino_client.data.PreferencesManager
 import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.CanastaDao
 import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.ItemCanasta
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.ItemPedido
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.PedidoMetaDoc
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemPedido
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.PedidoMetaDoc
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseAuthSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource

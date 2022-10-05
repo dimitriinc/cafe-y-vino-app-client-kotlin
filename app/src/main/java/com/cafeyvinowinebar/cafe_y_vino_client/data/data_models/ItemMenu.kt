@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes
+package com.cafeyvinowinebar.cafe_y_vino_client.data.data_models
 
 import android.os.Parcelable
 import androidx.annotation.Keep

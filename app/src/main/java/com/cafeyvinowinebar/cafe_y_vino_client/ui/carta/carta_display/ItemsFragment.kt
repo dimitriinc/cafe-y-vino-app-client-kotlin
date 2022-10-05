@@ -19,7 +19,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.KEY_IS_PRESENT
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_ITEMS
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_NOMBRE
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.ItemMenu
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenu
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemsBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemLongClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnProductClickListener

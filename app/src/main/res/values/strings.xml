@@ -37,7 +37,7 @@
     <string name="user_data_title">Datos del usuario</string>
     <string name="bienvenido">Bienvenido</string>
     <string name="reserva_ver_plan">Ver el plan de la sala</string>
-    <string name="gift_list_item_price" translatable="false">%1$spts</string>
+    <string name="gift_bonos" translatable="false">%1$spts</string>
     <string name="mesa">Mesa %1$s</string>
     <string name="data_telefono">Teléfono</string>
     <string name="data_email">Email</string>
