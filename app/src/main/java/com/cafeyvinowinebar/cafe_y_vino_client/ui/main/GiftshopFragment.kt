@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentGiftshopBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class GiftshopFragment : Fragment(R.layout.fragment_giftshop) {

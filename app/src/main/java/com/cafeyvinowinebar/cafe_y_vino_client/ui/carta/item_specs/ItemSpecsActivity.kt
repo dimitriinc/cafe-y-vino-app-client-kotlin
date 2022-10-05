@@ -10,9 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ActivityItemSpecsBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ItemSpecsActivity : AppCompatActivity() {

@@ -15,11 +15,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentReservasMesaBinding
 import kotlinx.android.synthetic.main.fragment_reservas_fecha.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {

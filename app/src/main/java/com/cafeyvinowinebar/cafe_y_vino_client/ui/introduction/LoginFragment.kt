@@ -15,9 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentLoginBinding
-import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentRegistrationBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment(R.layout.fragment_login) {

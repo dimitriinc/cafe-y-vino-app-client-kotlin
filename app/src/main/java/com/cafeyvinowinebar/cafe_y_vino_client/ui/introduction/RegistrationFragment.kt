@@ -17,7 +17,6 @@ import com.cafeyvinowinebar.cafe_y_vino_client.databinding.AlertPrivacyBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentRegistrationBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import kotlinx.android.synthetic.main.fragment_bienvenido.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {

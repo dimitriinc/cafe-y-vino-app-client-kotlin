@@ -150,7 +150,7 @@
         <b>What do you use it for?</b>\n
         Email - authentication in the system.\n
         Name and phone number - personal identification of clients and their reservations.\n
-        Birthdate - identification of age, we don't serve alcoholic drinks to minors.\n\n
+        Birthdate - identification of age, we do not serve alcoholic drinks to minors.\n\n
 
         <b>Where do you store the data?</b>\n
         In the Firebase Firestore database, owned by Google.\n\n

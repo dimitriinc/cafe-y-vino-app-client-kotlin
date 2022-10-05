@@ -3,7 +3,11 @@ package com.cafeyvinowinebar.cafe_y_vino_client
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
+import com.cafeyvinowinebar.cafe_y_vino_client.data.UserDataSerializer
 import dagger.hilt.android.HiltAndroidApp
 
 const val PUERTA = "channelPuerta"
@@ -11,6 +15,13 @@ const val RESERVA = "channelReserva"
 const val PEDIDO = "channelPedido"
 const val CUENTA = "channelCuenta"
 const val DATOS = "channelDatos"
+
+private const val DATA_STORE_FILE_NAME = "user_data.pb"
+
+private val Context.userDataStore: DataStore<UserData> by dataStore(
+    fileName = DATA_STORE_FILE_NAME,
+    serializer = UserDataSerializer
+)
 
 @HiltAndroidApp
 class App : Application() {
@@ -53,7 +64,8 @@ class App : Application() {
                 "Datos",
                 NotificationManager.IMPORTANCE_HIGH
             )
-            channelDatos.description = "Recibir promociones y otros mensajes de la administración del restaurante"
+            channelDatos.description =
+                "Recibir promociones y otros mensajes de la administración del restaurante"
 
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
@@ -63,13 +75,15 @@ class App : Application() {
 //            notificationManager.createNotificationChannel(channelCuenta)
 //            notificationManager.createNotificationChannel(channelDatos)
 
-            notificationManager.createNotificationChannels(listOf(
-                channelPuerta,
-                channelPedido,
-                channelCuenta,
-                channelReserva,
-                channelDatos
-            ))
+            notificationManager.createNotificationChannels(
+                listOf(
+                    channelPuerta,
+                    channelPedido,
+                    channelCuenta,
+                    channelReserva,
+                    channelDatos
+                )
+            )
 
         }
 

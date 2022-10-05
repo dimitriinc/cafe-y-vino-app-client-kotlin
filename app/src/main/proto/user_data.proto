@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_package = "com.cafeyvinowinebar.cafe_y_vino_client";
+option java_multiple_files = true;
+
+message UserData {
+  string nombre = 1;
+  string telefono = 2;
+  string email = 3;
+  string token = 4;
+  string mesa = 5;
+  bool is_present = 6;
+  int64 bonos = 7;
+}

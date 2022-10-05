@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.ItemMenu
 import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.MenuCategory
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentCategoriesBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemClickListener
@@ -18,9 +17,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 

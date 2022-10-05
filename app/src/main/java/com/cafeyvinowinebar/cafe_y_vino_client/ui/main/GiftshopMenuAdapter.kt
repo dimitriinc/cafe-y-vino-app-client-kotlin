@@ -10,7 +10,6 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.Gift
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ListItemGiftBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnGiftClickListener
-import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemClickListener
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import dagger.hilt.android.AndroidEntryPoint

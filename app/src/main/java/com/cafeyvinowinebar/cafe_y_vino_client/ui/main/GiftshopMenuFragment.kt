@@ -14,10 +14,8 @@ import com.cafeyvinowinebar.cafe_y_vino_client.KEY_IS_PRESENT
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.Gift
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnGiftClickListener
-import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

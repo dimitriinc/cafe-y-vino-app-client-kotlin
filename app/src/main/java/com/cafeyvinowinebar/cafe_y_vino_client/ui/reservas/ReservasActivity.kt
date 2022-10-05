@@ -9,7 +9,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ActivityReservasBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ReservasActivity : AppCompatActivity() {

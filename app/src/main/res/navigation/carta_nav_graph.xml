@@ -66,9 +66,7 @@
             app:destination="@id/main_nav_graph"
             app:popUpTo="@id/main_nav_graph"
             app:popUpToInclusive="true" />
-        <deepLink
-            android:id="@+id/deepLinkCanasta"
-            app:action="ACTION_CANASTA" />
+
     </fragment>
     <fragment
         android:id="@+id/cuentaFragment"
@@ -83,9 +81,7 @@
             app:destination="@id/main_nav_graph"
             app:popUpTo="@id/main_nav_graph"
             app:popUpToInclusive="true" />
-        <deepLink
-            android:id="@+id/deepLink2"
-            app:action="ACTION_CUENTA" />
+
     </fragment>
     <fragment
         android:id="@+id/itemSpecsFragment"

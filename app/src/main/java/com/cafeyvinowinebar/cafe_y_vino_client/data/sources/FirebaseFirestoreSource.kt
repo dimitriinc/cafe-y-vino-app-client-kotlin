@@ -6,7 +6,6 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -24,6 +23,11 @@ class FirebaseFirestoreSource @Inject constructor(
     val userBonos: Flow<Long?> = fStore.collection("usuarios")
         .document(fAuth.getUserId())
         .asBonosFlow()
+
+    val userFlow: Flow<DocumentSnapshot?> = fStore.collection("usuarios")
+        .document(fAuth.getUserId())
+        .snapshotAsFlow()
+
 
     private suspend fun getUtilsDocument(): DocumentSnapshot = fStore.collection("utils")
         .document("horas")
@@ -82,22 +86,17 @@ class FirebaseFirestoreSource @Inject constructor(
         }
     }
 
-    suspend fun getUtilsDoc(): UtilsHoras {
-        val snapshot = fStore.collection("utils")
-            .document("horas")
-            .get()
-            .await()
-        return UtilsHoras(
-            diasDeDescanso = snapshot.get("dias de descanso") as List<String>,
-            diasDeHappyHour = snapshot.get("dias de happy hour") as List<String>,
-            horasDeAtencion = snapshot.get("horas de atencion") as List<Long>,
-            horasDeHappyHour = snapshot.get("horas de happy hour") as List<Long>,
-            horasDeReservaDia = snapshot.get("horas de reserva (dia)") as List<String>,
-            horasDeReservaNoche = snapshot.get("horas de reserva (noche)") as List<String>,
-            horasDiaNoche = snapshot.get("horas dia_noche") as List<String>
-
-        )
+    suspend fun getUtilsDoc(): DocumentSnapshot? {
+        return try {
+            fStore.collection("utils")
+                .document("horas")
+                .get()
+                .await()
+        } catch (error: Throwable) {
+            null
+        }
     }
+
 
     suspend fun setReservaDoc(
         reserva: Reserva

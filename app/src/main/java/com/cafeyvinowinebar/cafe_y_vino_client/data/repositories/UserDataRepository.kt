@@ -1,24 +1,41 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
 import android.content.res.Resources
-import com.cafeyvinowinebar.cafe_y_vino_client.R
+import androidx.datastore.core.DataStore
+import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.User
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseAuthSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
+import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
+import com.google.firebase.firestore.DocumentSnapshot
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UserDataRepository @Inject constructor(
     private val fAuthSource: FirebaseAuthSource,
     private val fMessagingSource: FirebaseMessagingSource,
-    private val fStoreSource: FirebaseFirestoreSource
+    private val fStoreSource: FirebaseFirestoreSource,
+    private val userDataStore: DataStore<UserData>,
+    @ApplicationScope
+    private val appScope: CoroutineScope
 ) {
+
+    init {
+        appScope.launch {
+            fStoreSource.userFlow.collect { userSnapshot ->
+                updateUserData(userSnapshot!!)
+            }
+        }
+
+    }
 
 
     val errorMessageFlow: Flow<String?> = fAuthSource.errorFlow.map {
@@ -33,9 +50,13 @@ class UserDataRepository @Inject constructor(
 
     }
 
-    val userPresenceFlow: Flow<Boolean> = fStoreSource.userPresence.map { it!! }
+    val userPresenceFlow: Flow<Boolean> = userDataStore.data.map {
+        it.isPresent
+    }
 
-    val userBonosFlow: Flow<Long> = fStoreSource.userBonos.map { it!! }
+    val userBonosFlow: Flow<Long> = userDataStore.data.map {
+        it.bonos
+    }
 
     fun getUserObject(): FirebaseUser? =
         fAuthSource.getUserObject()
@@ -110,8 +131,24 @@ class UserDataRepository @Inject constructor(
     suspend fun updateNombre(nombre: String) = fStoreSource.updateNombre(nombre)
     suspend fun updateTelefono(telefono: String) = fStoreSource.updateTelefono(telefono)
 
-    fun updateBonos(newBonos: Long) {
-        fStoreSource.updateBonos(newBonos)
+    suspend fun updateBonos(newBonos: Long) {
+        userDataStore.updateData { user ->
+            user.toBuilder().setBonos(newBonos).build()
+        }
+    }
+
+    private suspend fun updateUserData(userSnapshot: DocumentSnapshot) {
+        userDataStore.updateData { user ->
+            user.toBuilder()
+                .setNombre(userSnapshot.getString(KEY_NOMBRE))
+                .setTelefono(userSnapshot.getString("telefono"))
+                .setEmail(userSnapshot.getString("email"))
+                .setToken(userSnapshot.getString("token"))
+                .setMesa(userSnapshot.getString(KEY_MESA))
+                .setIsPresent(userSnapshot.getBoolean(KEY_IS_PRESENT)!!)
+                .setBonos(userSnapshot.getLong("bonos")!!)
+                .build()
+        }
     }
 
 }

@@ -18,7 +18,7 @@ data class UserPreferences(
 )
 
 @AndroidEntryPoint
-class PreferencesManager @Inject constructor(val dataStore: DataStore<Preferences>) {
+class PreferencesManager @Inject constructor(private val dataStore: DataStore<Preferences>) {
 
     val preferencesFlow = dataStore.data
         .catch { exception ->

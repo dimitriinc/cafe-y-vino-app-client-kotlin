@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cafeyvinowinebar.cafe_y_vino_client">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
-        android:name=".App"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.App"
         android:allowBackup="true"
         android:icon="@mipmap/logo_icon"
         android:label="@string/app_name"
@@ -13,17 +12,17 @@
         android:theme="@style/Theme.CafeYVino">
 
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <nav-graph android:value="@navigation/main_nav_graph"/>
+<!--            <nav-graph android:value="@navigation/main_nav_graph"/>-->
         </activity>
 
         <service
-            android:name=".services.MyFirebaseMessagingService"
+            android:name="com.cafeyvinowinebar.cafe_y_vino_client.services.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
