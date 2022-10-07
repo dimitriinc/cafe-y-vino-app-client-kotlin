@@ -16,9 +16,11 @@ import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.AlertPrivacyBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentRegistrationBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
-import kotlinx.android.synthetic.main.fragment_bienvenido.*
 import kotlinx.coroutines.launch
 
+/**
+ * The user fills in the edit texts with their data needed for registration
+ */
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
     private val viewModel: IntroductionViewModel by viewModels()
@@ -29,6 +31,8 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         val binding = FragmentRegistrationBinding.bind(view)
 
         binding.apply {
+
+            // toggles the visibility of the content of the password edit texts
             checkBoxPassword.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     edtPass.transformationMethod = HideReturnsTransformationMethod.getInstance()
@@ -36,10 +40,12 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                     edtPass.transformationMethod = PasswordTransformationMethod.getInstance()
                 }
             }
-            btnReg.setOnClickListener {
+
+
+            btnRegistration.setOnClickListener {
                 if (isOnline(requireContext())) {
 
-                    // collect the values from edit texts
+                    // collect the values from the edit texts
                     val name = edtName.text.toString().trim()
                     val phone = edtPhone.text.toString().trim()
                     val email = edtEmail.text.toString().trim()
@@ -75,8 +81,8 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                         edtFechaNacimiento.error = getString(R.string.error_fecha_nacimiento)
                     }
 
-                    // all values are good, we are ready to authenticate the user
-                    // but first we need to ask him a permission to collect his personal data
+                    // all values are good, we are ready to register the user
+                    // but first we need to explicitly ask him for permission to collect his personal data
                     val privacyAlertView = layoutInflater.inflate(R.layout.alert_privacy, null)
                     val privacyAlertBinding = AlertPrivacyBinding.bind(privacyAlertView)
                     val privacyAlertDialog = AlertDialog.Builder(requireContext())
@@ -84,24 +90,25 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                         .create()
                     privacyAlertBinding.apply {
                         btnPrivacySaber.setOnClickListener {
-                            // go to a information page with a condensed FAQ of our privacy policy
+                            // navigate to the information screen with a condensed FAQ of our privacy policy
                             findNavController().navigate(R.id.action_registrationFragment_to_privacyFragment)
                         }
                         btnPrivacyRechazar.setOnClickListener {
                             privacyAlertDialog.dismiss()
                         }
                         btnPrivacyPermitir.setOnClickListener {
-                            // he permission granted we can start the business logic, and take care of some views while it's processing
-                            privacyAlertDialog.dismiss()
-                            progressBar.visibility = View.VISIBLE
 
-                            viewModel.authenticateUser(
+                            // the permission is granted; we can start the business logic, and take care of some views while it's processing
+                            viewModel.registerUser(
                                 email,
                                 password,
                                 name,
                                 phone,
                                 birthdate
                             )
+                            privacyAlertDialog.dismiss()
+                            progressBar.visibility = View.VISIBLE
+
                         }
                     }
                     privacyAlertDialog.show()
@@ -116,13 +123,20 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
+
+                    // if the isRegistered property of the UI state is true, that means the registration has terminated successfully
+                    // so we start the session and navigate to the main screen
                     if (it.isRegistered) {
                         binding.progressBar.visibility = View.INVISIBLE
-                        // TODO: navigate to the main fragment
+                        val action = RegistrationFragmentDirections.actionRegistrationFragmentToMainNavGraph()
+                        findNavController().navigate(action)
                     }
+
+                    // when the registration operation fails we get an error message and display it as a toast
                     if (it.errorMessage != null) {
                         binding.progressBar.visibility = View.INVISIBLE
                         Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG).show()
+                        // TODO: nullify the error message?
                     }
                 }
             }

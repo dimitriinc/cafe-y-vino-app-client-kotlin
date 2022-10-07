@@ -4,6 +4,8 @@ import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -21,7 +23,7 @@ class FirebaseFirestoreSource @Inject constructor(
      * Transmits the user's document snapshot as a flow
      */
     val userFlow: Flow<DocumentSnapshot?> = fStore.collection("usuarios")
-        .document(fAuth.getUserId())
+        .document(fAuth.getUserObject()!!.uid)
         .snapshotAsFlow()
 
 
@@ -50,8 +52,11 @@ class FirebaseFirestoreSource @Inject constructor(
     }
 
 
+    /**
+     * Stores a reservation document according to its date and part of day, the id of the document is its table's number
+     */
     suspend fun setReservaDoc(
-        reserva: Reserva
+        reserva: ReservaFirestore
     ): Boolean {
         return try {
             fStore.collection("reservas")
@@ -90,6 +95,9 @@ class FirebaseFirestoreSource @Inject constructor(
         }
     }
 
+    /**
+     * After a new user is registered, we save a document with some personal and necessary for the functioning of the app data
+     */
     suspend fun storeUserDoc(
         user: UserFirestore,
         userId: String
@@ -102,10 +110,11 @@ class FirebaseFirestoreSource @Inject constructor(
         }
     }
 
+    // TODO: those three should be the responsibility of the repository, updates are stored to the Room first
     suspend fun updateNombre(nombre: String): Boolean {
         return try {
             fStore.collection("usuarios")
-                .document(fAuth.getUserId())
+                .document(fAuth.getUserObject()!!.uid)
                 .update("nombre", nombre)
                 .await()
             true
@@ -117,7 +126,7 @@ class FirebaseFirestoreSource @Inject constructor(
     suspend fun updateTelefono(telefono: String): Boolean {
         return try {
             fStore.collection("usuarios")
-                .document(fAuth.getUserId())
+                .document(fAuth.getUserObject()!!.uid)
                 .update("telefono", telefono)
                 .await()
             true
@@ -128,7 +137,7 @@ class FirebaseFirestoreSource @Inject constructor(
 
     fun updateBonos(newBonos: Long) {
         fStore.collection("usuarios")
-            .document(fAuth.getUserId())
+            .document(fAuth.getUserObject()!!.uid)
             .update("bonos", newBonos)
     }
 
@@ -142,4 +151,15 @@ class FirebaseFirestoreSource @Inject constructor(
             .add(gift)
     }
 
+    /**
+     * Gets the collection of reservations for the defined date and part of day
+     * If there is no reservations for that set, the collection doesn't exist, and we return a null
+     */
+    suspend fun getReservasQuery(fecha: String?, part: String?): QuerySnapshot? {
+        return try {
+            fStore.collection("reservas").document(fecha!!).collection(part!!).get().await()
+        } catch (e: Throwable) {
+            null
+        }
+    }
 }

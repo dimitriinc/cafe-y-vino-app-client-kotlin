@@ -2,8 +2,6 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas
 
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -11,31 +9,46 @@ import java.util.*
 import javax.inject.Inject
 import com.cafeyvinowinebar.cafe_y_vino_client.DATE_FORMAT
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseAuthSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
-import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.Reserva
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ReservaFirestore
+import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.ReservasDataRepository
+import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UserDataRepository
+import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UtilsRepository
+import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
 import com.google.firebase.Timestamp
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
-
+/**
+ * A view model scoped to the reservas nav graph
+ */
 @HiltViewModel
 class ReservasViewModel @Inject constructor(
-    private val fStore: FirebaseFirestoreSource,
-    private val fAuth: FirebaseAuthSource,
-    private val fMessaging: FirebaseMessagingSource
+    private val userDataRepo: UserDataRepository,
+    utilsRepo: UtilsRepository,
+    private val fMessaging: FirebaseMessagingSource,
+    private val reservasRepo: ReservasDataRepository,
+    @ApplicationScope
+    private val appScope: CoroutineScope
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ReservasUiState())
     val uiState: StateFlow<ReservasUiState> = _uiState.asStateFlow()
 
-
-    fun getPartHoras() = viewModelScope.launch {
-        val horas = fStore.getPartHoras()
+    init {
+        val utils = utilsRepo.getUtilsForReservas()
         _uiState.update {
-            it.copy(horas = horas)
+            it.copy(
+                horas = utils.setsOfHours,
+                horasDeDia = utils.availableHoursDia,
+                horasDeNoche = utils.availableHoursNoche
+            )
         }
     }
 
+    /**
+     * Six methods to set the values, that will be used to create a Reserva instance, to the UI state
+     */
     fun setPartOfDay(part: String) {
         _uiState.update {
             it.copy(part = part)
@@ -43,7 +56,7 @@ class ReservasViewModel @Inject constructor(
     }
 
     fun setDate(calendar: Calendar) {
-        val sdf = SimpleDateFormat(DATE_FORMAT, Locale("ES"))
+        val sdf = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
         val date = sdf.format(calendar.time)
         _uiState.update {
             it.copy(fecha = date)
@@ -74,6 +87,9 @@ class ReservasViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Two functions to set the availability flags of the mesa and fin screens
+     */
     fun setPassToMesas(isAllowed: Boolean) {
         _uiState.update { it.copy(passToMesasAllowed = isAllowed) }
     }
@@ -82,8 +98,14 @@ class ReservasViewModel @Inject constructor(
         _uiState.update { it.copy(passToFinAllowed = isAllowed) }
     }
 
-    fun blockReservedTables(popup: PopupMenu?) = viewModelScope.launch {
-        fStore.getSetOfReservas(_uiState.value.fecha, _uiState.value.part)?.forEach {
+    /**
+     * Receives a popup menu instance to block unavailable items
+     * We request a query snapshot from the repository which will contain a list of document snapshots each corresponding to an existing reservation
+     * The id of the document snapshot is the table numeric value, so if the id exists, we block this table in the popup's menu
+     * If the collection doesn't exist, and the repo returns null, that means there is no reservation in this set, we block no items
+     */
+    fun blockReservedTables(popup: PopupMenu?) = appScope.launch {
+        reservasRepo.getSetOfReservas(_uiState.value.fecha, _uiState.value.part)?.forEach {
 
             val menu = popup?.menu
             when (it.id) {
@@ -103,52 +125,56 @@ class ReservasViewModel @Inject constructor(
             _uiState.update { uiState ->
                 uiState.copy(mesasPopup = popup)
             }
-
         }
     }
 
-    fun populateClockPopup(clockPopup: PopupMenu?) = viewModelScope.launch {
-        val availableHours = fStore.getSetOfAvailableReservaHours(_uiState.value.part)
-        availableHours.forEach { hourString ->
-            clockPopup?.menu?.add(hourString)
-        }
-        _uiState.update {
-            it.copy(clockPopup = clockPopup)
-        }
-    }
+    /**
+     * Starts the process of storing a reserva
+     */
+    fun makeReservation() = appScope.launch {
 
-    fun makeReservation(comentario: String) = viewModelScope.launch {
+        // gather all the necessary data
+        val userUid = userDataRepo.getUserId()
+        val user = userDataRepo.getUser()
+        val uiState = _uiState.value
 
-        val userUid = fAuth.getUserId()
-        val userDocSnapshot = fStore.getUserDocById(userUid)
-        val userNombre = userDocSnapshot.getString("nombre")
-        val userTelefono = userDocSnapshot.getString("telefono")
-
-        val reserva = Reserva(
-            nombre = userNombre,
-            telefono = userTelefono,
-            fecha = _uiState.value.fecha,
-            mesa = _uiState.value.mesa,
-            hora = _uiState.value.hora,
-            pax = _uiState.value.pax,
-            parte = _uiState.value.part,
+        // create an instance of reserva
+        val reserva = ReservaFirestore(
+            nombre = user.nombre,
+            telefono = user.telefono,
+            fecha = uiState.fecha,
+            mesa = uiState.mesa,
+            hora = uiState.hora,
+            pax = uiState.pax,
+            parte = uiState.part,
             userId = userUid,
-            comentario = comentario,
+            comentario = uiState.comentario,
             timestamp = Timestamp(Date())
         )
 
-        val isReservaSent = fStore.setReservaDoc(reserva)
+        // send it for storing into the Firestore DB, suspend until the result arrives
+        val reservaSent = reservasRepo.setReservaDoc(reserva)
 
-        fMessaging.sendReservaMessage(reserva)
+        // if true, send a message to admins
+        if (reservaSent) {
+            fMessaging.sendReservaMessage(reserva)
+        }
 
         _uiState.update {
             it.copy(
-                isReservaSent = isReservaSent
+                isReservaSent = reservaSent
             )
         }
 
     }
 
+    fun nullifyReservaSent() {
+        _uiState.update {
+            it.copy(
+                isReservaSent = null
+            )
+        }
+    }
 
 
 }

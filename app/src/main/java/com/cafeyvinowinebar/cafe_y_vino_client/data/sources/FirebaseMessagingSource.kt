@@ -1,7 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.sources
 
 import com.cafeyvinowinebar.cafe_y_vino_client.*
-import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.Reserva
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ReservaFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.getFirebaseMessageId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.remoteMessage
@@ -15,7 +15,7 @@ class FirebaseMessagingSource @Inject constructor(
 
     suspend fun getToken(): String = fMessaging.token.await()
 
-    suspend fun sendReservaMessage(reserva: Reserva) {
+    suspend fun sendReservaMessage(reserva: ReservaFirestore) {
         val userToken = fMessaging.token.await()
         val adminTokens = fStore.getAdminTokens()
         adminTokens.forEach {

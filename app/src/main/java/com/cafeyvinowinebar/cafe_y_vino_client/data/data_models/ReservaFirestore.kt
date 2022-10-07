@@ -2,7 +2,7 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.data_models
 
 import com.google.firebase.Timestamp
 
-class Reserva(
+data class ReservaFirestore(
     val nombre: String? = null,
     val telefono: String? = null,
     val fecha: String? = null,

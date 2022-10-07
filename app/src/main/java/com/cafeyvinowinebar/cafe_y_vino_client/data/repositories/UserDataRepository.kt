@@ -16,7 +16,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -42,7 +41,10 @@ class UserDataRepository @Inject constructor(
 
     }
 
-
+    /**
+     * Listens to the error flow from the fAuth source, and according to the exception type,
+     * transforms it into an error message
+     */
     val errorMessageFlow: Flow<String?> = fAuthSource.errorFlow.map {
         when (it) {
             null -> null
@@ -96,14 +98,20 @@ class UserDataRepository @Inject constructor(
         )
     }
 
-    suspend fun authenticateUser(
+    /**
+     * Gathers the data necessary for registration and for creating a user document in the Firestore
+     * First calls a suspending fun to register the user in the fAuth
+     * If the registration was successful, creates an instance of the User class for storing into the Firestore DB
+     * Returns the result of the storing operation
+     */
+    suspend fun registerUser(
         email: String,
         password: String,
         name: String,
         phone: String,
         birthdate: String
     ): Boolean {
-        val authenticated = fAuthSource.authenticateUser(email, password)
+        val authenticated = fAuthSource.registerUser(email, password)
         if (authenticated) {
             val token = fMessagingSource.getToken()
             val user = UserFirestore(
@@ -122,16 +130,27 @@ class UserDataRepository @Inject constructor(
         }
     }
 
-
+    /**
+     * Stores a User document in the "usuarios" collection into the Firebase DB, using the Uid as the ID of the document
+     * Return the result
+     */
     private suspend fun storeUserDoc(user: UserFirestore): Boolean {
-        val userId = fAuthSource.getUserId()
+        val userId = getUserId()
         return fStoreSource.storeUserDoc(user, userId)
     }
 
-    suspend fun resetPassword(email: String) {
-        fAuthSource.resetPassword(email)
+    /**
+     * Pass the email further to the fAuth source
+     * Return the result of the operation
+     */
+    suspend fun resetPassword(email: String): Boolean {
+        return fAuthSource.resetPassword(email)
     }
 
+    /**
+     * Pass the email + password further for the logging in
+     * Return the result
+     */
     suspend fun loginUser(email: String, password: String): Boolean {
         return fAuthSource.loginUser(email, password)
     }
@@ -140,10 +159,15 @@ class UserDataRepository @Inject constructor(
         fAuthSource.logout()
     }
 
+    /**
+     * Updates email in the fAuth system
+     */
     suspend fun updateEmail(email: String) = fAuthSource.updateEmail(email)
+
+
+    // TODO: update the writes according to the offline-first principles
     suspend fun updateNombre(nombre: String) = fStoreSource.updateNombre(nombre)
     suspend fun updateTelefono(telefono: String) = fStoreSource.updateTelefono(telefono)
-
     suspend fun updateBonos(newBonos: Long) {
         userDataStore.updateData { user ->
             user.toBuilder().setBonos(newBonos).build()
@@ -157,14 +181,13 @@ class UserDataRepository @Inject constructor(
         userDataStore.updateData { user ->
             user.toBuilder()
                 .setNombre(userSnapshot.getString(KEY_NOMBRE))
-                .setTelefono(userSnapshot.getString("telefono"))
-                .setEmail(userSnapshot.getString("email"))
-                .setToken(userSnapshot.getString("token"))
+                .setTelefono(userSnapshot.getString(KEY_TELEFONO))
+                .setEmail(userSnapshot.getString(KEY_EMAIL))
+                .setToken(userSnapshot.getString(KEY_TOKEN))
                 .setMesa(userSnapshot.getString(KEY_MESA))
                 .setIsPresent(userSnapshot.getBoolean(KEY_IS_PRESENT)!!)
-                .setBonos(userSnapshot.getLong("bonos")!!)
+                .setBonos(userSnapshot.getLong(KEY_BONOS)!!)
                 .build()
         }
     }
-
 }

@@ -6,22 +6,32 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
+/**
+ * Writes and reads from the Firebase Authentication system
+ */
 class FirebaseAuthSource @Inject constructor(
     private val fAuth: FirebaseAuth
 ) {
 
+    /**
+     * When an operation fails, it populates the error flow with its exception
+     * Which down the stream transforms into a message that the user sees on the screen
+     */
     private val _errorFlow: MutableStateFlow<Throwable?> = MutableStateFlow(null)
     val errorFlow: StateFlow<Throwable?> = _errorFlow.asStateFlow()
 
+    /**
+     * Simple read of the user object
+     */
     fun getUserObject(): FirebaseUser? =
         fAuth.currentUser
 
-
-    fun getUserId(): String =
-        fAuth.currentUser!!.uid
-
-
-    suspend fun authenticateUser(
+    /**
+     * We user email + password authentication
+     * The caller gets response from the suspending await() in form of a boolean
+     * In addition, if the registration fails, the error gets transmitted via the errorFlow
+     */
+    suspend fun registerUser(
         email: String,
         password: String
     ): Boolean {
@@ -37,17 +47,28 @@ class FirebaseAuthSource @Inject constructor(
 
     }
 
-    suspend fun resetPassword(email: String) {
-        try {
+    /**
+     * Send a new password form to the email provided
+     * Return the result of the operation
+     * If false, update the error flow
+     */
+    suspend fun resetPassword(email: String): Boolean {
+        return try {
             fAuth.sendPasswordResetEmail(email).await()
-            // TODO: get a success message to the UI
+            true
         } catch (e: Throwable) {
             _errorFlow.update {
                 e
             }
+            false
         }
     }
 
+    /**
+     * Try to log in the user using the provided email and password
+     * Return the result
+     * If false, update the error flow
+     */
     suspend fun loginUser(email: String, password: String): Boolean {
         return try {
             fAuth.signInWithEmailAndPassword(email, password).await()
@@ -64,6 +85,9 @@ class FirebaseAuthSource @Inject constructor(
         fAuth.signOut()
     }
 
+    /**
+     * Update the email in the fAuth system, return the result
+     */
     suspend fun updateEmail(email: String): Boolean {
         return try {
             val user = getUserObject()

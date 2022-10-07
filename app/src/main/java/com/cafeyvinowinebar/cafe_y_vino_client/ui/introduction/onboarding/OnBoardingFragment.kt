@@ -15,6 +15,9 @@ import androidx.viewpager.widget.ViewPager
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentOnBoardingBinding
 
+/**
+ * Displays a ViewPager with descriptions for the functionalities of the app
+ */
 class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding), ViewPager.OnPageChangeListener {
 
     private lateinit var dotsLayout: LinearLayout
@@ -56,6 +59,9 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding), ViewPager.On
     override fun onPageScrollStateChanged(state: Int) {
     }
 
+    /**
+     * Builds a dots layout to correspond with the pages of the ViewPager
+     */
     private fun addDotsIndicator(position: Int) {
         dots = arrayOfNulls(4)
         dotsLayout.removeAllViews()

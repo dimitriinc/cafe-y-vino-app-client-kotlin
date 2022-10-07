@@ -30,19 +30,32 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
+
+                    // if the log in operation was a success we display a greeting toast and navigate to the main screen
                     if (it.isLoggedIn) {
                         binding.progressBarLogin.visibility = View.INVISIBLE
                         Toast.makeText(requireContext(), R.string.login_inicio, Toast.LENGTH_SHORT).show()
-                        findNavController().popBackStack(R.id.main_nav_graph, false)
+                        val action = LoginFragmentDirections.actionLoginFragmentToMainNavGraph()
+                        findNavController().navigate(action)
                     }
+
+                    // if some of the operations fails we get an error message and display it as a toast
                     if (it.errorMessage != null) {
-                        Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG).show()
+                    }
+
+                    // specially for when an email with the password reset form is sent to the user's address
+                    // we notify them with a message
+                    if (it.message != null) {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
 
         binding.apply {
+
+            // toggle the password visibility
             checkBoxPassword.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     edtPassLogin.transformationMethod =
@@ -51,6 +64,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     edtPassLogin.transformationMethod = PasswordTransformationMethod.getInstance()
                 }
             }
+
+            // build a dialog to ask for an email where to send a form for a password resetting
+            // gather the email and pass it to the view model
             btnRestablecer.setOnClickListener {
                 val restablecerView = layoutInflater.inflate(R.layout.user_data_et, null)
                 val edtEmail = restablecerView.findViewById<EditText>(R.id.edtUserEt)
@@ -79,6 +95,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     .show()
 
             }
+
+            // get the input values and pass them to the view model to start the logging in
             btnLogin.setOnClickListener {
                 if (isOnline(requireContext())) {
                     val email = edtEmailLogin.text.toString().trim()

@@ -17,7 +17,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentReservasMesaBinding
-import kotlinx.android.synthetic.main.fragment_reservas_fecha.*
 import kotlinx.coroutines.launch
 
 class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
@@ -51,11 +50,14 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
             super.onViewCreated(view, savedInstanceState)
 
             val binding = FragmentReservasMesaBinding.bind(view)
+            // create a wrapper for a customized popup menu look
             val wrapper = ContextThemeWrapper(requireContext(), R.style.popupMenuStyle)
 
+            // build a popup menu
             var popup: PopupMenu? = PopupMenu(wrapper, binding.imgEscogerMesa)
             popup?.setOnMenuItemClickListener(this)
             popup?.inflate(R.menu.popup_mesa)
+            // send it to view model to block the items that correspond to existing reservations
             viewModel.blockReservedTables(popup)
 
             viewLifecycleOwner.lifecycleScope.launch {
@@ -64,6 +66,7 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
                         popup = it.mesasPopup
 
+                        // if the mesa is chosen, display it
                         if(it.mesa != null) {
                             binding.txtMesa.apply {
                                 text = it.mesa
@@ -75,7 +78,9 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
             }
 
             binding.apply {
-                imgInfo.setOnClickListener {
+
+                // display a dialog explaining the functioning of the mesa picker
+                imgInfoMesa.setOnClickListener {
                     val dialogView = layoutInflater.inflate(R.layout.alert_info, null)
                     val txtMsg = dialogView.findViewById<TextView>(R.id.txtInfoMsg)
                     txtMsg.text = getString(R.string.alert_reserva_mesa_message)
@@ -84,6 +89,8 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
                         .create()
                         .show()
                 }
+
+                // navigate to the fragment that displays the tables arrangement
                 imgSala.setOnClickListener {
                     val action = MesaFragmentDirections.actionReservasMesaDestToSalaPlanFragment()
                     findNavController().navigate(action)
