@@ -134,7 +134,7 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
     }
 
     override fun onLongClick(document: DocumentSnapshot) {
-        viewModel.addItemToCanastaDb(document)
+        viewModel.addProductToCanasta(document)
         Toast.makeText(requireContext(), R.string.on_adding_item, Toast.LENGTH_SHORT).show()
     }
 

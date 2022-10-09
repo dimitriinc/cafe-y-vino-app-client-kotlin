@@ -8,7 +8,11 @@ import android.os.Build
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.UserDataSerializer
+import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UtilsRepository
+import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import javax.inject.Inject
 
 const val PUERTA = "channelPuerta"
 const val RESERVA = "channelReserva"
@@ -24,7 +28,9 @@ private val Context.userDataStore: DataStore<UserData> by dataStore(
 )
 
 @HiltAndroidApp
-class App : Application() {
+class App(
+    @Inject val utilsRepository: UtilsRepository
+) : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -68,12 +74,6 @@ class App : Application() {
                 "Recibir promociones y otros mensajes de la administración del restaurante"
 
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-//            notificationManager.createNotificationChannel(channelPuerta)
-//            notificationManager.createNotificationChannel(channelReserva)
-//            notificationManager.createNotificationChannel(channelPuerta)
-//            notificationManager.createNotificationChannel(channelCuenta)
-//            notificationManager.createNotificationChannel(channelDatos)
 
             notificationManager.createNotificationChannels(
                 listOf(

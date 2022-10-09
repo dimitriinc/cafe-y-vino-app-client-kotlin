@@ -40,7 +40,7 @@ class GiftshopFragment : Fragment(R.layout.fragment_giftshop) {
 
                     // displays the message on the screen with how much bonus points does the user have
                     binding.apply {
-                        txtMensaje.text = getString(R.string.gift_user_msg, it.userName)
+                        txtMensaje.text = getString(R.string.gift_user_msg, it.userFirstName)
                         txtBonos.text = it.bonos.toString()
                     }
                 }

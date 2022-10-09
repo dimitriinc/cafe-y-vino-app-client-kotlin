@@ -16,6 +16,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -58,6 +59,21 @@ class UserDataRepository @Inject constructor(
     }
 
     /**
+     * Transmits the object store in the user dataStore as a User instance
+     */
+    val userFlow: Flow<User> = userDataStore.data.map {
+        User(
+            nombre = it.nombre,
+            email = it.email,
+            telefono = it.telefono,
+            token = it.token,
+            mesa = it.mesa,
+            isPresent = it.isPresent,
+            bonos = it.bonos
+        )
+    }
+
+    /**
      * Gets the flow from the Proto DataStore, converts it to a flow of the isPresent property for its exposure to the UI layer
      */
     val userPresenceFlow: Flow<Boolean> = userDataStore.data.map {
@@ -97,6 +113,16 @@ class UserDataRepository @Inject constructor(
             bonos = userData.bonos
         )
     }
+
+    suspend fun getUserFirstName(): String =
+        userDataStore.data.first()
+            .nombre
+            .substringBefore(" ")
+            .lowercase()
+            .replaceFirstChar {
+                it.uppercaseChar()
+            }
+
 
     /**
      * Gathers the data necessary for registration and for creating a user document in the Firestore
@@ -159,19 +185,45 @@ class UserDataRepository @Inject constructor(
         fAuthSource.logout()
     }
 
-    /**
-     * Updates email in the fAuth system
-     */
-    suspend fun updateEmail(email: String) = fAuthSource.updateEmail(email)
+    suspend fun updateEmail(email: String): Boolean {
+        return try {
+            userDataStore.updateData { user ->
+                user.toBuilder().setEmail(email).build()
+            }
+            // TODO: tell the work manager to update fAuth
+            true
+        } catch (e: Throwable) {
+            false
+        }
 
-
-    // TODO: update the writes according to the offline-first principles
-    suspend fun updateNombre(nombre: String) = fStoreSource.updateNombre(nombre)
-    suspend fun updateTelefono(telefono: String) = fStoreSource.updateTelefono(telefono)
+    }
+    suspend fun updateNombre(nombre: String): Boolean {
+        return try {
+            userDataStore.updateData { user ->
+                user.toBuilder().setNombre(nombre).build()
+            }
+            // TODO: tell the work manager to update fStore
+            true
+        } catch (e: Throwable) {
+            false
+        }
+    }
+    suspend fun updateTelefono(telefono: String): Boolean {
+        return try {
+            userDataStore.updateData { user ->
+                user.toBuilder().setTelefono(telefono).build()
+            }
+            // TODO: tell the work manager to update fStore
+            true
+        } catch (e: Throwable) {
+            false
+        }
+    }
     suspend fun updateBonos(newBonos: Long) {
         userDataStore.updateData { user ->
             user.toBuilder().setBonos(newBonos).build()
         }
+        // TODO: tell the work manager to update fStore (when the user exits the giftshop?)
     }
 
     /**

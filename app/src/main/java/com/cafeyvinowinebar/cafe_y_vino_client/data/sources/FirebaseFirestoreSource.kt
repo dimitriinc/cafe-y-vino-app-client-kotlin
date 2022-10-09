@@ -26,6 +26,13 @@ class FirebaseFirestoreSource @Inject constructor(
         .document(fAuth.getUserObject()!!.uid)
         .snapshotAsFlow()
 
+    /**
+     * Transmits the utils data as flow
+     */
+    val utilsFlow: Flow<DocumentSnapshot?> = fStore.collection("utils")
+        .document("horas")
+        .snapshotAsFlow()
+
 
     /**
      * Gets a list of admin tokens as strings for the messaging source to send them messages
@@ -36,21 +43,6 @@ class FirebaseFirestoreSource @Inject constructor(
             it.getString("token")!!
         }
     }
-
-    /**
-     * One-off operation to get the utils doc, so that the utils repo can store it in a Room table at the beginning of the app's process
-     */
-    suspend fun getUtilsDoc(): DocumentSnapshot? {
-        return try {
-            fStore.collection("utils")
-                .document("horas")
-                .get()
-                .await()
-        } catch (error: Throwable) {
-            null
-        }
-    }
-
 
     /**
      * Stores a reservation document according to its date and part of day, the id of the document is its table's number
@@ -110,7 +102,7 @@ class FirebaseFirestoreSource @Inject constructor(
         }
     }
 
-    // TODO: those three should be the responsibility of the repository, updates are stored to the Room first
+    // TODO: those three should be performed by a work manager, updates are stored to the Room first
     suspend fun updateNombre(nombre: String): Boolean {
         return try {
             fStore.collection("usuarios")
@@ -122,7 +114,6 @@ class FirebaseFirestoreSource @Inject constructor(
             false
         }
     }
-
     suspend fun updateTelefono(telefono: String): Boolean {
         return try {
             fStore.collection("usuarios")
@@ -134,7 +125,6 @@ class FirebaseFirestoreSource @Inject constructor(
             false
         }
     }
-
     fun updateBonos(newBonos: Long) {
         fStore.collection("usuarios")
             .document(fAuth.getUserObject()!!.uid)

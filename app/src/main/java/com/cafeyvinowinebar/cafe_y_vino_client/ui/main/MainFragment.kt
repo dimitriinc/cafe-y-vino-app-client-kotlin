@@ -38,9 +38,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         // check if the user is logged in
         // if not, direct to the log in flow
-        if (!viewModel.uiState.value.isLoggedIn) {
-            findNavController().navigate(R.id.intro_nav_graph)
-            // TODO: you have to pop up the main graph somehow
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.uiState.collect {
+                    if (!it.isLoggedIn) {
+                        val action = MainFragmentDirections.actionMainFragmentToIntroNavGraph()
+                        findNavController().navigate(action)
+                        // TODO: you have to pop up the main graph somehow
+                    }
+                }
+            }
         }
     }
 

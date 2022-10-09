@@ -36,18 +36,6 @@ fun DocumentReference.snapshotAsFlow(
     }
 }.flowOn(coroutineContext)
 
-fun DocumentReference.asPresenceFlow(
-    coroutineContext: CoroutineContext = Dispatchers.IO
-): Flow<Boolean?> = snapshotAsFlow(coroutineContext).map {
-    it?.getBoolean("isPresent")
-}
-
-fun DocumentReference.asBonosFlow(
-    coroutineContext: CoroutineContext = Dispatchers.IO
-): Flow<Long?> = snapshotAsFlow(coroutineContext).map {
-    it?.getLong("bonos")
-}
-
 fun Query.snapshotAsFlow(
     coroutineContext: CoroutineContext = Dispatchers.IO
 ): Flow<QuerySnapshot?> = callbackFlow {

@@ -1,5 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
+import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.CanastaDao
+import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.ItemCanasta
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.GiftToSend
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
 import com.google.firebase.Timestamp
@@ -9,8 +11,9 @@ import javax.inject.Inject
 /**
  * Repository for the operations on the menu items, stored in the "menu" collection, and also on the gifts, stored in the "regalos" collection
  */
-class ProductsDataRepository @Inject constructor(
-    private val fStoreSource: FirebaseFirestoreSource
+class MenuDataRepository @Inject constructor(
+    private val fStoreSource: FirebaseFirestoreSource,
+    private val canastaDao: CanastaDao
 ) {
 
     /**
@@ -35,5 +38,9 @@ class ProductsDataRepository @Inject constructor(
         )
 
         fStoreSource.storeGift(gift)
+    }
+
+    suspend fun addProductToCanasta(item: ItemCanasta) {
+        canastaDao.insert(item)
     }
 }

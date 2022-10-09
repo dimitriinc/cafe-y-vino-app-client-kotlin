@@ -101,6 +101,12 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
 
+                    binding.apply {
+                        txtInfoEmail.text = it.userEmail
+                        txtInfoName.text = it.userName
+                        txtInfoTelefono.text = it.userTelefono
+                    }
+
                     // as a response to updating the user data, a message should appear on the screen
                     // without updating the message value is null
                     // and it returns to null right after displaying a message

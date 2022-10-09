@@ -2,6 +2,7 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas
 
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -17,6 +18,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UtilsRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
 import com.google.firebase.Timestamp
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 
 /**
@@ -36,14 +38,19 @@ class ReservasViewModel @Inject constructor(
     val uiState: StateFlow<ReservasUiState> = _uiState.asStateFlow()
 
     init {
-        val utils = utilsRepo.getUtilsForReservas()
-        _uiState.update {
-            it.copy(
-                horas = utils.setsOfHours,
-                horasDeDia = utils.availableHoursDia,
-                horasDeNoche = utils.availableHoursNoche
-            )
+        viewModelScope.launch(Dispatchers.IO) {
+            val utils = utilsRepo.getUtilsForReservas()
+            val firstName = userDataRepo.getUserFirstName()
+            _uiState.update {
+                it.copy(
+                    horas = utils.setsOfHours,
+                    horasDeDia = utils.availableHoursDia,
+                    horasDeNoche = utils.availableHoursNoche,
+                    firstName = firstName
+                )
+            }
         }
+
     }
 
     /**

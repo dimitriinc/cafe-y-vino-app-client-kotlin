@@ -2,12 +2,20 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.cafeyvinowinebar.cafe_y_vino_client.R
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
     }
 }

@@ -5,12 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cafeyvinowinebar.cafe_y_vino_client.GMT
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.ProductsDataRepository
+import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.MenuDataRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UserDataRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UtilsRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.Gift
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -25,7 +26,7 @@ class MainViewModel @Inject constructor(
     private val utilsRepo: UtilsRepository,
     private val userDataRepo: UserDataRepository,
     private val fMessaging: FirebaseMessagingSource,
-    private val productsRepo: ProductsDataRepository
+    private val productsRepo: MenuDataRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MainUiState())
@@ -35,40 +36,32 @@ class MainViewModel @Inject constructor(
 
         // first of all we set the logged in value to true if the user is logged in
         // otherwise the user will be sent to the intro nav graph
-        if (userDataRepo.getUserObject() != null) {
+        if (userDataRepo.getUserObject() == null) {
             _uiState.update {
                 it.copy(
-                    isLoggedIn = true
+                    isLoggedIn = false
                 )
             }
         }
 
 
-        viewModelScope.launch {
+        // get the user data stored in the UI state
+        viewModelScope.launch(Dispatchers.IO) {
 
-            // the name of the user will be displayed at the giftshop screen
-            _uiState.update {
-                it.copy(
-                    userName = userDataRepo.getUser()?.nombre!!
-                )
-            }
+            val firstName = userDataRepo.getUserFirstName()
 
-            // we listen to the presence status of the user
-            // the value decides whats on display in main fragment + if the user can see the gifts menu
-            userDataRepo.userPresenceFlow.collect { isPresent ->
-                _uiState.update {
-                    it.copy(
-                        isUserPresent = isPresent
+            userDataRepo.userFlow.collect { user ->
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        isUserPresent = user.isPresent,
+                        userEmail = user.email,
+                        userTelefono = user.telefono,
+                        userFirstName = firstName,
+                        bonos = user.bonos
                     )
+
                 }
-            }
-            // we listen to the bonos amount (displayed at giftshop, decides if user can afford gifts)
-            userDataRepo.userBonosFlow.collect { bonos ->
-                _uiState.update {
-                    it.copy(
-                        bonos = bonos
-                    )
-                }
+
             }
         }
     }

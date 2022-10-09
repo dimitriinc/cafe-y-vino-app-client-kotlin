@@ -62,15 +62,11 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickLi
                 if (!viewModel.uiState.value.isPresent) {
                     findNavController().navigate(toItemsAction)
                 } else {
-                    viewModel.isHourHappy()
-                    lifecycleScope.launch {
-                        viewModel.uiState.collect {
-                            if (it.isHappyHour == false) {
-                                Toast.makeText(requireContext(), R.string.main_menu_ofertas_404, Toast.LENGTH_SHORT).show()
-                            } else if (it.isHappyHour == true) {
-                                findNavController().navigate(toItemsAction)
-                            }
-                        }
+                    val uiState = viewModel.uiState.value
+                    if (uiState.isHappyHour == false) {
+                        Toast.makeText(requireContext(), R.string.main_menu_ofertas_404, Toast.LENGTH_SHORT).show()
+                    } else if (uiState.isHappyHour == true) {
+                        findNavController().navigate(toItemsAction)
                     }
                 }
             }
