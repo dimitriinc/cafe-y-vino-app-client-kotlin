@@ -8,6 +8,11 @@ import com.google.firebase.messaging.ktx.remoteMessage
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
+/**
+ * Contains functions to send different kind of messages to the admin app through the Firebase Cloud Messaging
+ * There may be multiple devices with the admin app installed, we want to send each a message
+ * That's why each functions starts with retrieving the admin tokens stored in Firestore DB
+ */
 class FirebaseMessagingSource @Inject constructor(
     private val fMessaging: FirebaseMessaging,
     private val fStore: FirebaseFirestoreSource
@@ -16,7 +21,7 @@ class FirebaseMessagingSource @Inject constructor(
     suspend fun getToken(): String = fMessaging.token.await()
 
     suspend fun sendReservaMessage(reserva: ReservaFirestore) {
-        val userToken = fMessaging.token.await()
+        val userToken = getToken()
         val adminTokens = fStore.getAdminTokens()
         adminTokens.forEach {
             fMessaging.send(remoteMessage("$SENDER_ID@fcm.googleapis.com") {
@@ -43,7 +48,7 @@ class FirebaseMessagingSource @Inject constructor(
         mesa: String,
         userNombre: String,
     ) {
-        val userToken = fMessaging.token.await()
+        val userToken = getToken()
         val adminTokens = fStore.getAdminTokens()
         adminTokens.forEach { adminToken ->
             fMessaging.send(remoteMessage("$SENDER_ID@fcm.googleapis.com") {
@@ -60,12 +65,12 @@ class FirebaseMessagingSource @Inject constructor(
         }
     }
 
-    suspend fun sendCuentaMessage(
+    suspend fun sendCuentaRequest(
         payMode: String,
         userNombre: String,
         mesa: String
     ) {
-        val userToken = fMessaging.token.await()
+        val userToken = getToken()
         val adminTokens = fStore.getAdminTokens()
         adminTokens.forEach { adminToken ->
             fMessaging.send(remoteMessage("$SENDER_ID@fcm.googleapis.com") {
@@ -83,9 +88,9 @@ class FirebaseMessagingSource @Inject constructor(
 
     suspend fun sendEntryRequest(
         userId: String,
-        userToken: String,
         userName: String
     ) {
+        val userToken = getToken()
         val adminTokens = fStore.getAdminTokens()
         adminTokens.forEach { adminToken ->
             fMessaging.send(remoteMessage("$SENDER_ID@fcm.googleapis.com") {

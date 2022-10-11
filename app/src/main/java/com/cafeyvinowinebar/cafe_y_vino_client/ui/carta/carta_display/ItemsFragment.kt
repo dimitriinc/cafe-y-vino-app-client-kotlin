@@ -19,7 +19,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.KEY_IS_PRESENT
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_ITEMS
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_NOMBRE
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenu
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemsBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemLongClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnProductClickListener
@@ -31,6 +31,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Displays the products of a category that have a positive presence status in form of a recycler view
+ */
 @AndroidEntryPoint
 class ItemsFragment : Fragment(R.layout.fragment_items),
     OnProductClickListener,
@@ -49,11 +52,12 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
 
         val binding = FragmentItemsBinding.bind(view)
 
+        // build up the adapter
         val query = fStore.collection(args.categoryPath)
             .whereEqualTo(KEY_IS_PRESENT, true)
             .orderBy(KEY_NOMBRE)
-        val options = FirestoreRecyclerOptions.Builder<ItemMenu>()
-            .setQuery(query, ItemMenu::class.java)
+        val options = FirestoreRecyclerOptions.Builder<ItemMenuFirestore>()
+            .setQuery(query, ItemMenuFirestore::class.java)
             .build()
         adapter = ItemsAdapter(options, this, this)
 
@@ -61,6 +65,9 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
 
+                    // on the user's presence status depends what fabs we display
+                    // if not present, it's just a home button
+                    // if present, we have a fab, that expands to display some other fabs
                     if (it.isPresent) {
                         binding.apply {
                             fabItemsHome.visibility = GONE
@@ -74,6 +81,8 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
                         viewModel.collapseFabs()
                     }
 
+                    // if the fabs are expanded is controlled by a UI state property
+                    // the parent fab takes one different images depending on the value, and different functions to perform on click
                     if (it.areFabsExpanded) {
                         binding.apply {
                             fabItemsParent.apply {
@@ -108,10 +117,13 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
 
         binding.apply {
             recItems.apply {
+                // configure the recycler view
                 adapter = adapter
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
             }
+
+            // display a dialog that explains the functionality of the clicks
             fabItemsInfo.setOnClickListener {
                 val dialogView = layoutInflater.inflate(R.layout.alert_info, null)
                 val txtMsg = dialogView.findViewById<TextView>(R.id.txtInfoMsg)
@@ -127,18 +139,27 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
                 findNavController().navigate(action)
             }
             fabItemsHome.setOnClickListener {
-                findNavController().navigate(R.id.main_nav_graph)
+                val action = ItemsFragmentDirections.actionItemsFragmentToMainNavGraph()
+                findNavController().navigate(action)
 
             }
         }
     }
 
+    /**
+     * Add one instance of the product to the Canasta Room table
+     */
     override fun onLongClick(document: DocumentSnapshot) {
         viewModel.addProductToCanasta(document)
         Toast.makeText(requireContext(), R.string.on_adding_item, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onClick(document: DocumentSnapshot, items: ArrayList<ItemMenu>) {
+    /**
+     * On click the user navigates to the Item Specs
+     * Which is a ViewPager, that displays all the available items of the category, starting with the one that has been pressed
+     * So as arguments to the new activity, we pass the list of all the items, represented as instances of the ItemMenu class
+     */
+    override fun onClick(document: DocumentSnapshot, items: ArrayList<ItemMenuFirestore>) {
         val bundle = Bundle()
         bundle.putSerializable(KEY_ITEMS, items)
         val action = ItemsFragmentDirections.actionItemsFragmentToItemSpecsActivity(

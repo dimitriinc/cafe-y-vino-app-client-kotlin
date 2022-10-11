@@ -26,7 +26,8 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
 
         binding.apply {
             fabItemSpecsHome.setOnClickListener {
-                findNavController().navigate(R.id.main_nav_graph)
+                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToMainNavGraph()
+                findNavController().navigate(action)
             }
             fabMainMenu.setOnClickListener {
                 val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToCategoriesFragment()
@@ -36,16 +37,31 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                 val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToCanastaFragment()
                 findNavController().navigate(action)
             }
+
+            /**
+             * Add the current item on display to the Canasta Room table
+             */
+            fabAdd.setOnClickListener {
+                viewModel.addItemToCanastaDb(viewModel.uiState.value.currentItem!!)
+                Toast.makeText(requireContext(), R.string.on_adding_item, Toast.LENGTH_SHORT).show()
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
 
+                    /**
+                     * Configure the views of the fragment
+                     */
                     binding.apply {
+                        // an ItemMenu instance should be stored in the UI state at this point
+                        // we get the data from its properties to populate the layout
                         val item = uiState.currentItem
                         require(item != null)
 
+                        // some new items may not have image in the Storage yet
+                        // in this case we give them a stand in image
                         if (item.image != null) {
                             Glide.with(requireContext())
                                 .load(uiState.itemImgReference)
@@ -54,6 +70,8 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                             imgItem.setImageResource(R.drawable.logo_stand_in)
                         }
 
+                        // some new items also may not have a description
+                        // in this case we give them a default description
                         if (item.descripcion == null || item.descripcion.isEmpty()) {
                             txtDesc.text = getString(R.string.no_desc)
                         } else {
@@ -64,6 +82,8 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                         txtPrecioInt.text = item.precio
                         txtPrecio.visibility = VISIBLE
 
+                        // the first item in the collection shouldn't display the left arrow
+                        // the last one - the right arrow
                         if (uiState.currentPosition == 0) {
                             arrowLeft.visibility = GONE
                         }
@@ -72,11 +92,9 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                         }
 
 
-                        fabAdd.setOnClickListener {
-                            viewModel.addItemToCanastaDb(item)
-                            Toast.makeText(requireContext(), R.string.on_adding_item, Toast.LENGTH_SHORT).show()
-                        }
 
+
+                        // the fabs visibility depends on a value stored in the UI state
                         if (uiState.isPresent) {
                             binding.apply {
                                fabItemSpecsHome.visibility = GONE
@@ -90,6 +108,7 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                             }
                         }
 
+                        // expanding fabs' behaviour
                         if (uiState.areFabsExpended) {
                             binding.apply {
                                 fabExpand.apply {

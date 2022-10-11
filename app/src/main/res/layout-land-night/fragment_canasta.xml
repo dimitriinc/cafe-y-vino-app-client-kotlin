@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.carta.when_present.CanastaFragment"
+    tools:context=".ui.carta.when_present.canasta.CanastaFragment"
     android:background="@drawable/bkg_canasta">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

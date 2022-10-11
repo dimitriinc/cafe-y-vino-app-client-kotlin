@@ -13,6 +13,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ActivityItemSpecsBinding
 import kotlinx.coroutines.launch
 
+/**
+ * Hosts a ViewPager2 that displays a collection of menu items of the chosen category
+ */
 class ItemSpecsActivity : AppCompatActivity() {
 
     // what's a better way to provide the configuration changes safety? to store the args in the savedInstanceState, or in the viewModel?
@@ -22,27 +25,34 @@ class ItemSpecsActivity : AppCompatActivity() {
     private val viewModel: ItemSpecsViewModel by viewModels()
     private lateinit var binding: ActivityItemSpecsBinding
 
+    init {
+        // pass the arguments to the viewModel, so it stores the necessary values into the UI state
+        viewModel.setArgsOnUiState(args.bundleWithItemsCollection, args.nameOfInitialItem)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         binding = ActivityItemSpecsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        viewModel.setArgsOnUiState(args.bundleWithItemsCollection, args.nameOfInitialItem)
+        // configure the ViewPager
+        binding.root.apply {
+            adapter = Adapter()
+            setPageTransformer(ZoomOutPageTransformer())
+            currentItem = viewModel.uiState.value.initialPosition
+        }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
-                    binding.root.apply {
-                        adapter = Adapter()
-                        currentItem = it.initialPosition
-                        setPageTransformer(ZoomOutPageTransformer())
-                    }
-
+                    // it might happen that the initial position in the UI state is set after the onCreate call (?)
+                    binding.root.currentItem = it.initialPosition
                 }
             }
         }
     }
+
 
     inner class Adapter : FragmentStateAdapter(this) {
 

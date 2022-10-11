@@ -5,11 +5,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.MenuCategory
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.MenuCategoryFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentCategoriesBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.adapters.CategoriesAdapter
@@ -17,9 +16,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * All the products in the menu are divided into categories
+ * The fragment displays them as a recycler view
+ */
 @AndroidEntryPoint
 class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickListener {
 
@@ -31,15 +33,18 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickLi
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentCategoriesBinding.bind(view)
+
+        // construct the adapter
         val query = fStore.collection("menu")
-        val options = FirestoreRecyclerOptions.Builder<MenuCategory>()
-            .setQuery(query, MenuCategory::class.java)
+        val options = FirestoreRecyclerOptions.Builder<MenuCategoryFirestore>()
+            .setQuery(query, MenuCategoryFirestore::class.java)
             .build()
         adapter = CategoriesAdapter(options, this)
 
         binding.apply {
             fabHome.setOnClickListener {
-                findNavController().navigate(R.id.main_nav_graph)
+                val action = CategoriesFragmentDirections.actionCategoriesFragmentToMainNavGraph()
+                findNavController().navigate(action)
             }
             recCategories.apply {
                 adapter = adapter
@@ -50,6 +55,12 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickLi
 
     }
 
+    /**
+     * On click we navigate to the next fragment displaying the items of the chosen category
+     * If the category is Vinos, we navigate to the fragment where the user chooses a subcategory of wines
+     * If the category is Ofertas (which contains the items of happy hour), we first check the presence status of the user
+     * If not present, they can move to the items freely, if present (means they can add items to Canasta), they can enter only during the happy hours
+     */
     override fun onItemClick(item: DocumentSnapshot) {
         val categoryName = item.getString("name")!!
         val categoryPath = item.getString("catPath")!!

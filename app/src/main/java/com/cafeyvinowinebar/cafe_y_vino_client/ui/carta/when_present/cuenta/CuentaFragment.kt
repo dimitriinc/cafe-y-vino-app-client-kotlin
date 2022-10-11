@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.cuenta
 
 import android.os.Bundle
 import android.view.View
@@ -16,7 +16,6 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemCuenta
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentCuentaBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.getCurrentDate
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
-import com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.adapters.CuentaAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
 
-    private val viewModel: CanastaCuentaViewModel by viewModels()
+    private val viewModel: CuentaViewModel by viewModels()
     private lateinit var adapterCuenta: CuentaAdapter
 
     @Inject
@@ -36,18 +35,36 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentCuentaBinding.bind(view)
 
+        val query =
+            fStore.collection("cuentas/${getCurrentDate()}/cuentas corrientes/${viewModel.uiState.value.userId}/cuenta")
+        val options = FirestoreRecyclerOptions.Builder<ItemCuenta>()
+            .setQuery(query, ItemCuenta::class.java)
+            .build()
+        adapterCuenta = CuentaAdapter(options)
+
         binding.apply {
+
+            recCuenta.apply {
+                adapter = adapterCuenta
+                layoutManager = LinearLayoutManager(requireContext())
+                setHasFixedSize(true)
+            }
+
             fabCuentaHome.setOnClickListener {
-                // w/o a popup
+                // we don't want the tasks to pop up, so we don't use the action here
                 findNavController().navigate(R.id.main_nav_graph)
             }
             fabCuentaMenu.setOnClickListener {
                 val action = CuentaFragmentDirections.actionCuentaFragmentToCategoriesFragment()
                 findNavController().navigate(action)
             }
+
+            // show different pay methods
             fabPedirCuenta.setOnClickListener {
                 viewModel.expandPayModeFabs()
             }
+
+            // four fabs that define the pay method, call the same function with the corresponding pay mode
             fabCash.setOnClickListener {
                 checkOnlineSendRequest("efectivo")
             }
@@ -65,33 +82,22 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
+
+                    // when the bill is cancelled by the admin app, the presence status of the user becomes false
+                    // and they're navigated to the main screen
+                    // the user can stay in the cuenta fragment while in negative presence status
                     if (!uiState.isPresent) {
-                        // with a popup
-                        findNavController().navigate(R.id.main_nav_graph)
-                        viewModel.updateCanSendPedido(true)
+                        val action = CuentaFragmentDirections.actionCuentaFragmentToMainNavGraph()
+                        findNavController().navigate(action)
                     }
 
-                    val query =
-                        fStore.collection("cuentas/${getCurrentDate()}/cuentas corrientes/${uiState.userId}/cuenta")
-                    val options = FirestoreRecyclerOptions.Builder<ItemCuenta>()
-                        .setQuery(query, ItemCuenta::class.java)
-                        .build()
-                    adapterCuenta = CuentaAdapter(options)
-
-                    binding.apply {
-                        recCuenta.apply {
-                            adapter = adapterCuenta
-                            layoutManager = LinearLayoutManager(requireContext())
-                            setHasFixedSize(true)
-                        }
-                    }
+                    // configure the parent fab's behavior
                     if (uiState.isPedirCuentaFabExpanded) {
                         binding.apply {
                             fabParentCuenta.apply {
                                 setImageResource(R.drawable.ic_collapse)
                                 setOnClickListener {
-                                    viewModel.collapsePedirCuentaFab()
-                                    viewModel.collapsePayModeFabs()
+                                    collapseAllFabs()
                                 }
                             }
                             fabPedirCuenta.show()
@@ -102,10 +108,17 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
                             fabParentCuenta.apply {
                                 setImageResource(R.drawable.ic_expand)
                                 setOnClickListener {
+                                    // we can give the user access to send cuenta requests on when the preference is true
                                     if (uiState.canSendPedidos) {
+                                        // so when it's true we expand the pedir fab
                                         viewModel.expandPedirCuentaFab()
                                     } else {
-                                        Toast.makeText(requireContext(), R.string.cuenta_no_expand, Toast.LENGTH_SHORT)
+                                        // if it's false, the user can't expand fabs, and thus can't send requests
+                                        Toast.makeText(
+                                            requireContext(),
+                                            R.string.cuenta_no_expand,
+                                            Toast.LENGTH_LONG
+                                        )
                                             .show()
                                     }
                                 }
@@ -115,6 +128,7 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
                         }
                     }
 
+                    // the expanding behavior
                     if (uiState.arePayModeFabsExpanded) {
                         binding.apply {
                             fabCash.show()
@@ -125,6 +139,7 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
                             txtCrypto.visibility = VISIBLE
                             txtPos.visibility = VISIBLE
                             txtYape.visibility = VISIBLE
+                            txtPedirCuenta.visibility = GONE
                         }
                     } else {
                         binding.apply {
@@ -137,10 +152,6 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
                             txtPos.visibility = GONE
                             txtYape.visibility = GONE
                         }
-                    }
-
-                    if (uiState.isCuentaEmpty) {
-                        Toast.makeText(requireContext(), R.string.cuenta_vacia, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -155,15 +166,31 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
     override fun onStop() {
         super.onStop()
         adapterCuenta.stopListening()
-        viewModel.collapsePedirCuentaFab()
-        viewModel.collapsePayModeFabs()
+        collapseAllFabs()
     }
 
+    /**
+     * Check the conditions under which it's possible to send a cuenta request
+     * If the conditions are satisfied, tell the view model to start the sending
+     */
     private fun checkOnlineSendRequest(payMode: String) {
-        if (isOnline(requireContext())) {
-            viewModel.sendCuentaRequest(payMode)
-        } else {
-            Toast.makeText(requireContext(), R.string.no_connection, Toast.LENGTH_SHORT).show()
-        }
+            if (viewModel.uiState.value.totalCuentaCost > 0) {
+                if (isOnline(requireContext())) {
+                    viewModel.sendCuentaRequest(payMode)
+                } else {
+                    Toast.makeText(requireContext(), R.string.no_connection, Toast.LENGTH_SHORT)
+                        .show()
+                    collapseAllFabs()
+                }
+            } else {
+                // there is nothing in the bill
+                Toast.makeText(requireContext(), R.string.cuenta_vacia, Toast.LENGTH_SHORT).show()
+                collapseAllFabs()
+            }
+    }
+
+    private fun collapseAllFabs() {
+        viewModel.collapsePayModeFabs()
+        viewModel.collapsePedirCuentaFab()
     }
 }

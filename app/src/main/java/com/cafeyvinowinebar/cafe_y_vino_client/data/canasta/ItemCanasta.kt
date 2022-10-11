@@ -2,6 +2,7 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.canasta
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemPedido
 
 
 /**
@@ -19,3 +20,11 @@ data class ItemCanasta(
     @PrimaryKey(autoGenerate = true) val id: Int = 0
 ) {
 }
+
+fun ItemCanasta.asItemPedido(itemCount: Long): ItemPedido =
+    ItemPedido(
+        name = name,
+        count = itemCount,
+        price = price,
+        category = category
+    )

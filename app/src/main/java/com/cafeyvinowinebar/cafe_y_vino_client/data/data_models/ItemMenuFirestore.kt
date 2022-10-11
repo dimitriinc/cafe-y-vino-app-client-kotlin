@@ -2,6 +2,7 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.data_models
 
 import android.os.Parcelable
 import androidx.annotation.Keep
+import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.ItemCanasta
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -11,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Keep
-class ItemMenu(
+data class ItemMenuFirestore(
     val nombre: String,
     val categoria: String,
     val descripcion: String?,
@@ -21,3 +22,11 @@ class ItemMenu(
     val isPresent: Boolean
 ) : Parcelable {
 }
+
+fun ItemMenuFirestore.asItemCanasta(): ItemCanasta =
+    ItemCanasta(
+        name = nombre,
+        category = categoria,
+        icon = icon,
+        price = precio.toLong()
+    )

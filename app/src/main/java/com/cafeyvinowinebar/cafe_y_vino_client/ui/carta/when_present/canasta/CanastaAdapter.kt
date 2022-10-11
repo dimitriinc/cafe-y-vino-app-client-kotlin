@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.adapters
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.canasta
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,8 +11,10 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.ItemCanasta
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ListItemCanastaBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnCanastaListener
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class CanastaAdapter(
     private val listener: OnCanastaListener
 ) : ListAdapter<ItemCanasta, CanastaAdapter.CanastaViewHolder>(DiffCallback()) {
@@ -43,9 +45,10 @@ class CanastaAdapter(
         fun bind(item: ItemCanasta) {
             binding.apply {
                 txtCanastaItem.text = item.name
+                // some items may not have icons stored for them, in this case we load a default one
                 if (item.icon != null) {
                     Glide.with(root)
-                        .load(item.icon)
+                        .load(fStorage.getImgReference(item.icon))
                         .into(imgCanasta)
                 } else {
                     imgCanasta.setImageResource(R.drawable.logo_mini)

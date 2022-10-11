@@ -122,7 +122,6 @@ class MainViewModel @Inject constructor(
         val userId = userDataRepo.getUserId()
         fMessaging.sendEntryRequest(
             userId,
-            user.token,
             user.nombre
         )
     }

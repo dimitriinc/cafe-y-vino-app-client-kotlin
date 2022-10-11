@@ -4,12 +4,12 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_ITEMS
-import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.CanastaDao
-import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.ItemCanasta
-import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenu
-import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
-import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.asItemCanasta
+import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.MenuDataRepository
+import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UserDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,35 +19,40 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemSpecsViewModel @Inject constructor(
-    private val fStore: FirebaseFirestoreSource,
-    private val fStorage: FirebaseStorageSource,
-    private val canastaDao: CanastaDao
+    private val userDataRepo: UserDataRepository,
+    private val menuDataRepo: MenuDataRepository
 
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SpecsUiState())
     val uiState: StateFlow<SpecsUiState> = _uiState.asStateFlow()
 
+    // listen to the presence status
     init {
-        viewModelScope.launch {
-            fStore.userPresence.collect { isPresent ->
+        viewModelScope.launch(Dispatchers.IO) {
+            userDataRepo.userPresenceFlow.collect { isPresent ->
                 _uiState.update {
                     it.copy(
-                        isPresent = isPresent ?: false
+                        isPresent = isPresent
                     )
                 }
             }
         }
     }
 
-    fun setArgsOnUiState(bundle: Bundle, initialName: String) = viewModelScope.launch {
-        val items = bundle.getSerializable(KEY_ITEMS) as ArrayList<ItemMenu>
+    fun setArgsOnUiState(bundle: Bundle, initialName: String) = viewModelScope.launch(Dispatchers.Default) {
+        // retrieve the array list of items from the bundle, passed as an argument
+        val items = bundle.getSerializable(KEY_ITEMS) as ArrayList<ItemMenuFirestore>
+        // to define the initial position where the ViewPager should start, we iterate through the list, and compare the names of items to the name
+        // of the item chosen by the user
+        // when the name matches, we retrieve the position of the item
         var initialPosition = 0
         items.forEach {
             if (initialName == it.nombre) {
                 initialPosition = items.indexOf(it)
             }
         }
+        // update the UI state with the list and the position of our item
         _uiState.update {
             it.copy(
                 items = items,
@@ -56,6 +61,9 @@ class ItemSpecsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Called whenever a new fragment is introduced to the ViewPager
+     */
     fun setThePagingFragment(
         currentPosition: Int
     ) = viewModelScope.launch {
@@ -65,22 +73,17 @@ class ItemSpecsViewModel @Inject constructor(
                 currentItem = it.items?.get(currentPosition),
                 setSize = it.items?.size,
                 itemImgReference = it.items?.get(currentPosition)?.image?.let { imgPath ->
-                    fStorage.getImgReference(
-                        imgPath
-                    )
+                    menuDataRepo.getImgReference(imgPath)
                 }
             )
         }
     }
 
-    fun addItemToCanastaDb(itemMenu: ItemMenu) = viewModelScope.launch {
-        val item = ItemCanasta(
-            name = itemMenu.nombre,
-            category = itemMenu.categoria,
-            price = itemMenu.precio.toLong(),
-            icon = itemMenu.icon
-        )
-        canastaDao.insert(item)
+    fun addItemToCanastaDb(itemMenu: ItemMenuFirestore) = viewModelScope.launch {
+
+        // transform item menu to the entity class
+        val item = itemMenu.asItemCanasta()
+        menuDataRepo.addProductToCanasta(item)
     }
 
     fun collapseFabs() {

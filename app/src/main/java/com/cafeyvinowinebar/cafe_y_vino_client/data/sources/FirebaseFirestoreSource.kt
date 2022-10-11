@@ -4,7 +4,6 @@ import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
@@ -32,6 +31,19 @@ class FirebaseFirestoreSource @Inject constructor(
     val utilsFlow: Flow<DocumentSnapshot?> = fStore.collection("utils")
         .document("horas")
         .snapshotAsFlow()
+
+    /**
+     * Creates a flow with calculated total cost of the user's cuenta
+     */
+    fun getCuentaTotalFlow(userId: String): Flow<Long?> {
+        val currentDate = getCurrentDate()
+        return fStore.collection("cuentas")
+            .document(currentDate)
+            .collection("cuentas corrientes")
+            .document(userId)
+            .collection("cuenta")
+            .asCuentaTotalFlow()
+    }
 
 
     /**
@@ -64,7 +76,12 @@ class FirebaseFirestoreSource @Inject constructor(
 
     }
 
-    fun setPedido(
+    /**
+     * Stores a new pedido in the DB
+     * First a document with its metadata
+     * Then, iterating through the pedido set, each of its items
+     */
+    fun storePedido(
         metaDocId: String,
         pedidoSet: Set<ItemPedido>,
         metaDoc: PedidoMetaDoc,

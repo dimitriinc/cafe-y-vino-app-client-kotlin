@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.adapters
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.cuenta
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

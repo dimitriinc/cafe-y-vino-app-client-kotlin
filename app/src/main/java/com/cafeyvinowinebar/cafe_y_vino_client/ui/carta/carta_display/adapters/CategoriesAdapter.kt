@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.MenuCategory
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.MenuCategoryFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ListItemMenuBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemClickListener
@@ -15,9 +15,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CategoriesAdapter(
-    options: FirestoreRecyclerOptions<MenuCategory>,
+    options: FirestoreRecyclerOptions<MenuCategoryFirestore>,
     val listener: OnItemClickListener,
-) : FirestoreRecyclerAdapter<MenuCategory, CategoriesAdapter.ViewHolder>(options) {
+) : FirestoreRecyclerAdapter<MenuCategoryFirestore, CategoriesAdapter.ViewHolder>(options) {
 
     @Inject
     lateinit var fStorage: FirebaseStorageSource
@@ -36,7 +36,7 @@ class CategoriesAdapter(
             }
         }
 
-        fun bind(model: MenuCategory) {
+        fun bind(model: MenuCategoryFirestore) {
             binding.apply {
                 txtCategoryName.text = model.name
                 Glide.with(root)
@@ -51,7 +51,7 @@ class CategoriesAdapter(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: MenuCategory) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: MenuCategoryFirestore) {
         holder.bind(model)
     }
 }

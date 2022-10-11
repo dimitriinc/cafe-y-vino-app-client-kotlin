@@ -52,7 +52,7 @@
     </activity>
     <fragment
         android:id="@+id/canastaFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.CanastaFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.canasta.CanastaFragment"
         android:label="fragment_canasta"
         tools:layout="@layout/fragment_canasta">
         <action
@@ -70,7 +70,7 @@
     </fragment>
     <fragment
         android:id="@+id/cuentaFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.CuentaFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.cuenta.CuentaFragment"
         android:label="fragment_cuenta"
         tools:layout="@layout/fragment_cuenta">
         <action

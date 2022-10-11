@@ -28,9 +28,10 @@ private val Context.userDataStore: DataStore<UserData> by dataStore(
 )
 
 @HiltAndroidApp
-class App(
-    @Inject val utilsRepository: UtilsRepository
-) : Application() {
+class App() : Application() {
+
+    @Inject
+    lateinit var utilsRepo: UtilsRepository
 
     override fun onCreate() {
         super.onCreate()
