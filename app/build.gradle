@@ -1,9 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-//    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
+//    id 'dagger.hilt.android.plugin'
+//    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
@@ -101,7 +102,7 @@ dependencies {
     implementation "com.firebaseui:firebase-ui-storage:$firebaseUiVersion"
 
     // coroutines support for firebase operations
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"

@@ -16,11 +16,13 @@ import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.AlertPrivacyBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentRegistrationBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 /**
  * The user fills in the edit texts with their data needed for registration
  */
+@AndroidEntryPoint
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
     private val viewModel: IntroductionViewModel by viewModels()

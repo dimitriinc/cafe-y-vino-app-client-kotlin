@@ -13,14 +13,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@AndroidEntryPoint
 class CategoriesAdapter(
     options: FirestoreRecyclerOptions<MenuCategoryFirestore>,
     val listener: OnItemClickListener,
+    val fStorage: FirebaseStorageSource
 ) : FirestoreRecyclerAdapter<MenuCategoryFirestore, CategoriesAdapter.ViewHolder>(options) {
-
-    @Inject
-    lateinit var fStorage: FirebaseStorageSource
 
     inner class ViewHolder(
         private val binding: ListItemMenuBinding

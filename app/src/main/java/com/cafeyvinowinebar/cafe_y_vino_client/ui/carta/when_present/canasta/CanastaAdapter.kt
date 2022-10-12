@@ -14,7 +14,6 @@ import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnCanastaListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@AndroidEntryPoint
 class CanastaAdapter(
     private val listener: OnCanastaListener
 ) : ListAdapter<ItemCanasta, CanastaAdapter.CanastaViewHolder>(DiffCallback()) {

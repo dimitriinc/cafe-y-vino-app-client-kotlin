@@ -11,11 +11,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ActivityItemSpecsBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 /**
  * Hosts a ViewPager2 that displays a collection of menu items of the chosen category
  */
+@AndroidEntryPoint
 class ItemSpecsActivity : AppCompatActivity() {
 
     // what's a better way to provide the configuration changes safety? to store the args in the savedInstanceState, or in the viewModel?

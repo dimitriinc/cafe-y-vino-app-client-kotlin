@@ -15,7 +15,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@AndroidEntryPoint
 class ItemsAdapter(
     options: FirestoreRecyclerOptions<ItemMenuFirestore>,
     val listener: OnProductClickListener,

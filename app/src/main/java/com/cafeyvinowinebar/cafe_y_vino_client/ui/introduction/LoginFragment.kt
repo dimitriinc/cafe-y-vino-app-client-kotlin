@@ -16,8 +16,10 @@ import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentLoginBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val viewModel: IntroductionViewModel by viewModels()

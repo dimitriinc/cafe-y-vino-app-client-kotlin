@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.MenuCategoryFirestore
+import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentCategoriesBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.adapters.CategoriesAdapter
@@ -23,10 +24,12 @@ import javax.inject.Inject
  * The fragment displays them as a recycler view
  */
 @AndroidEntryPoint
-class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickListener {
+class CategoriesFragment @Inject constructor(
+    val fStore: FirebaseFirestore,
+    val fStorage: FirebaseStorageSource
+) : Fragment(R.layout.fragment_categories), OnItemClickListener {
 
     private val viewModel: CartaDisplayViewModel by viewModels()
-    @Inject lateinit var fStore: FirebaseFirestore
     lateinit var adapter: CategoriesAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +42,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickLi
         val options = FirestoreRecyclerOptions.Builder<MenuCategoryFirestore>()
             .setQuery(query, MenuCategoryFirestore::class.java)
             .build()
-        adapter = CategoriesAdapter(options, this)
+        adapter = CategoriesAdapter(options, this, fStorage)
 
         binding.apply {
             fabHome.setOnClickListener {

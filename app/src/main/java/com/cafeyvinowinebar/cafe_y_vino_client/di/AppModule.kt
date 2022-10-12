@@ -3,13 +3,17 @@ package com.cafeyvinowinebar.cafe_y_vino_client.di
 import android.app.Application
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
+import com.cafeyvinowinebar.cafe_y_vino_client.UserData
+import com.cafeyvinowinebar.cafe_y_vino_client.data.UserDataSerializer
 import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.CanastaDatabase
 import com.cafeyvinowinebar.cafe_y_vino_client.data.utils_data.UtilsDatabase
 import com.google.firebase.auth.ktx.auth
@@ -29,6 +33,7 @@ import javax.inject.Qualifier
 import javax.inject.Singleton
 
 private const val USER_PREFERENCES_NAME = "user_preferences"
+private const val DATA_STORE_FILE_NAME = "user_data.pb"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -87,6 +92,16 @@ object AppModule {
             migrations = listOf(SharedPreferencesMigration(appContext, USER_PREFERENCES_NAME)),
             scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
             produceFile = { appContext.preferencesDataStoreFile(USER_PREFERENCES_NAME)}
+        )
+
+    @Singleton
+    @Provides
+    fun provideUserDataStore(@ApplicationContext appContext: Context): DataStore<UserData> =
+        DataStoreFactory.create(
+            serializer = UserDataSerializer,
+            corruptionHandler = null,
+            produceFile = { appContext.dataStoreFile(DATA_STORE_FILE_NAME)},
+            scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
         )
 
 }

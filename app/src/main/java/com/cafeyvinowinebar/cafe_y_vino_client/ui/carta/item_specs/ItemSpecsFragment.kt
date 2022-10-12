@@ -13,8 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemSpecsBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
 
     private val viewModel: ItemSpecsViewModel by viewModels()

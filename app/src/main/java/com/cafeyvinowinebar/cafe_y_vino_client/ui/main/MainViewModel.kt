@@ -33,7 +33,6 @@ class MainViewModel @Inject constructor(
     val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
     init {
-
         // first of all we set the logged in value to true if the user is logged in
         // otherwise the user will be sent to the intro nav graph
         if (userDataRepo.getUserObject() == null) {

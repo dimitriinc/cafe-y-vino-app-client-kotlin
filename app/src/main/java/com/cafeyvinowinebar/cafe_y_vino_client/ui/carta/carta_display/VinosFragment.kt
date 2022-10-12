@@ -7,6 +7,10 @@ import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentVinosBinding
 
+/**
+ * Displays text views of different wine subcategories
+ * On click we navigate to the items fragment with the proper category path as an argument
+ */
 class VinosFragment : Fragment(R.layout.fragment_vinos) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

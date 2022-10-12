@@ -17,8 +17,9 @@ data class UserPreferences(
     val isUserPresent: Boolean
 )
 
-@AndroidEntryPoint
-class PreferencesManager @Inject constructor(private val dataStore: DataStore<Preferences>) {
+class PreferencesManager @Inject constructor(
+    val dataStore: DataStore<Preferences>
+    ) {
 
     val preferencesFlow = dataStore.data
         .catch { exception ->
@@ -48,14 +49,6 @@ class PreferencesManager @Inject constructor(private val dataStore: DataStore<Pr
 
     suspend fun getCanSendPedidos() =
         dataStore.data.first().toPreferences()[PreferencesKeys.CAN_SEND_PEDIDOS] ?: true
-
-    suspend fun getIsUserPresent() =
-        dataStore.data.first().toPreferences()[PreferencesKeys.IS_USER_PRESENT] ?: false
-
-    suspend fun observeCanSendPedidos() {
-
-    }
-
 
 
     private object PreferencesKeys {

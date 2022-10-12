@@ -28,9 +28,9 @@ import kotlin.random.Random
 
 @HiltViewModel
 class CanastaViewModel @Inject constructor(
-    private val menuDataRepo: MenuDataRepository,
-    private val userDataRepo: UserDataRepository,
-    @ApplicationScope private val applicationScope: CoroutineScope
+    val menuDataRepo: MenuDataRepository,
+    val userDataRepo: UserDataRepository,
+    @ApplicationScope val applicationScope: CoroutineScope
 ) : ViewModel(){
     private val _uiState = MutableStateFlow(
         CanastaUiState(

@@ -16,7 +16,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@AndroidEntryPoint
 class GiftshopMenuAdapter(
     options: FirestoreRecyclerOptions<GiftFirestore>,
     private val listener: OnGiftClickListener

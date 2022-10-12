@@ -20,16 +20,11 @@ const val PEDIDO = "channelPedido"
 const val CUENTA = "channelCuenta"
 const val DATOS = "channelDatos"
 
-private const val DATA_STORE_FILE_NAME = "user_data.pb"
-
-private val Context.userDataStore: DataStore<UserData> by dataStore(
-    fileName = DATA_STORE_FILE_NAME,
-    serializer = UserDataSerializer
-)
-
 @HiltAndroidApp
 class App() : Application() {
 
+    // the idea is to inject the utils repo at the start of the app process to trigger its init block
+    // and start collecting from the utils flow
     @Inject
     lateinit var utilsRepo: UtilsRepository
 

@@ -16,10 +16,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CuentaViewModel @Inject constructor(
-    private val userDataRepo: UserDataRepository,
-    private val menuDataRepo: MenuDataRepository,
-    private val preferencesManager: PreferencesManager,
-    private val fMessaging: FirebaseMessagingSource,
+    val userDataRepo: UserDataRepository,
+    val menuDataRepo: MenuDataRepository,
+    val preferencesManager: PreferencesManager,
+    val fMessaging: FirebaseMessagingSource,
     @ApplicationScope private val applicationScope: CoroutineScope
 ) : ViewModel() {
 
