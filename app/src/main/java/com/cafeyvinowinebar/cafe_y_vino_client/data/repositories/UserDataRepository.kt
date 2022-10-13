@@ -1,7 +1,12 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
+import android.content.Context
 import android.content.res.Resources
 import androidx.datastore.core.DataStore
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.UserFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.User
@@ -9,10 +14,12 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseAuthSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
 import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
+import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateEmailWorker
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
+import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -28,7 +35,8 @@ class UserDataRepository @Inject constructor(
     private val fStoreSource: FirebaseFirestoreSource,
     private val userDataStore: DataStore<UserData>,
     @ApplicationScope
-    private val appScope: CoroutineScope
+    private val appScope: CoroutineScope,
+    @ActivityContext val context: Context
 ) {
 
     init {
@@ -190,7 +198,11 @@ class UserDataRepository @Inject constructor(
             userDataStore.updateData { user ->
                 user.toBuilder().setEmail(email).build()
             }
-            // TODO: tell the work manager to update fAuth
+            val request = OneTimeWorkRequestBuilder<UpdateEmailWorker>()
+                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .setInputData(workDataOf( KEY_EMAIL to email))
+                .build()
+            WorkManager.getInstance(context).enqueue(request)
             true
         } catch (e: Throwable) {
             false
