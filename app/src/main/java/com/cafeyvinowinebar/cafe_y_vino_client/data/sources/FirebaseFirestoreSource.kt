@@ -119,35 +119,6 @@ class FirebaseFirestoreSource @Inject constructor(
         }
     }
 
-    // TODO: those three should be performed by a work manager, updates are stored to the Room first
-    suspend fun updateNombre(nombre: String): Boolean {
-        return try {
-            fStore.collection("usuarios")
-                .document(fAuth.getUserObject()!!.uid)
-                .update("nombre", nombre)
-                .await()
-            true
-        } catch (e: Throwable) {
-            false
-        }
-    }
-    suspend fun updateTelefono(telefono: String): Boolean {
-        return try {
-            fStore.collection("usuarios")
-                .document(fAuth.getUserObject()!!.uid)
-                .update("telefono", telefono)
-                .await()
-            true
-        } catch (e: Throwable) {
-            false
-        }
-    }
-    fun updateBonos(newBonos: Long) {
-        fStore.collection("usuarios")
-            .document(fAuth.getUserObject()!!.uid)
-            .update("bonos", newBonos)
-    }
-
     /**
      * Receives an instance of a Gift class and stores to the "pedidos" collection
      */

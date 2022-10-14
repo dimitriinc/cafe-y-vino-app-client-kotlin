@@ -14,7 +14,10 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseAuthSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
 import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
+import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateBonosWorker
 import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateEmailWorker
+import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateNombreWorker
+import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateTelefonoWorker
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
@@ -193,6 +196,11 @@ class UserDataRepository @Inject constructor(
         fAuthSource.logout()
     }
 
+    /**
+     * The following four functions update different user data values according to the offline-first principles
+     * First we update the local data (the UserData object in the Proto DataStore)
+     * And then we submit a worker to the WorkManager to update the value in the Firestore DB
+     */
     suspend fun updateEmail(email: String): Boolean {
         return try {
             userDataStore.updateData { user ->
@@ -200,7 +208,12 @@ class UserDataRepository @Inject constructor(
             }
             val request = OneTimeWorkRequestBuilder<UpdateEmailWorker>()
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                .setInputData(workDataOf( KEY_EMAIL to email))
+                .setInputData(
+                    workDataOf(
+                        KEY_EMAIL to email,
+                        KEY_USER_ID to getUserId()
+                    )
+                )
                 .build()
             WorkManager.getInstance(context).enqueue(request)
             true
@@ -214,7 +227,14 @@ class UserDataRepository @Inject constructor(
             userDataStore.updateData { user ->
                 user.toBuilder().setNombre(nombre).build()
             }
-            // TODO: tell the work manager to update fStore
+            val request = OneTimeWorkRequestBuilder<UpdateNombreWorker>()
+                .setInputData(workDataOf(
+                    KEY_NOMBRE to nombre,
+                    KEY_USER_ID to getUserId()
+                ))
+                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .build()
+            WorkManager.getInstance(context).enqueue(request)
             true
         } catch (e: Throwable) {
             false
@@ -225,7 +245,14 @@ class UserDataRepository @Inject constructor(
             userDataStore.updateData { user ->
                 user.toBuilder().setTelefono(telefono).build()
             }
-            // TODO: tell the work manager to update fStore
+            val request = OneTimeWorkRequestBuilder<UpdateTelefonoWorker>()
+                .setInputData(workDataOf(
+                    KEY_USER_ID to getUserId(),
+                    KEY_TELEFONO to telefono
+                ))
+                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .build()
+            WorkManager.getInstance(context).enqueue(request)
             true
         } catch (e: Throwable) {
             false
@@ -235,7 +262,14 @@ class UserDataRepository @Inject constructor(
         userDataStore.updateData { user ->
             user.toBuilder().setBonos(newBonos).build()
         }
-        // TODO: tell the work manager to update fStore (when the user exits the giftshop?)
+        val request = OneTimeWorkRequestBuilder<UpdateBonosWorker>()
+            .setInputData(workDataOf(
+                KEY_USER_ID to getUserId(),
+                KEY_BONOS to newBonos
+            ))
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .build()
+        WorkManager.getInstance(context).enqueue(request)
     }
 
     /**
