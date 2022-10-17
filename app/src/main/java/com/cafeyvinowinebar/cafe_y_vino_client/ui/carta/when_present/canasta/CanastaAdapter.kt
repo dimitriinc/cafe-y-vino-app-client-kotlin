@@ -19,7 +19,7 @@ class CanastaAdapter(
 ) : ListAdapter<ItemCanasta, CanastaAdapter.CanastaViewHolder>(DiffCallback()) {
 
     @Inject
-    private lateinit var fStorage: FirebaseStorageSource
+    lateinit var fStorage: FirebaseStorageSource
 
     inner class CanastaViewHolder(
         private val binding: ListItemCanastaBinding

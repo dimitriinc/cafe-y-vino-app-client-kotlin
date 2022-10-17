@@ -93,7 +93,7 @@
             app:destination="@id/canastaFragment" />
         <argument
             android:name="item"
-            app:argType="com.cafeyvinowinebar.cafe_y_vino_client.data.model_classes.ItemMenu" />
+            app:argType="com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore" />
         <argument
             android:name="position"
             app:argType="integer" />

@@ -9,6 +9,7 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
     id "com.google.protobuf" version "0.8.17"
+    id 'kotlinx-serialization'
 }
 
 android {
@@ -83,7 +84,7 @@ dependencies {
     // Dagger Hilt
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
+//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
 
     // DataStore
@@ -110,6 +111,9 @@ dependencies {
 
     // WorkManager
     implementation("androidx.work:work-runtime-ktx:$workVersion")
+
+    // Kotlin serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
 }

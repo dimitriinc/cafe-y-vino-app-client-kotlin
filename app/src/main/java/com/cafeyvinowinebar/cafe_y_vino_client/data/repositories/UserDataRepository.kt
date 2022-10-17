@@ -22,11 +22,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
-import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -39,7 +38,7 @@ class UserDataRepository @Inject constructor(
     private val userDataStore: DataStore<UserData>,
     @ApplicationScope
     private val appScope: CoroutineScope,
-    @ActivityContext val context: Context
+    @ApplicationContext val context: Context
 ) {
 
     init {
