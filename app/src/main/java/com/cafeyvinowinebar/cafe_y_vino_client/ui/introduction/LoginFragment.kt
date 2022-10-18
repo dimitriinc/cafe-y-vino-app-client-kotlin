@@ -8,11 +8,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentLoginBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
-    private val viewModel: IntroductionViewModel by viewModels()
+    private val viewModel: IntroductionViewModel by navGraphViewModels(R.id.intro_nav_graph)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,7 +37,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     if (it.isLoggedIn) {
                         binding.progressBarLogin.visibility = View.INVISIBLE
                         Toast.makeText(requireContext(), R.string.login_inicio, Toast.LENGTH_SHORT).show()
-                        val action = LoginFragmentDirections.actionLoginFragmentToMainNavGraph()
+                        val action = LoginFragmentDirections.actionLoginFragmentToMainActivity()
                         findNavController().navigate(action)
                     }
 

@@ -1,5 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.main
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.View.*
@@ -15,6 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
+import com.cafeyvinowinebar.cafe_y_vino_client.CANASTA_URI
+import com.cafeyvinowinebar.cafe_y_vino_client.CUENTA_URI
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentMainBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
@@ -42,7 +45,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.uiState.collect {
                     if (!it.isLoggedIn) {
-                        val action = MainFragmentDirections.actionMainFragmentToIntroNavGraph()
+                        val action = MainFragmentDirections.actionMainFragmentToIntroActivity()
                         findNavController().navigate(action)
                         // TODO: you have to pop up the main graph somehow
                     }
@@ -110,25 +113,29 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
             // simple navigation to destinations
             imgBtnGiftshop.setOnClickListener {
-                findNavController().navigate(R.id.giftshopFragment)
+                val action = MainFragmentDirections.actionMainFragmentToGiftshopFragment()
+                findNavController().navigate(action)
             }
             imgBtnMenu.setOnClickListener {
-                findNavController().navigate(R.id.carta_nav_graph)
+                val action = MainFragmentDirections.actionMainFragmentToCartaNavGraph()
+                findNavController().navigate(action)
             }
             imgBtnReserv.setOnClickListener {
-                findNavController().navigate(R.id.reservas_nav_graph)
+                val action = MainFragmentDirections.actionMainFragmentToReservasActivity()
+                findNavController().navigate(action)
             }
             fabUserData.setOnClickListener {
-                findNavController().navigate(R.id.userDataFragment)
+                val action = MainFragmentDirections.actionMainFragmentToUserDataFragment()
+                findNavController().navigate(action)
             }
 
             // deep links to the destinations from the carta nav graph, that are not start destinations (canasta and cuenta)
             fabCanastaMain.setOnClickListener {
-                val request = NavDeepLinkRequest.Builder.fromAction("ACTION_CANASTA").build()
+                val request = NavDeepLinkRequest.Builder.fromUri(Uri.parse(CANASTA_URI)).build()
                 findNavController().navigate(request)
             }
             fabCuentaMain.setOnClickListener {
-                val request = NavDeepLinkRequest.Builder.fromAction("ACTION_CUENTA").build()
+                val request = NavDeepLinkRequest.Builder.fromUri(Uri.parse(CUENTA_URI)).build()
                 findNavController().navigate(request)
             }
 

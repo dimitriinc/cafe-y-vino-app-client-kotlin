@@ -22,8 +22,6 @@ const val KEY_BONOS = "bonos"
 const val KEY_ADMIN_TOKEN = "adminToken"
 const val KEY_PARTE = "parte"
 const val KEY_TYPE = "type"
-const val KEY_HAPPY_DAYS = "happyDays"
-const val KEY_HAPPY_HOURS = "happyHours"
 const val KEY_ITEMS = "items"
 const val KEY_CATEGORIA = "categoria"
 const val KEY_PRECIO = "precio"
@@ -36,6 +34,9 @@ const val KEY_EMAIL = "email"
 const val KEY_TELEFONO = "telefono"
 
 const val TO_ADMIN_NEW = "toAdminNew"
+
+const val CANASTA_URI = "myapp://cafeyvino.com/canasta"
+const val CUENTA_URI = "myapp://cafeyvino.com/cuenta"
 
 
 const val DATE_FORMAT = "dd-MM-yyyy"

@@ -6,23 +6,11 @@
     app:startDestination="@id/mainFragment">
 
     <include app:graph="@navigation/carta_nav_graph" />
-    <include app:graph="@navigation/reservas_nav_graph" />
-    <include app:graph="@navigation/intro_nav_graph" />
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_mainFragment_to_intro_nav_graph"
-            app:destination="@id/intro_nav_graph"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-        <action
-            android:id="@+id/action_mainFragment_to_reservas_nav_graph"
-            app:destination="@id/reservas_nav_graph"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_mainFragment_to_carta_nav_graph"
             app:destination="@id/carta_nav_graph"
@@ -38,6 +26,18 @@
             app:destination="@id/userDataFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_introActivity"
+            app:destination="@id/introActivity"
+            app:popUpTo="@id/introActivity"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"/>
+        <action
+            android:id="@+id/action_mainFragment_to_reservasActivity"
+            app:destination="@id/reservasActivity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/giftshopFragment"
@@ -50,11 +50,20 @@
         android:label="fragment_user_data"
         tools:layout="@layout/fragment_user_data" >
         <action
-            android:id="@+id/action_userDataFragment_to_intro_nav_graph"
-            app:destination="@id/intro_nav_graph"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popUpTo="@id/intro_nav_graph"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_userDataFragment_to_introActivity"
+            app:destination="@id/introActivity"
+            app:popUpTo="@id/introActivity"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"/>
     </fragment>
+    <activity
+        android:id="@+id/introActivity"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.IntroActivity"
+        android:label="IntroActivity" />
+    <activity
+        android:id="@+id/reservasActivity"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.ReservasActivity"
+        android:label="activity_reservas"
+        tools:layout="@layout/activity_reservas" />
 </navigation>

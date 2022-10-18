@@ -18,6 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentReservasFinBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isDarkThemeOn
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
 
 class FinFragment : Fragment() {
 
-    private val viewModel: ReservasViewModel by viewModels()
+    private val viewModel: ReservasViewModel by navGraphViewModels(R.id.reservas_nav_graph)
     private val passAllowed = arguments?.getBoolean("passAllowed") ?: false
     private lateinit var clockPopupMenu: PopupMenu
     private lateinit var paxPopupMenu: PopupMenu
@@ -90,7 +91,7 @@ class FinFragment : Fragment() {
         binding.apply {
 
             imgClock.setOnClickListener {
-                clockPopupMenu?.show()
+                clockPopupMenu.show()
             }
             imgPax.setOnClickListener {
                 paxPopupMenu.show()

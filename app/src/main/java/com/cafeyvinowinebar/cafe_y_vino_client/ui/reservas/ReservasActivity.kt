@@ -3,6 +3,7 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.navigation.navGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavArgument
 import androidx.navigation.fragment.NavHostFragment

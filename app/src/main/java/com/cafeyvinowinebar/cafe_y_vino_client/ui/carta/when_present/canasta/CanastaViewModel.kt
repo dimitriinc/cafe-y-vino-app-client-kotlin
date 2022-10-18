@@ -28,9 +28,10 @@ import kotlin.random.Random
 
 @HiltViewModel
 class CanastaViewModel @Inject constructor(
-    val menuDataRepo: MenuDataRepository,
+    private val menuDataRepo: MenuDataRepository,
     val userDataRepo: UserDataRepository,
-    @ApplicationScope val applicationScope: CoroutineScope
+    @ApplicationScope val applicationScope: CoroutineScope,
+    private val preferencesManager: PreferencesManager
 ) : ViewModel(){
     private val _uiState = MutableStateFlow(
         CanastaUiState(
@@ -40,12 +41,19 @@ class CanastaViewModel @Inject constructor(
     val uiState: StateFlow<CanastaUiState> = _uiState.asStateFlow()
 
     init {
-        // listen to the user's presence state
+        // listen to the user's presence state, and if they can make orders
         viewModelScope.launch(Dispatchers.IO) {
             userDataRepo.userPresenceFlow.collect { isPresent ->
                 _uiState.update {
                     it.copy(
                         isPresent = isPresent
+                    )
+                }
+            }
+            preferencesManager.preferencesFlow.collect { preferences ->
+                _uiState.update {
+                    it.copy(
+                        canSendPedidos = preferences.canSendPedidos
                     )
                 }
             }

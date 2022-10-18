@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_specs_nav_graph"
+    app:startDestination="@id/itemSpecsActivity2">
+
+    <activity
+        android:id="@+id/itemSpecsActivity2"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsActivity"
+        android:label="activity_item_specs"
+        tools:layout="@layout/activity_item_specs" />
+    <fragment
+        android:id="@+id/itemSpecsFragment2"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsFragment"
+        android:label="fragment_item_specs"
+        tools:layout="@layout/fragment_item_specs" />
+</navigation>

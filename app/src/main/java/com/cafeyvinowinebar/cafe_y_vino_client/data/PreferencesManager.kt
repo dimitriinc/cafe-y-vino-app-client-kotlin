@@ -13,8 +13,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 data class UserPreferences(
-    val canSendPedidos: Boolean,
-    val isUserPresent: Boolean
+    val canSendPedidos: Boolean
 )
 
 class PreferencesManager @Inject constructor(
@@ -31,8 +30,7 @@ class PreferencesManager @Inject constructor(
         }
         .map { preferences ->
             val canSendPedidos = preferences[PreferencesKeys.CAN_SEND_PEDIDOS] ?: true
-            val isUserPresent = preferences[PreferencesKeys.IS_USER_PRESENT] ?: false
-            UserPreferences(canSendPedidos, isUserPresent)
+            UserPreferences(canSendPedidos)
         }
 
     suspend fun updateCanSendPedidos(canSendPedidos: Boolean) {
@@ -41,19 +39,8 @@ class PreferencesManager @Inject constructor(
         }
     }
 
-    suspend fun updateIsUserPresent(isUserPresent: Boolean) {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKeys.IS_USER_PRESENT] = isUserPresent
-        }
-    }
-
-    suspend fun getCanSendPedidos() =
-        dataStore.data.first().toPreferences()[PreferencesKeys.CAN_SEND_PEDIDOS] ?: true
-
-
     private object PreferencesKeys {
         val CAN_SEND_PEDIDOS = booleanPreferencesKey("canSendPedidos")
-        val IS_USER_PRESENT = booleanPreferencesKey("isUserPresent")
     }
 
 }

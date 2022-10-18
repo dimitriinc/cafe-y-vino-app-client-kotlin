@@ -17,8 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CuentaViewModel @Inject constructor(
     val userDataRepo: UserDataRepository,
-    val menuDataRepo: MenuDataRepository,
-    val preferencesManager: PreferencesManager,
+    private val menuDataRepo: MenuDataRepository,
+    private val preferencesManager: PreferencesManager,
     val fMessaging: FirebaseMessagingSource,
     @ApplicationScope private val applicationScope: CoroutineScope
 ) : ViewModel() {
@@ -31,8 +31,10 @@ class CuentaViewModel @Inject constructor(
     val uiState: StateFlow<CuentaUiState> = _uiState.asStateFlow()
 
     init {
-        // listen to the user's presence state
+
         viewModelScope.launch(Dispatchers.IO) {
+
+            // listen to the user's presence state
             userDataRepo.userPresenceFlow.collect { isPresent ->
                 _uiState.update {
                     it.copy(
@@ -40,6 +42,7 @@ class CuentaViewModel @Inject constructor(
                     )
                 }
             }
+
             // observe the bill's total price
             menuDataRepo.getCuentaTotalFlow(userDataRepo.getUserId()).collect { total ->
                 _uiState.update { uiState ->
@@ -48,6 +51,16 @@ class CuentaViewModel @Inject constructor(
                     )
                 }
             }
+
+            // collect the preference about sending new orders or cuenta requests
+            preferencesManager.preferencesFlow.collect { preferences ->
+                _uiState.update {
+                    it.copy(
+                        canSendPedidos = preferences.canSendPedidos
+                    )
+                }
+            }
+
         }
 
     }
