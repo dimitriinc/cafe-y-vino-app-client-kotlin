@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".ui.introduction.IntroActivity"
             android:exported="false"/>
-        <activity android:name=".ui.carta.item_specs.ItemSpecsActivity"
+        <activity android:name=".ui.carta.item_specs.ItemSpecsHostFragment"
             android:exported="false"/>
         <activity android:name=".ui.reservas.ReservasActivity"
             android:exported="false"/>

@@ -3,11 +3,9 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 import android.content.Context
 import android.content.res.Resources
 import androidx.datastore.core.DataStore
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.OutOfQuotaPolicy
-import androidx.work.WorkManager
-import androidx.work.workDataOf
+import androidx.work.*
 import com.cafeyvinowinebar.cafe_y_vino_client.*
+import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.UserFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.User
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseAuthSource
@@ -205,6 +203,9 @@ class UserDataRepository @Inject constructor(
             userDataStore.updateData { user ->
                 user.toBuilder().setEmail(email).build()
             }
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
             val request = OneTimeWorkRequestBuilder<UpdateEmailWorker>()
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .setInputData(
@@ -213,6 +214,7 @@ class UserDataRepository @Inject constructor(
                         KEY_USER_ID to getUserId()
                     )
                 )
+                .setConstraints(constraints)
                 .build()
             WorkManager.getInstance(context).enqueue(request)
             true
@@ -226,12 +228,16 @@ class UserDataRepository @Inject constructor(
             userDataStore.updateData { user ->
                 user.toBuilder().setNombre(nombre).build()
             }
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
             val request = OneTimeWorkRequestBuilder<UpdateNombreWorker>()
                 .setInputData(workDataOf(
                     KEY_NOMBRE to nombre,
                     KEY_USER_ID to getUserId()
                 ))
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .setConstraints(constraints)
                 .build()
             WorkManager.getInstance(context).enqueue(request)
             true
@@ -244,12 +250,16 @@ class UserDataRepository @Inject constructor(
             userDataStore.updateData { user ->
                 user.toBuilder().setTelefono(telefono).build()
             }
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
             val request = OneTimeWorkRequestBuilder<UpdateTelefonoWorker>()
                 .setInputData(workDataOf(
                     KEY_USER_ID to getUserId(),
                     KEY_TELEFONO to telefono
                 ))
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .setConstraints(constraints)
                 .build()
             WorkManager.getInstance(context).enqueue(request)
             true
@@ -261,13 +271,19 @@ class UserDataRepository @Inject constructor(
         userDataStore.updateData { user ->
             user.toBuilder().setBonos(newBonos).build()
         }
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
         val request = OneTimeWorkRequestBuilder<UpdateBonosWorker>()
             .setInputData(workDataOf(
                 KEY_USER_ID to getUserId(),
                 KEY_BONOS to newBonos
             ))
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .setConstraints(constraints)
             .build()
+
         WorkManager.getInstance(context).enqueue(request)
     }
 

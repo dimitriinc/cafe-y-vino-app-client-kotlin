@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.cafeyvinowinebar.cafe_y_vino_client.CartaNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.ItemCanasta
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentCanastaBinding
@@ -62,7 +63,7 @@ class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
                 viewModel.collapseCanastaFabs()
             }
             fabMenu.setOnClickListener {
-                val action = CanastaFragmentDirections.actionCanastaFragmentToCategoriesFragment()
+                val action = CartaNavGraphDirections.actionGlobalCategoriesFragment()
                 findNavController().navigate(action)
             }
             fabUpload.setOnClickListener {

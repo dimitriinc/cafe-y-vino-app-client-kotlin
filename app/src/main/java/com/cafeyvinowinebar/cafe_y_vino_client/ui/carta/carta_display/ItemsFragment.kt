@@ -14,11 +14,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cafeyvinowinebar.cafe_y_vino_client.KEY_IS_PRESENT
-import com.cafeyvinowinebar.cafe_y_vino_client.KEY_ITEMS
-import com.cafeyvinowinebar.cafe_y_vino_client.KEY_NOMBRE
-import com.cafeyvinowinebar.cafe_y_vino_client.R
+import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemsBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemLongClickListener
@@ -44,7 +42,7 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
     @Inject
     lateinit var fStore: FirebaseFirestore
     private val args: ItemsFragmentArgs by navArgs()
-    private val viewModel: CartaDisplayViewModel by viewModels()
+    private val viewModel: CartaDisplayViewModel by navGraphViewModels(R.id.carta_nav_graph)
 
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -135,11 +133,11 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
                 viewModel.collapseFabs()
             }
             fabItemsCanasta.setOnClickListener {
-                val action = ItemsFragmentDirections.actionItemsFragmentToCanastaFragment()
+                val action = ItemsFragmentDirections.actionItemsFragmentToWhenPresentNavGraph()
                 findNavController().navigate(action)
             }
             fabItemsHome.setOnClickListener {
-                val action = ItemsFragmentDirections.actionItemsFragmentToMainNavGraph()
+                val action = MainNavGraphDirections.actionGlobalMainFragment()
                 findNavController().navigate(action)
 
             }
@@ -162,7 +160,8 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
     override fun onClick(document: DocumentSnapshot, items: ArrayList<ItemMenuFirestore>) {
         val bundle = Bundle()
         bundle.putSerializable(KEY_ITEMS, items)
-        val action = ItemsFragmentDirections.actionItemsFragmentToItemSpecsActivity(
+        bundle.putString(KEY_NOMBRE, document.getString(KEY_NOMBRE))
+        val action = ItemSpecsNavGraphDirections.actionGlobalItemSpecsHostFragment(
             bundle,
             document.getString(KEY_NOMBRE)!!
         )

@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.MenuCategoryFirestore
@@ -29,7 +30,7 @@ class CategoriesFragment @Inject constructor(
     val fStorage: FirebaseStorageSource
 ) : Fragment(R.layout.fragment_categories), OnItemClickListener {
 
-    private val viewModel: CartaDisplayViewModel by viewModels()
+    private val viewModel: CartaDisplayViewModel by navGraphViewModels(R.id.carta_nav_graph)
     lateinit var adapter: CategoriesAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

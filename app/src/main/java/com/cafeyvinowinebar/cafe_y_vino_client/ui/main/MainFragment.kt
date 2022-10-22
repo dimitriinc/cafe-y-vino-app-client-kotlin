@@ -16,11 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
-import com.cafeyvinowinebar.cafe_y_vino_client.CANASTA_URI
-import com.cafeyvinowinebar.cafe_y_vino_client.CUENTA_URI
-import com.cafeyvinowinebar.cafe_y_vino_client.R
+import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentMainBinding
-import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -117,7 +114,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 findNavController().navigate(action)
             }
             imgBtnMenu.setOnClickListener {
-                val action = MainFragmentDirections.actionMainFragmentToCartaNavGraph()
+                val action = CartaNavGraphDirections.actionGlobalCategoriesFragment()
                 findNavController().navigate(action)
             }
             imgBtnReserv.setOnClickListener {
@@ -129,14 +126,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 findNavController().navigate(action)
             }
 
-            // deep links to the destinations from the carta nav graph, that are not start destinations (canasta and cuenta)
             fabCanastaMain.setOnClickListener {
-                val request = NavDeepLinkRequest.Builder.fromUri(Uri.parse(CANASTA_URI)).build()
-                findNavController().navigate(request)
+                val action = MainFragmentDirections.actionMainFragmentToWhenPresentNavGraph()
+                findNavController().navigate(action)
             }
             fabCuentaMain.setOnClickListener {
-                val request = NavDeepLinkRequest.Builder.fromUri(Uri.parse(CUENTA_URI)).build()
-                findNavController().navigate(request)
+//                val request = NavDeepLinkRequest.Builder.fromUri(Uri.parse(CUENTA_URI)).build()
+                val action = WhenPresentNavGraphDirections.actionGlobalCuentaFragment()
+                findNavController().navigate(action)
             }
 
             // before sending an entry request we show a dialog that explains the function of the button

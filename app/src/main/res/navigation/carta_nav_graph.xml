@@ -16,102 +16,22 @@
         <action
             android:id="@+id/action_categoriesFragment_to_vinosFragment"
             app:destination="@id/vinosFragment" />
-        <action
-            android:id="@+id/action_categoriesFragment_to_main_nav_graph"
-            app:destination="@id/main_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/itemsFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.ItemsFragment"
         android:label="fragment_items"
         tools:layout="@layout/fragment_items" >
-        <action
-            android:id="@+id/action_itemsFragment_to_itemSpecsActivity"
-            app:destination="@id/itemSpecsActivity" />
-        <action
-            android:id="@+id/action_itemsFragment_to_canastaFragment"
-            app:destination="@id/canastaFragment" />
         <argument
             android:name="categoryPath"
             app:argType="string" />
         <action
-            android:id="@+id/action_itemsFragment_to_main_nav_graph"
-            app:destination="@id/main_nav_graph" />
-    </fragment>
-    <activity
-        android:id="@+id/itemSpecsActivity"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsActivity"
-        android:label="activity_item_specs"
-        tools:layout="@layout/activity_item_specs" >
-        <argument
-            android:name="bundleWithItemsCollection"
-            app:argType="android.os.Bundle" />
-        <argument
-            android:name="nameOfInitialItem"
-            app:argType="string" />
-    </activity>
-    <fragment
-        android:id="@+id/canastaFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.canasta.CanastaFragment"
-        android:label="fragment_canasta"
-        tools:layout="@layout/fragment_canasta">
+            android:id="@+id/action_itemsFragment_to_when_present_nav_graph"
+            app:destination="@id/when_present_nav_graph" />
         <action
-            android:id="@+id/action_canastaFragment_to_cuentaFragment"
-            app:destination="@id/cuentaFragment" />
-        <action
-            android:id="@+id/action_canastaFragment_to_categoriesFragment"
-            app:destination="@id/categoriesFragment" />
-        <action
-            android:id="@+id/action_canastaFragment_to_main_nav_graph"
-            app:destination="@id/main_nav_graph"
-            app:popUpTo="@id/main_nav_graph"
-            app:popUpToInclusive="true" />
-        <deepLink
-            android:id="@+id/deepLink2"
-            app:uri="myapp://cafeyvino.com/canasta" />
+            android:id="@+id/action_itemsFragment_to_item_specs_nav_graph"
+            app:destination="@id/item_specs_nav_graph" />
 
-    </fragment>
-    <fragment
-        android:id="@+id/cuentaFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.cuenta.CuentaFragment"
-        android:label="fragment_cuenta"
-        tools:layout="@layout/fragment_cuenta">
-        <action
-            android:id="@+id/action_cuentaFragment_to_categoriesFragment"
-            app:destination="@id/categoriesFragment" />
-        <action
-            android:id="@+id/action_cuentaFragment_to_main_nav_graph"
-            app:destination="@id/main_nav_graph"
-            app:popUpTo="@id/main_nav_graph"
-            app:popUpToInclusive="true" />
-        <deepLink
-            android:id="@+id/deepLink"
-            app:uri="myapp://cafeyvino.com/cuenta" />
-
-    </fragment>
-    <fragment
-        android:id="@+id/itemSpecsFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsFragment"
-        android:label="fragment_item_specs"
-        tools:layout="@layout/fragment_item_specs" >
-        <action
-            android:id="@+id/action_itemSpecsFragment_to_canastaFragment"
-            app:destination="@id/canastaFragment" />
-        <argument
-            android:name="item"
-            app:argType="com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore" />
-        <argument
-            android:name="position"
-            app:argType="integer" />
-        <argument
-            android:name="setSize"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_itemSpecsFragment_to_categoriesFragment"
-            app:destination="@id/categoriesFragment" />
-        <action
-            android:id="@+id/action_itemSpecsFragment_to_main_nav_graph"
-            app:destination="@id/main_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/vinosFragment"
@@ -122,5 +42,6 @@
             android:id="@+id/action_vinosFragment_to_itemsFragment"
             app:destination="@id/itemsFragment" />
     </fragment>
-    <include app:graph="@navigation/main_nav_graph" />
+    <include app:graph="@navigation/when_present_nav_graph" />
+    <include app:graph="@navigation/item_specs_nav_graph" /><action android:id="@+id/action_global_categoriesFragment" app:destination="@id/categoriesFragment"/>
 </navigation>

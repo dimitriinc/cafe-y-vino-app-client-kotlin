@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.bumptech.glide.Glide
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemSpecsBinding
@@ -19,7 +20,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
 
-    private val viewModel: ItemSpecsViewModel by viewModels()
+    private val viewModel: ItemSpecsViewModel by navGraphViewModels(R.id.item_specs_nav_graph)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,11 +33,11 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                 findNavController().navigate(action)
             }
             fabMainMenu.setOnClickListener {
-                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToCategoriesFragment()
+                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToCartaNavGraph()
                 findNavController().navigate(action)
             }
             fabCanasta.setOnClickListener {
-                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToCanastaFragment()
+                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToWhenPresentNavGraph()
                 findNavController().navigate(action)
             }
 

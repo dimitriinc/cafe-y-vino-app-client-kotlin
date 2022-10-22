@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/mainFragment">
 
-    <include app:graph="@navigation/carta_nav_graph" />
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_mainFragment_to_carta_nav_graph"
-            app:destination="@id/carta_nav_graph"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_mainFragment_to_giftshopFragment"
             app:destination="@id/giftshopFragment"
@@ -38,6 +33,9 @@
             app:destination="@id/reservasActivity"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"/>
+        <action
+            android:id="@+id/action_mainFragment_to_when_present_nav_graph"
+            app:destination="@id/when_present_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/giftshopFragment"
@@ -66,4 +64,6 @@
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.ReservasActivity"
         android:label="activity_reservas"
         tools:layout="@layout/activity_reservas" />
+    <include app:graph="@navigation/when_present_nav_graph" />
+    <action android:id="@+id/action_global_mainFragment" app:destination="@id/mainFragment" />
 </navigation>

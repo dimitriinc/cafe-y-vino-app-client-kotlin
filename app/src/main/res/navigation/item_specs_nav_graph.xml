@@ -3,16 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_specs_nav_graph"
-    app:startDestination="@id/itemSpecsActivity2">
+    app:startDestination="@id/itemSpecsHostFragment">
 
-    <activity
-        android:id="@+id/itemSpecsActivity2"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsActivity"
-        android:label="activity_item_specs"
-        tools:layout="@layout/activity_item_specs" />
     <fragment
-        android:id="@+id/itemSpecsFragment2"
+        android:id="@+id/itemSpecsHostFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsHostFragment"
+        android:label="fragment_item_specs_host"
+        tools:layout="@layout/fragment_item_specs_host" />
+    <fragment
+        android:id="@+id/itemSpecsFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsFragment"
         android:label="fragment_item_specs"
-        tools:layout="@layout/fragment_item_specs" />
+        tools:layout="@layout/fragment_item_specs">
+        <action
+            android:id="@+id/action_itemSpecsFragment_to_carta_nav_graph"
+            app:destination="@id/carta_nav_graph" />
+        <action
+            android:id="@+id/action_itemSpecsFragment_to_when_present_nav_graph"
+            app:destination="@id/when_present_nav_graph" />
+    </fragment>
+    <include app:graph="@navigation/when_present_nav_graph" />
+    <include app:graph="@navigation/carta_nav_graph" />
+    <action
+        android:id="@+id/action_global_itemSpecsHostFragment"
+        app:destination="@id/itemSpecsHostFragment" >
+        <argument
+            android:name="bundleWithItemsCollection"
+            app:argType="android.os.Bundle" />
+        <argument
+            android:name="nameOfInitialItem"
+            app:argType="string" />
+    </action>
 </navigation>

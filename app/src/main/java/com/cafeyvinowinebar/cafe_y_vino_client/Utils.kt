@@ -35,9 +35,7 @@ const val KEY_TELEFONO = "telefono"
 
 const val TO_ADMIN_NEW = "toAdminNew"
 
-const val CANASTA_URI = "myapp://cafeyvino.com/canasta"
 const val CUENTA_URI = "myapp://cafeyvino.com/cuenta"
-
 
 const val DATE_FORMAT = "dd-MM-yyyy"
 const val GMT = "GMT-5"

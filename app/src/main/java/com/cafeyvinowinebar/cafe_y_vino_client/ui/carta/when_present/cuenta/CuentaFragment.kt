@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cafeyvinowinebar.cafe_y_vino_client.CartaNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemCuenta
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentCuentaBinding
@@ -55,7 +56,7 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
                 findNavController().navigate(R.id.main_nav_graph)
             }
             fabCuentaMenu.setOnClickListener {
-                val action = CuentaFragmentDirections.actionCuentaFragmentToCategoriesFragment()
+                val action = CartaNavGraphDirections.actionGlobalCategoriesFragment()
                 findNavController().navigate(action)
             }
 

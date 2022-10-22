@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/when_present_nav_graph"
+    app:startDestination="@id/canastaFragment">
+
+    <fragment
+        android:id="@+id/canastaFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.canasta.CanastaFragment"
+        android:label="fragment_canasta"
+        tools:layout="@layout/fragment_canasta">
+        <action
+            android:id="@+id/action_canastaFragment_to_cuentaFragment"
+            app:destination="@id/cuentaFragment" />
+        <action
+            android:id="@+id/action_canastaFragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/main_nav_graph"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/cuentaFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.cuenta.CuentaFragment"
+        android:label="fragment_cuenta"
+        tools:layout="@layout/fragment_cuenta">
+        <action
+            android:id="@+id/action_cuentaFragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/main_nav_graph"
+            app:popUpToInclusive="false" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="myapp://cafeyvino.com/cuenta" />
+    </fragment>
+    <include app:graph="@navigation/main_nav_graph" />
+    <action
+        android:id="@+id/action_global_cuentaFragment"
+        app:destination="@id/cuentaFragment" >
+    </action>
+</navigation>
