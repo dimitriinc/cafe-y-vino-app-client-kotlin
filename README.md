@@ -5,9 +5,8 @@ An Android app for customers of a restaurant.
 
 ## Summary
 
-A translation of the [this](https://github.com/dimitriinc/cafe-y-vino-app-client) from Java to Kotlin, according to the recommended app architecutre, proper separation of concerns, unidirectional flow of data, single sources of truth, and representation of UI states with data models.\
+A translation of [the old draft of the app](https://github.com/dimitriinc/cafe-y-vino-app-client) from Java to Kotlin, according to the recommended app architecutre, proper separation of concerns, unidirectional flow of data, single sources of truth, and representation of UI states with data models.\
 Some of the offline-first principles are implemented as well. A repository collects a flow of a Firestore document containing user data, crucial for functioning of the app, and updates an object stored with Proto DataStore. Theh UI layer accesses only the local user data. The writes are performed on the DataStore object first, and then are submitted to the WorkManager to be executed when online.\
-The dependency injections are preformed with Hilt.
 
 ## Functionality
 
