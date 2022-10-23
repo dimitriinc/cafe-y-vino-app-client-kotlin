@@ -1,6 +1,5 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.main
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.View.*
@@ -10,11 +9,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentMainBinding
@@ -30,7 +28,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main) {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by hiltNavGraphViewModels(R.id.main_nav_graph)
     private lateinit var entryRequestDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {

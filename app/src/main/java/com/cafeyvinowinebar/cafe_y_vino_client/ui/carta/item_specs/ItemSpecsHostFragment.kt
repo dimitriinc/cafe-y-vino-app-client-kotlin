@@ -3,12 +3,10 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.navArgs
-import androidx.navigation.navGraphViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemSpecsHostBinding
@@ -25,7 +23,7 @@ class ItemSpecsHostFragment : Fragment(R.layout.fragment_item_specs_host) {
     // what's a better way to provide the configuration changes safety? to store the args in the savedInstanceState, or in the viewModel?
     // i'll start with setting the data onto the uiState via viewModel, and maybe test the traditional way later, if it doesn't work.
 
-    private val viewModel: ItemSpecsViewModel by navGraphViewModels(R.id.item_specs_nav_graph)
+    private val viewModel: ItemSpecsViewModel by hiltNavGraphViewModels(R.id.item_specs_nav_graph)
 
     init {
         // TODO: retrieve arguments

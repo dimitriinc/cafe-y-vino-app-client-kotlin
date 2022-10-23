@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.MenuCategoryFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
@@ -30,7 +30,7 @@ class CategoriesFragment @Inject constructor(
     val fStorage: FirebaseStorageSource
 ) : Fragment(R.layout.fragment_categories), OnItemClickListener {
 
-    private val viewModel: CartaDisplayViewModel by navGraphViewModels(R.id.carta_nav_graph)
+    private val viewModel: CartaDisplayViewModel by hiltNavGraphViewModels(R.id.carta_nav_graph)
     lateinit var adapter: CategoriesAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,7 +47,7 @@ class CategoriesFragment @Inject constructor(
 
         binding.apply {
             fabHome.setOnClickListener {
-                val action = CategoriesFragmentDirections.actionCategoriesFragmentToMainNavGraph()
+                val action = MainNavGraphDirections.actionGlobalMainFragment()
                 findNavController().navigate(action)
             }
             recCategories.apply {

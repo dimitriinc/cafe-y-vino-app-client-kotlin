@@ -19,7 +19,7 @@ import java.util.*
 import javax.inject.Inject
 
 /**
- * A view model scoped to the main to the main nav graph
+ * A view model scoped to the main nav graph
  */
 @HiltViewModel
 class MainViewModel @Inject constructor(

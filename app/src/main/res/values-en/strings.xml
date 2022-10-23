@@ -155,9 +155,6 @@
         <b>Where do you store the data?</b>\n
         In the Firebase Firestore database, owned by Google.\n\n
 
-        <b>For how long do you store the data?</b>\n
-        As long as you have the app on your device. When you delete the app, your data is deleted from the database.\n\n
-
         <b>How the collected data is protected?</b>\n
         The data is encrypted every time it is transported from the device to server and the other way around.
         It is also encrypted when it rests in the database.\n\n
@@ -174,5 +171,11 @@
         <b>Do you use Cookies?</b>\n
         No.
     </string>
+    <string name="email_update_success">The email is updated</string>
+    <string name="email_update_failure">Failed to update the email</string>
+    <string name="nombre_update_success">The name is updated</string>
+    <string name="nombre_update_failure">Failed to update the name</string>
+    <string name="telefono_update_success">The phone number is updated</string>
+    <string name="telefono_update_failure">Failed to update the phone number</string>
 
 </resources>

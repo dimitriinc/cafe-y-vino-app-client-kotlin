@@ -6,12 +6,14 @@ import android.view.View.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.bumptech.glide.Glide
+import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemSpecsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
 
-    private val viewModel: ItemSpecsViewModel by navGraphViewModels(R.id.item_specs_nav_graph)
+    private val viewModel: ItemSpecsViewModel by hiltNavGraphViewModels(R.id.item_specs_nav_graph)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,7 +31,7 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
 
         binding.apply {
             fabItemSpecsHome.setOnClickListener {
-                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToMainNavGraph()
+                val action = MainNavGraphDirections.actionGlobalMainFragment()
                 findNavController().navigate(action)
             }
             fabMainMenu.setOnClickListener {

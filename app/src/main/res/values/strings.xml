@@ -169,9 +169,6 @@
         <b>¿Donde están almacenados los datos?</b>\n
         En el banco de datos Firebase Firestore, poseido por el Google.\n\n
 
-        <b>¿Por cuanto tiempo los almacenan?</b>\n
-        A lo largo que usted mantenga la app en su dispositivo. Al borrar la app, los datos serán borrados del banco de datos.\n\n
-
         <b>¿De que manera están protegidos los datos recopilados?</b>\n
         Los datos se encriptan cada vez al transportarse del dispositivo al servidor y de vuelta. Tambien están encriptados mientras yacen en el banco de datos.\n\n
 

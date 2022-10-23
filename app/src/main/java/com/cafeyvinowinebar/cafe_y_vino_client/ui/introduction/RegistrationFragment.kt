@@ -7,12 +7,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.AlertPrivacyBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentRegistrationBinding
@@ -26,7 +25,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
-    private val viewModel: IntroductionViewModel by navGraphViewModels(R.id.intro_nav_graph)
+    private val viewModel: IntroductionViewModel by hiltNavGraphViewModels(R.id.intro_nav_graph)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

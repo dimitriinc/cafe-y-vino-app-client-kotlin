@@ -10,11 +10,10 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.navGraphViewModels
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentReservasFechaBinding
 import kotlinx.coroutines.launch
@@ -27,7 +26,7 @@ import java.util.*
  */
 class FechaFragment : Fragment(R.layout.fragment_reservas_fecha) {
 
-    private val viewModel: ReservasViewModel by navGraphViewModels(R.id.reservas_nav_graph)
+    private val viewModel: ReservasViewModel by hiltNavGraphViewModels(R.id.reservas_nav_graph)
     private lateinit var horas: List<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

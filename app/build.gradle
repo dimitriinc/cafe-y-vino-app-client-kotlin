@@ -83,6 +83,8 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
 //    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
+    implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0'
+
 
     // DataStore
     implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"

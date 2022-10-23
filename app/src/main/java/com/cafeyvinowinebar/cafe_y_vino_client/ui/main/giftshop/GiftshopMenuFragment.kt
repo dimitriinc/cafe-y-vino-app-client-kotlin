@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_IS_PRESENT
@@ -29,7 +29,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class GiftshopMenuFragment : DialogFragment(), OnGiftClickListener {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by hiltNavGraphViewModels(R.id.main_nav_graph)
 
     @Inject
     lateinit var fStore: FirebaseFirestore
