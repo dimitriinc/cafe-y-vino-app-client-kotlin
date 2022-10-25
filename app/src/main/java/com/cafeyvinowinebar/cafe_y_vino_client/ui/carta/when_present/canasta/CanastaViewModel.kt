@@ -43,7 +43,7 @@ class CanastaViewModel @Inject constructor(
     init {
         // listen to the user's presence state, and if they can make orders
         viewModelScope.launch(Dispatchers.IO) {
-            userDataRepo.userPresenceFlow.collect { isPresent ->
+            userDataRepo.getUserPresenceFlow().collect { isPresent ->
                 _uiState.update {
                     it.copy(
                         isPresent = isPresent

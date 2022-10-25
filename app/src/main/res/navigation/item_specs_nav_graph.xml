@@ -16,22 +16,12 @@
         android:label="fragment_item_specs"
         tools:layout="@layout/fragment_item_specs">
         <action
-            android:id="@+id/action_itemSpecsFragment_to_carta_nav_graph"
-            app:destination="@id/carta_nav_graph" />
-        <action
             android:id="@+id/action_itemSpecsFragment_to_when_present_nav_graph"
             app:destination="@id/when_present_nav_graph" />
     </fragment>
     <include app:graph="@navigation/when_present_nav_graph" />
-    <include app:graph="@navigation/carta_nav_graph" />
     <action
         android:id="@+id/action_global_itemSpecsHostFragment"
         app:destination="@id/itemSpecsHostFragment" >
-        <argument
-            android:name="bundleWithItemsCollection"
-            app:argType="android.os.Bundle" />
-        <argument
-            android:name="nameOfInitialItem"
-            app:argType="string" />
     </action>
 </navigation>

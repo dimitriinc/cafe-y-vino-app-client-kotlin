@@ -47,8 +47,7 @@ class CategoriesFragment @Inject constructor(
 
         binding.apply {
             fabHome.setOnClickListener {
-                val action = MainNavGraphDirections.actionGlobalMainFragment()
-                findNavController().navigate(action)
+                findNavController().navigate(R.id.mainFragment)
             }
             recCategories.apply {
                 adapter = adapter

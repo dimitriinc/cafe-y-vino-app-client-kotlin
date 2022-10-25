@@ -6,6 +6,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import java.lang.Exception as LangException
@@ -21,16 +22,28 @@ class FirebaseFirestoreSource @Inject constructor(
     /**
      * Transmits the user's document snapshot as a flow
      */
-    val userFlow: Flow<DocumentSnapshot?> = fStore.collection("usuarios")
-        .document(fAuth.getUserObject()!!.uid)
-        .snapshotAsFlow()
+    val userFlow: Flow<DocumentSnapshot?> =
+
+        if (fAuth.getUserObject() != null) {
+            fStore.collection("usuarios")
+                .document(fAuth.getUserObject()!!.uid)
+                .snapshotAsFlow()
+        } else {
+            flowOf(null)
+        }
+
 
     /**
      * Transmits the utils data as flow
      */
-    val utilsFlow: Flow<DocumentSnapshot?> = fStore.collection("utils")
-        .document("horas")
-        .snapshotAsFlow()
+    val utilsFlow: Flow<DocumentSnapshot?> =
+        if (fAuth.getUserObject() != null) {
+            fStore.collection("utils")
+                .document("horas")
+                .snapshotAsFlow()
+        } else {
+            flowOf(null)
+        }
 
     /**
      * Creates a flow with calculated total cost of the user's cuenta

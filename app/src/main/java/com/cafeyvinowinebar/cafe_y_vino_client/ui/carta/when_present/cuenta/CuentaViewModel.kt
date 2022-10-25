@@ -35,7 +35,7 @@ class CuentaViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
 
             // listen to the user's presence state
-            userDataRepo.userPresenceFlow.collect { isPresent ->
+            userDataRepo.getUserPresenceFlow().collect { isPresent ->
                 _uiState.update {
                     it.copy(
                         isPresent = isPresent

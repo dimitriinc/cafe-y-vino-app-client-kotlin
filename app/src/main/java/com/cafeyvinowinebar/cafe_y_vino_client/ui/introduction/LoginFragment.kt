@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentLoginBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
@@ -37,7 +38,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     if (it.isLoggedIn) {
                         binding.progressBarLogin.visibility = View.INVISIBLE
                         Toast.makeText(requireContext(), R.string.login_inicio, Toast.LENGTH_SHORT).show()
-                        val action = LoginFragmentDirections.actionLoginFragmentToMainActivity()
+                        val action = MainNavGraphDirections.actionGlobalMainFragment()
                         findNavController().navigate(action)
                     }
 

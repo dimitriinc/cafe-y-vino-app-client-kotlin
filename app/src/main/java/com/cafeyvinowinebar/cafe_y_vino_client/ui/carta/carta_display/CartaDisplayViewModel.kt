@@ -31,7 +31,7 @@ class CartaDisplayViewModel @Inject constructor(
 
         // set the presence status in the UI state
         viewModelScope.launch {
-            userDataRepo.userFlow.collect {
+            userDataRepo.getUserPresenceFlow().collect {
                 _uiState.update {
                     it.copy(isPresent = it.isPresent)
                 }

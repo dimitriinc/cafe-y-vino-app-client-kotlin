@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.AlertPrivacyBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentRegistrationBinding
@@ -130,7 +131,7 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                     // so we start the session and navigate to the main screen
                     if (it.isRegistered) {
                         binding.progressBar.visibility = View.INVISIBLE
-                        val action = RegistrationFragmentDirections.actionRegistrationFragmentToMainActivity()
+                        val action = MainNavGraphDirections.actionGlobalMainFragment()
                         findNavController().navigate(action)
                     }
 

@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.bumptech.glide.Glide
+import com.cafeyvinowinebar.cafe_y_vino_client.CartaNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemSpecsBinding
@@ -31,11 +32,10 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
 
         binding.apply {
             fabItemSpecsHome.setOnClickListener {
-                val action = MainNavGraphDirections.actionGlobalMainFragment()
-                findNavController().navigate(action)
+                findNavController().navigate(R.id.mainFragment)
             }
             fabMainMenu.setOnClickListener {
-                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToCartaNavGraph()
+                val action = CartaNavGraphDirections.actionGlobalCategoriesFragment()
                 findNavController().navigate(action)
             }
             fabCanasta.setOnClickListener {

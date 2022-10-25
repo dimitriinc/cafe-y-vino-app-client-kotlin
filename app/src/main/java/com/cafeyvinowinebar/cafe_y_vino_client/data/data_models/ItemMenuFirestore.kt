@@ -10,7 +10,6 @@ import kotlinx.android.parcel.Parcelize
  * Model for the AdapterCategory
  */
 
-@Parcelize
 @Keep
 data class ItemMenuFirestore(
     val nombre: String,
@@ -20,7 +19,7 @@ data class ItemMenuFirestore(
     val image: String?,
     val icon: String?,
     val isPresent: Boolean
-) : Parcelable {
+) : java.io.Serializable {
 }
 
 fun ItemMenuFirestore.asItemCanasta(): ItemCanasta =

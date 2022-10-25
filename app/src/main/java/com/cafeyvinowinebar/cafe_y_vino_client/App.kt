@@ -23,11 +23,6 @@ const val DATOS = "channelDatos"
 @HiltAndroidApp
 class App() : Application() {
 
-    // the idea is to inject the utils repo at the start of the app process to trigger its init block
-    // and start collecting from the utils flow
-    @Inject
-    lateinit var utilsRepo: UtilsRepository
-
     override fun onCreate() {
         super.onCreate()
 

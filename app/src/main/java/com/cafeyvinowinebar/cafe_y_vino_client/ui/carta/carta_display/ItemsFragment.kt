@@ -136,8 +136,7 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
                 findNavController().navigate(action)
             }
             fabItemsHome.setOnClickListener {
-                val action = MainNavGraphDirections.actionGlobalMainFragment()
-                findNavController().navigate(action)
+                findNavController().navigate(R.id.mainFragment)
 
             }
         }
@@ -160,17 +159,13 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
         val bundle = Bundle()
         bundle.putSerializable(KEY_ITEMS, items)
         bundle.putString(KEY_NOMBRE, document.getString(KEY_NOMBRE))
-        val action = ItemSpecsNavGraphDirections.actionGlobalItemSpecsHostFragment(
-            bundle,
-            document.getString(KEY_NOMBRE)!!
-        )
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.action_global_itemSpecsHostFragment, bundle)
     }
 
     override fun onStart() {
         super.onStart()
         adapter.startListening()
-    }
+    }   
 
     override fun onStop() {
         super.onStop()

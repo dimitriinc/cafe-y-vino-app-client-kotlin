@@ -18,6 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentReservasFinBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isDarkThemeOn
@@ -73,7 +74,7 @@ class FinFragment : Fragment() {
                         if (uiState.isReservaSent) {
                             // if the value is true, the reserva sending is done, we can navigate to the main screen
                             Toast.makeText(requireContext(), getString(R.string.solicitud_reserva, uiState.firstName), Toast.LENGTH_SHORT).show()
-                            val action = FinFragmentDirections.actionReservasFinDestToMainNavGraph()
+                            val action = MainNavGraphDirections.actionGlobalMainFragment()
                             findNavController().navigate(action)
                             
                         } else {

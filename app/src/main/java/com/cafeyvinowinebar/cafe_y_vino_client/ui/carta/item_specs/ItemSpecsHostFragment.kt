@@ -8,7 +8,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.cafeyvinowinebar.cafe_y_vino_client.KEY_ITEMS
+import com.cafeyvinowinebar.cafe_y_vino_client.KEY_NOMBRE
 import com.cafeyvinowinebar.cafe_y_vino_client.R
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemSpecsHostBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,9 +29,10 @@ class ItemSpecsHostFragment : Fragment(R.layout.fragment_item_specs_host) {
     private val viewModel: ItemSpecsViewModel by hiltNavGraphViewModels(R.id.item_specs_nav_graph)
 
     init {
-        // TODO: retrieve arguments
+        val items = arguments?.getSerializable(KEY_ITEMS) as ArrayList<ItemMenuFirestore>
+        val initialItemName = arguments?.getString(KEY_NOMBRE)!!
         // pass the arguments to the viewModel, so it stores the necessary values into the UI state
-//        viewModel.setArgsOnUiState(args.bundleWithItemsCollection, args.nameOfInitialItem)
+        viewModel.setArgsOnUiState(items, initialItemName)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

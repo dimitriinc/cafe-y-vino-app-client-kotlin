@@ -12,10 +12,8 @@ import com.cafeyvinowinebar.cafe_y_vino_client.databinding.SlidePagerBinding
 
 class OnBoardingAdapter(
     private val context: Context,
-    private val slide_headings: Array<out String> = Resources.getSystem()
-        .getStringArray(R.array.pager_headings),
-    private val slide_descs: Array<out String> = Resources.getSystem()
-        .getStringArray(R.array.pager_descriptions)
+    private val slide_headings: Array<out String> = context.resources.getStringArray(R.array.pager_headings),
+    private val slide_descs: Array<out String> = context.resources.getStringArray(R.array.pager_descriptions)
 ) : PagerAdapter() {
 
     override fun getCount() = slide_headings.size

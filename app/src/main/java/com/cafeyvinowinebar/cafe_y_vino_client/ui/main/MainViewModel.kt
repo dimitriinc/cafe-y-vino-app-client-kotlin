@@ -49,7 +49,7 @@ class MainViewModel @Inject constructor(
 
             val firstName = userDataRepo.getUserFirstName()
 
-            userDataRepo.userFlow.collect { user ->
+            userDataRepo.getUserFlow().collect { user ->
                 _uiState.update { uiState ->
                     uiState.copy(
                         isUserPresent = user.isPresent,

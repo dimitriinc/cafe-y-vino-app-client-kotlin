@@ -11,12 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cafeyvinowinebar.cafe_y_vino_client.CartaNavGraphDirections
-import com.cafeyvinowinebar.cafe_y_vino_client.R
+import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemCuenta
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentCuentaBinding
-import com.cafeyvinowinebar.cafe_y_vino_client.getCurrentDate
-import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,7 +85,7 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
                     // and they're navigated to the main screen
                     // the user can stay in the cuenta fragment while in negative presence status
                     if (!uiState.isPresent) {
-                        val action = CuentaFragmentDirections.actionCuentaFragmentToMainNavGraph()
+                        val action = MainNavGraphDirections.actionGlobalMainFragment()
                         findNavController().navigate(action)
                     }
 

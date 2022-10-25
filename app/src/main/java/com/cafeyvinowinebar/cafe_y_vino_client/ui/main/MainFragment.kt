@@ -36,73 +36,17 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         // check if the user is logged in
         // if not, direct to the log in flow
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.uiState.collect {
-                    if (!it.isLoggedIn) {
-                        val action = MainFragmentDirections.actionMainFragmentToIntroActivity()
-                        findNavController().navigate(action)
-                        // TODO: you have to pop up the main graph somehow
-                    }
-                }
-            }
+        if (!viewModel.uiState.value.isLoggedIn) {
+            val action = MainFragmentDirections.actionMainFragmentToIntroNavGraph()
+            findNavController().navigate(action)
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentMainBinding.bind(view)
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
-
-                    // what fabs to display depends on the presence status of the user
-                    if (!it.isUserPresent) {
-                        binding.apply {
-                            fabCanastaMain.visibility = GONE
-                            fabCuentaMain.visibility = GONE
-                            fabPuerta.visibility = VISIBLE
-                            fabUserData.visibility = VISIBLE
-                        }
-                    } else {
-                        binding.apply {
-                            fabCanastaMain.visibility = VISIBLE
-                            fabCuentaMain.visibility = VISIBLE
-                            fabPuerta.visibility = GONE
-                            fabUserData.visibility = GONE
-                        }
-                    }
-
-                    // the initial value of the UI state property is null
-                    // when the user tries to send the request, the view model decides if they're allowed to do it
-                    // when the decision is made, it sets the value to true or false
-                    // and this block is supposed to react to this action
-                    // after the appropriate reaction, the view model is asked to set the value to null again
-                    require(it.canUserSendEntryRequest != null) {
-                        if (it.canUserSendEntryRequest == true) {
-                            viewModel.sendEntryRequest()
-                            entryRequestDialog.dismiss()
-                            Toast.makeText(
-                                requireContext(),
-                                R.string.main_request_puerta,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            viewModel.nullifyEntryRequestStatus()
-                        } else {
-                            entryRequestDialog.dismiss()
-                            Toast.makeText(
-                                requireContext(),
-                                R.string.main_we_closed,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            viewModel.nullifyEntryRequestStatus()
-                        }
-                    }
-                }
-            }
-        }
 
         binding.apply {
 
@@ -116,7 +60,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 findNavController().navigate(action)
             }
             imgBtnReserv.setOnClickListener {
-                val action = MainFragmentDirections.actionMainFragmentToReservasActivity()
+                val action = MainFragmentDirections.actionMainFragmentToReservasNavGraph()
                 findNavController().navigate(action)
             }
             fabUserData.setOnClickListener {
@@ -169,5 +113,57 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 entryRequestDialog.show()
             }
         }
+
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+
+                    // what fabs to display depends on the presence status of the user
+                    if (!it.isUserPresent) {
+                        binding.apply {
+                            fabCanastaMain.visibility = GONE
+                            fabCuentaMain.visibility = GONE
+                            fabPuerta.visibility = VISIBLE
+                            fabUserData.visibility = VISIBLE
+                        }
+                    } else {
+                        binding.apply {
+                            fabCanastaMain.visibility = VISIBLE
+                            fabCuentaMain.visibility = VISIBLE
+                            fabPuerta.visibility = GONE
+                            fabUserData.visibility = GONE
+                        }
+                    }
+
+                    // the initial value of the UI state property is null
+                    // when the user tries to send the request, the view model decides if they're allowed to do it
+                    // when the decision is made, it sets the value to true or false
+                    // and this block is supposed to react to this action
+                    // after the appropriate reaction, the view model is asked to set the value to null again
+                    if (it.canUserSendEntryRequest != null) {
+                        if (it.canUserSendEntryRequest == true) {
+                            viewModel.sendEntryRequest()
+                            entryRequestDialog.dismiss()
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.main_request_puerta,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            viewModel.nullifyEntryRequestStatus()
+                        } else {
+                            entryRequestDialog.dismiss()
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.main_we_closed,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            viewModel.nullifyEntryRequestStatus()
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

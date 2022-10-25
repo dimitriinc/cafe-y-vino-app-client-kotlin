@@ -12,10 +12,14 @@
         tools:layout="@layout/fragment_categories" >
         <action
             android:id="@+id/action_categoriesFragment_to_itemsFragment"
-            app:destination="@id/itemsFragment" />
+            app:destination="@id/itemsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_categoriesFragment_to_vinosFragment"
-            app:destination="@id/vinosFragment" />
+            app:destination="@id/vinosFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/itemsFragment"
@@ -27,10 +31,14 @@
             app:argType="string" />
         <action
             android:id="@+id/action_itemsFragment_to_when_present_nav_graph"
-            app:destination="@id/when_present_nav_graph" />
+            app:destination="@id/when_present_nav_graph"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_itemsFragment_to_item_specs_nav_graph"
-            app:destination="@id/item_specs_nav_graph" />
+            app:destination="@id/item_specs_nav_graph"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
 
     </fragment>
     <fragment
@@ -40,7 +48,9 @@
         tools:layout="@layout/fragment_vinos" >
         <action
             android:id="@+id/action_vinosFragment_to_itemsFragment"
-            app:destination="@id/itemsFragment" />
+            app:destination="@id/itemsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <include app:graph="@navigation/when_present_nav_graph" />
     <include app:graph="@navigation/item_specs_nav_graph" /><action android:id="@+id/action_global_categoriesFragment" app:destination="@id/categoriesFragment"/>

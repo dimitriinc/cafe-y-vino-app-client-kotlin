@@ -24,6 +24,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 /**
@@ -44,7 +45,7 @@ class UserDataRepository @Inject constructor(
         // inside the application scope we listen to the user document and update the object stored in the Proto DataStore
         appScope.launch {
             fStoreSource.userFlow.collect { userSnapshot ->
-                updateUserData(userSnapshot!!)
+                updateUserData(userSnapshot)
             }
         }
 
@@ -67,33 +68,42 @@ class UserDataRepository @Inject constructor(
     }
 
     /**
-     * Transmits the object store in the user dataStore as a User instance
+     * Transmits the object stored in the user dataStore as a User instance
      */
-    val userFlow: Flow<User> = userDataStore.data.map {
-        User(
-            nombre = it.nombre,
-            email = it.email,
-            telefono = it.telefono,
-            token = it.token,
-            mesa = it.mesa,
-            isPresent = it.isPresent,
-            bonos = it.bonos
-        )
-    }
+    fun getUserFlow(): Flow<User> = userDataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(UserData.getDefaultInstance())
+            } else {
+                throw exception
+            }
+        }
+        .map {
+            User(
+                nombre = it.nombre,
+                email = it.email,
+                telefono = it.telefono,
+                token = it.token,
+                mesa = it.mesa,
+                isPresent = it.isPresent,
+                bonos = it.bonos
+            )
+        }
+
 
     /**
      * Gets the flow from the Proto DataStore, converts it to a flow of the isPresent property for its exposure to the UI layer
      */
-    val userPresenceFlow: Flow<Boolean> = userDataStore.data.map {
+    fun getUserPresenceFlow(): Flow<Boolean> = userDataStore.data.map {
         it.isPresent
     }
 
     /**
      * Gets the flow from the Proto DataStore, converts it to a flow of the bonos property for its exposure to the UI layer
      */
-    val userBonosFlow: Flow<Long> = userDataStore.data.map {
-        it.bonos
-    }
+//    fun getUserBonosFlow(): Flow<Long> = userDataStore.data.map {
+//        it.bonos
+//    }
 
     /**
      * Returns an Auth object for the start destination to decided if the user is logged in
@@ -223,6 +233,7 @@ class UserDataRepository @Inject constructor(
         }
 
     }
+
     suspend fun updateNombre(nombre: String): Boolean {
         return try {
             userDataStore.updateData { user ->
@@ -232,10 +243,12 @@ class UserDataRepository @Inject constructor(
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
             val request = OneTimeWorkRequestBuilder<UpdateNombreWorker>()
-                .setInputData(workDataOf(
-                    KEY_NOMBRE to nombre,
-                    KEY_USER_ID to getUserId()
-                ))
+                .setInputData(
+                    workDataOf(
+                        KEY_NOMBRE to nombre,
+                        KEY_USER_ID to getUserId()
+                    )
+                )
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .setConstraints(constraints)
                 .build()
@@ -245,6 +258,7 @@ class UserDataRepository @Inject constructor(
             false
         }
     }
+
     suspend fun updateTelefono(telefono: String): Boolean {
         return try {
             userDataStore.updateData { user ->
@@ -254,10 +268,12 @@ class UserDataRepository @Inject constructor(
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
             val request = OneTimeWorkRequestBuilder<UpdateTelefonoWorker>()
-                .setInputData(workDataOf(
-                    KEY_USER_ID to getUserId(),
-                    KEY_TELEFONO to telefono
-                ))
+                .setInputData(
+                    workDataOf(
+                        KEY_USER_ID to getUserId(),
+                        KEY_TELEFONO to telefono
+                    )
+                )
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .setConstraints(constraints)
                 .build()
@@ -267,6 +283,7 @@ class UserDataRepository @Inject constructor(
             false
         }
     }
+
     suspend fun updateBonos(newBonos: Long) {
         userDataStore.updateData { user ->
             user.toBuilder().setBonos(newBonos).build()
@@ -276,10 +293,12 @@ class UserDataRepository @Inject constructor(
             .build()
 
         val request = OneTimeWorkRequestBuilder<UpdateBonosWorker>()
-            .setInputData(workDataOf(
-                KEY_USER_ID to getUserId(),
-                KEY_BONOS to newBonos
-            ))
+            .setInputData(
+                workDataOf(
+                    KEY_USER_ID to getUserId(),
+                    KEY_BONOS to newBonos
+                )
+            )
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .setConstraints(constraints)
             .build()
@@ -290,17 +309,31 @@ class UserDataRepository @Inject constructor(
     /**
      * With a user document snapshot from the fStore flow we update the Proto DataStore object
      */
-    private suspend fun updateUserData(userSnapshot: DocumentSnapshot) {
-        userDataStore.updateData { user ->
-            user.toBuilder()
-                .setNombre(userSnapshot.getString(KEY_NOMBRE))
-                .setTelefono(userSnapshot.getString(KEY_TELEFONO))
-                .setEmail(userSnapshot.getString(KEY_EMAIL))
-                .setToken(userSnapshot.getString(KEY_TOKEN))
-                .setMesa(userSnapshot.getString(KEY_MESA))
-                .setIsPresent(userSnapshot.getBoolean(KEY_IS_PRESENT)!!)
-                .setBonos(userSnapshot.getLong(KEY_BONOS)!!)
-                .build()
+    private suspend fun updateUserData(userSnapshot: DocumentSnapshot?) {
+        if (userSnapshot != null) {
+            userDataStore.updateData { user ->
+                user.toBuilder()
+                    .setNombre(userSnapshot.getString(KEY_NOMBRE))
+                    .setTelefono(userSnapshot.getString(KEY_TELEFONO))
+                    .setEmail(userSnapshot.getString(KEY_EMAIL))
+                    .setToken(userSnapshot.getString(KEY_TOKEN))
+                    .setMesa(userSnapshot.getString(KEY_MESA))
+                    .setIsPresent(userSnapshot.getBoolean(KEY_IS_PRESENT)!!)
+                    .setBonos(userSnapshot.getLong(KEY_BONOS)!!)
+                    .build()
+            }
+        } else {
+            userDataStore.updateData { user ->
+                user.toBuilder()
+                    .setNombre("")
+                    .setTelefono("")
+                    .setEmail("")
+                    .setToken("")
+                    .setMesa("")
+                    .setIsPresent(false)
+                    .setBonos(0)
+                    .build()
+            }
         }
     }
 }
