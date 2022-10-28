@@ -1,7 +1,9 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.res.Resources
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.work.*
 import com.cafeyvinowinebar.cafe_y_vino_client.*
@@ -58,11 +60,9 @@ class UserDataRepository @Inject constructor(
     val errorMessageFlow: Flow<String?> = fAuthSource.errorFlow.map {
         when (it) {
             null -> null
-            is FirebaseAuthUserCollisionException -> Resources.getSystem()
-                .getString(R.string.email_collision)
-            is FirebaseAuthInvalidUserException -> Resources.getSystem()
-                .getString(R.string.wrong_email)
-            else -> Resources.getSystem().getString(R.string.error)
+            is FirebaseAuthUserCollisionException -> context.getString(R.string.email_collision)
+            is FirebaseAuthInvalidUserException -> context.getString(R.string.wrong_email)
+            else -> it.localizedMessage
         }
 
     }
@@ -322,18 +322,19 @@ class UserDataRepository @Inject constructor(
                     .setBonos(userSnapshot.getLong(KEY_BONOS)!!)
                     .build()
             }
-        } else {
-            userDataStore.updateData { user ->
-                user.toBuilder()
-                    .setNombre("")
-                    .setTelefono("")
-                    .setEmail("")
-                    .setToken("")
-                    .setMesa("")
-                    .setIsPresent(false)
-                    .setBonos(0)
-                    .build()
-            }
         }
+//        else {
+//            userDataStore.updateData { user ->
+//                user.toBuilder()
+//                    .setNombre("")
+//                    .setTelefono("")
+//                    .setEmail("")
+//                    .setToken("")
+//                    .setMesa("")
+//                    .setIsPresent(false)
+//                    .setBonos(0)
+//                    .build()
+//            }
+//        }
     }
 }

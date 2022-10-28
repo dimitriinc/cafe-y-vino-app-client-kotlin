@@ -5,7 +5,6 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
@@ -14,7 +13,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.databinding.AlertPrivacyBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentRegistrationBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +41,6 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                     edtPass.transformationMethod = PasswordTransformationMethod.getInstance()
                 }
             }
-
 
             btnRegistration.setOnClickListener {
                 if (isOnline(requireContext())) {
@@ -82,40 +79,16 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                     }
                     if (birthdate.isEmpty()) {
                         edtFechaNacimiento.error = getString(R.string.error_fecha_nacimiento)
+                        return@setOnClickListener
                     }
+
+                    // store the data to the UI state
+                    viewModel.storeFormData(email, password, name, phone, birthdate)
 
                     // all values are good, we are ready to register the user
                     // but first we need to explicitly ask him for permission to collect his personal data
-                    val privacyAlertView = layoutInflater.inflate(R.layout.alert_privacy, null)
-                    val privacyAlertBinding = AlertPrivacyBinding.bind(privacyAlertView)
-                    val privacyAlertDialog = AlertDialog.Builder(requireContext())
-                        .setView(privacyAlertView)
-                        .create()
-                    privacyAlertBinding.apply {
-                        btnPrivacySaber.setOnClickListener {
-                            // navigate to the information screen with a condensed FAQ of our privacy policy
-                            findNavController().navigate(R.id.action_registrationFragment_to_privacyFragment)
-                        }
-                        btnPrivacyRechazar.setOnClickListener {
-                            privacyAlertDialog.dismiss()
-                        }
-                        btnPrivacyPermitir.setOnClickListener {
-
-                            // the permission is granted; we can start the business logic, and take care of some views while it's processing
-                            viewModel.registerUser(
-                                email,
-                                password,
-                                name,
-                                phone,
-                                birthdate
-                            )
-                            privacyAlertDialog.dismiss()
-                            progressBar.visibility = View.VISIBLE
-
-                        }
-                    }
-                    privacyAlertDialog.show()
-
+                    val action = RegistrationFragmentDirections.actionRegistrationFragmentToPrivacyDialog()
+                    findNavController().navigate(action)
 
                 } else {
                     Toast.makeText(requireContext(), R.string.no_connection, Toast.LENGTH_LONG).show()
@@ -127,19 +100,30 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
 
+                    if (it.privacyPolicyVisited) {
+                        val action = RegistrationFragmentDirections.actionRegistrationFragmentToPrivacyDialog()
+                        findNavController().navigate(action)
+                        viewModel.setPrivacyFlag(false)
+                    }
+
                     // if the isRegistered property of the UI state is true, that means the registration has terminated successfully
                     // so we start the session and navigate to the main screen
                     if (it.isRegistered) {
-                        binding.progressBar.visibility = View.INVISIBLE
                         val action = MainNavGraphDirections.actionGlobalMainFragment()
                         findNavController().navigate(action)
                     }
 
+                    if (it.progressBarVisible) {
+                        binding.progressBar.visibility = View.VISIBLE
+                    } else {
+                        binding.progressBar.visibility = View.INVISIBLE
+                    }
+
                     // when the registration operation fails we get an error message and display it as a toast
                     if (it.errorMessage != null) {
-                        binding.progressBar.visibility = View.INVISIBLE
+                        viewModel.setProgressBarVisibility(false)
                         Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG).show()
-                        // TODO: nullify the error message?
+                        viewModel.nullifyErrorMessage()
                     }
                 }
             }

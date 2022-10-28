@@ -1,5 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.sources
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.*
@@ -39,6 +41,7 @@ class FirebaseAuthSource @Inject constructor(
             fAuth.createUserWithEmailAndPassword(email, password).await()
             true
         } catch (e: Throwable) {
+            Log.d(TAG, "registerUser: the exception: ${e.cause}")
             _errorFlow.update {
                 e
             }

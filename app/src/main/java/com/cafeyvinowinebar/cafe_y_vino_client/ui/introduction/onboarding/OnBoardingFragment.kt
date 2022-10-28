@@ -52,7 +52,7 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding), ViewPager.On
     override fun onPageSelected(position: Int) {
         addDotsIndicator(position)
         if (position == dots.size - 1) {
-            btnOmitir.text = getString(android.R.string.ok)
+            btnOmitir.text = "OK"
         }
     }
 

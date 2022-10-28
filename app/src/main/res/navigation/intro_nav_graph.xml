@@ -9,39 +9,33 @@
         android:id="@+id/bienvenidoFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.BienvenidoFragment"
         android:label="fragment_bienvenido"
-        tools:layout="@layout/fragment_bienvenido" >
+        tools:layout="@layout/fragment_bienvenido">
         <action
             android:id="@+id/action_bienvenidoFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"/>
+            app:destination="@id/registrationFragment" />
         <action
             android:id="@+id/action_bienvenidoFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/walkthroughFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.onboarding.OnBoardingFragment"
         android:label="fragment_walkthrough"
-        tools:layout="@layout/fragment_on_boarding" >
+        tools:layout="@layout/fragment_on_boarding">
         <action
             android:id="@+id/action_walkthroughFragment_to_bienvenidoFragment"
-            app:destination="@id/bienvenidoFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:destination="@id/bienvenidoFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" >
+        tools:layout="@layout/fragment_registration">
         <action
-            android:id="@+id/action_registrationFragment_to_privacyFragment"
-            app:destination="@id/privacyFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"/>
+            android:id="@+id/action_registrationFragment_to_privacyDialog"
+            app:destination="@id/privacyDialog"
+            app:enterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -53,4 +47,15 @@
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.PrivacyFragment"
         android:label="fragment_privacy_policy"
         tools:layout="@layout/fragment_privacy_policy" />
+    <dialog
+        android:id="@+id/privacyDialog"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction.PrivacyDialog"
+        android:label="alert_privacy"
+        tools:layout="@layout/alert_privacy">
+        <action
+            android:id="@+id/action_privacyDialog_to_privacyFragment"
+            app:destination="@id/privacyFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </dialog>
 </navigation>

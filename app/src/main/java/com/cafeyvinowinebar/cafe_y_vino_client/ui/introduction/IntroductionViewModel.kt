@@ -46,20 +46,48 @@ class IntroductionViewModel @Inject constructor(
      * Calls the registration operations from the repository and suspends until their completion
      * If the registration process returns 'true', lets the fragment know by updating the UI state
      */
-    fun registerUser(
+    fun registerUser() = applicationScope.launch {
+        _uiState.update {
+            it.copy(
+                progressBarVisible = true
+            )
+        }
+        val uiState = _uiState.value
+        val registered = userDataRepo.registerUser(
+            uiState.email,
+            uiState.password,
+            uiState.name,
+            uiState.phone,
+            uiState.birthdate
+        )
+        if (registered) {
+            _uiState.update {
+                it.copy(
+                    isRegistered = true,
+                    progressBarVisible = false
+                )
+            }
+        }
+    }
+
+    /**
+     * Take the values from the form and store them in the UI state
+     */
+    fun storeFormData(
         email: String,
         password: String,
         name: String,
         phone: String,
         birthdate: String
-    ) = applicationScope.launch {
-        val registered = userDataRepo.registerUser(email, password, name, phone, birthdate)
-        if (registered) {
-            _uiState.update {
-                it.copy(
-                    isRegistered = true
-                )
-            }
+    ) {
+        _uiState.update {
+            it.copy(
+                email = email,
+                password = password,
+                name = name,
+                phone = phone,
+                birthdate = birthdate
+            )
         }
     }
 
@@ -90,6 +118,33 @@ class IntroductionViewModel @Inject constructor(
                     isLoggedIn = true
                 )
             }
+        }
+    }
+
+    /**
+     * When returning from the privacy policy fragment we want to recreate the dialog
+     */
+    fun setPrivacyFlag(flag: Boolean) {
+        _uiState.update {
+            it.copy(
+                privacyPolicyVisited = flag
+            )
+        }
+    }
+
+    fun nullifyErrorMessage() {
+        _uiState.update {
+            it.copy(
+                errorMessage = null
+            )
+        }
+    }
+
+    fun setProgressBarVisibility(isVisible: Boolean) {
+        _uiState.update {
+            it.copy(
+                progressBarVisible = isVisible
+            )
         }
     }
 }
