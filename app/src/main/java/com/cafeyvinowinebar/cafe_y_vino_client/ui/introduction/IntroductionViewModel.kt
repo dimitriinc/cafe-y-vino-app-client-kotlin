@@ -1,5 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction
 
+import android.content.Context
 import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +8,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UserDataRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -19,7 +21,8 @@ import javax.inject.Inject
 class IntroductionViewModel @Inject constructor(
 
     private val userDataRepo: UserDataRepository,
-    @ApplicationScope private val applicationScope: CoroutineScope
+    @ApplicationScope private val applicationScope: CoroutineScope,
+    @ApplicationContext val context: Context
 
 ) : ViewModel() {
 
@@ -100,7 +103,7 @@ class IntroductionViewModel @Inject constructor(
         if (formSent) {
             _uiState.update {
                 it.copy(
-                    message = Resources.getSystem().getString(R.string.sent_email_toast)
+                    message = context.getString(R.string.sent_email_toast)
                 )
             }
         }
@@ -144,6 +147,14 @@ class IntroductionViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 progressBarVisible = isVisible
+            )
+        }
+    }
+
+    fun nullifyMessage() {
+        _uiState.update {
+            it.copy(
+                message = null
             )
         }
     }

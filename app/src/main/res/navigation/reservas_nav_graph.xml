@@ -3,25 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/reservas_nav_graph"
-    app:startDestination="@id/reservas_fecha_dest">
+    app:startDestination="@id/reservas_dest">
 
+    <fragment
+        android:id="@+id/reservas_dest"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.ReservasFragment"
+        android:label="fragment_reservas"
+        tools:layout="@layout/fragment_reservas"/>
     <fragment
         android:id="@+id/reservas_fecha_dest"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.FechaFragment"
         android:label="fragment_reservas_fecha"
-        tools:layout="@layout/fragment_reservas_fecha" >
-        <action
-            android:id="@+id/action_fechaFragment_to_mesaFragment"
-            app:destination="@id/reservas_mesa_dest" />
-    </fragment>
+        tools:layout="@layout/fragment_reservas_fecha" />
     <fragment
         android:id="@+id/reservas_mesa_dest"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.MesaFragment"
         android:label="fragment_reservas_mesa"
         tools:layout="@layout/fragment_reservas_mesa" >
-        <action
-            android:id="@+id/action_mesaFragment_to_finFragment"
-            app:destination="@id/reservas_fin_dest" />
         <argument
             android:name="passAllowed"
             app:argType="boolean"
@@ -29,8 +27,8 @@
         <action
             android:id="@+id/action_reservas_mesa_dest_to_salaPlanFragment"
             app:destination="@id/salaPlanFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/reservas_fin_dest"

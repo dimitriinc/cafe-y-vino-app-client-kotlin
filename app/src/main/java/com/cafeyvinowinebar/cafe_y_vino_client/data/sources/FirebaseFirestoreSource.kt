@@ -22,7 +22,7 @@ class FirebaseFirestoreSource @Inject constructor(
     /**
      * Transmits the user's document snapshot as a flow
      */
-    val userFlow: Flow<DocumentSnapshot?> =
+    fun getUserFlow(): Flow<DocumentSnapshot?> =
 
         if (fAuth.getUserObject() != null) {
             fStore.collection("usuarios")
@@ -36,7 +36,7 @@ class FirebaseFirestoreSource @Inject constructor(
     /**
      * Transmits the utils data as flow
      */
-    val utilsFlow: Flow<DocumentSnapshot?> =
+    fun getUtilsFlow(): Flow<DocumentSnapshot?> =
         if (fAuth.getUserObject() != null) {
             fStore.collection("utils")
                 .document("horas")

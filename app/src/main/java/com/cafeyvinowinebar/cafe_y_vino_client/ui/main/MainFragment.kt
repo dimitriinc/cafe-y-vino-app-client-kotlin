@@ -16,6 +16,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentMainBinding
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -40,7 +41,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             val action = MainFragmentDirections.actionMainFragmentToIntroNavGraph()
             findNavController().navigate(action)
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

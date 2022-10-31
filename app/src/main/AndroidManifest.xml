@@ -19,14 +19,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-<!--            <nav-graph android:value="@navigation/main_nav_graph"/>-->
         </activity>
-        <activity android:name=".ui.introduction.IntroActivity"
-            android:exported="false"/>
-        <activity android:name=".ui.carta.item_specs.ItemSpecsHostFragment"
-            android:exported="false"/>
-        <activity android:name=".ui.reservas.ReservasActivity"
-            android:exported="false"/>
 
         <service
             android:name="com.cafeyvinowinebar.cafe_y_vino_client.services.MyFirebaseMessagingService"

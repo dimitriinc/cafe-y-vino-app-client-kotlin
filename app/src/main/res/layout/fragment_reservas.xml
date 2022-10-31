@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.reservas.ReservasActivity">
+    tools:context=".ui.reservas.ReservasFragment">
     
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"

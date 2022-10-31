@@ -33,6 +33,7 @@ class MainViewModel @Inject constructor(
     val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
     init {
+        userDataRepo.collectUserFlow()
         // first of all we set the logged in value to true if the user is logged in
         // otherwise the user will be sent to the intro nav graph
         if (userDataRepo.getUserObject() == null) {
@@ -56,11 +57,10 @@ class MainViewModel @Inject constructor(
                         userEmail = user.email,
                         userTelefono = user.telefono,
                         userFirstName = firstName,
-                        bonos = user.bonos
+                        bonos = user.bonos,
+                        userName = user.nombre
                     )
-
                 }
-
             }
         }
     }
@@ -81,7 +81,7 @@ class MainViewModel @Inject constructor(
      * We get related to entry requests values from the utils Room table
      * and check the current time against them to set the entry status
      */
-    fun setEntryRequestStatus() = viewModelScope.launch {
+    fun setEntryRequestStatus() = viewModelScope.launch(Dispatchers.IO) {
         val utils = utilsRepo.getUtilsForEntryRequest()
         val day = LocalDate.now().dayOfWeek.name
         utils.offDays.forEach { offDay ->

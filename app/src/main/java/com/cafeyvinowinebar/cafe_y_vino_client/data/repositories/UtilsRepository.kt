@@ -27,7 +27,7 @@ class UtilsRepository @Inject constructor(
      */
     init {
         appScope.launch {
-            fStoreSource.utilsFlow.collect { utilsDoc ->
+            fStoreSource.getUtilsFlow().collect { utilsDoc ->
                 if (utilsDoc != null) {
                     utilsDao.insert(UtilsEntity(
                         diasDeDescanso = utilsDoc.get("dias de descanso") as List<String>,

@@ -30,8 +30,8 @@
         <action
             android:id="@+id/action_mainFragment_to_intro_nav_graph"
             app:destination="@id/intro_nav_graph"
-            app:popUpTo="@id/intro_nav_graph"
-            app:popUpToInclusive="false" />
+            app:popUpTo="@id/main_nav_graph"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_mainFragment_to_reservas_nav_graph"
             app:destination="@id/reservas_nav_graph" />
@@ -49,19 +49,16 @@
         <action
             android:id="@+id/action_userDataFragment_to_intro_nav_graph2"
             app:destination="@id/intro_nav_graph"
-            app:popUpTo="@id/intro_nav_graph"
-            app:popUpToInclusive="false" />
+            app:popUpTo="@id/main_nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <include app:graph="@navigation/when_present_nav_graph" />
     <action
         android:id="@+id/action_global_mainFragment"
         app:destination="@id/mainFragment"
-        app:enterAnim="@android:anim/slide_in_left"
-        app:exitAnim="@android:anim/slide_out_right"
-        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-        app:popExitAnim="@anim/nav_default_pop_exit_anim"
-        app:popUpTo="@id/mainFragment"
-        app:popUpToInclusive="false" />
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true"
+        app:launchSingleTop="true"/>
     <include app:graph="@navigation/reservas_nav_graph" />
     <include app:graph="@navigation/intro_nav_graph" />
     <include app:graph="@navigation/carta_nav_graph" />

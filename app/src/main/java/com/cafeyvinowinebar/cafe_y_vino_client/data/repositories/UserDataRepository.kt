@@ -43,14 +43,7 @@ class UserDataRepository @Inject constructor(
 ) {
 
     init {
-
-        // inside the application scope we listen to the user document and update the object stored in the Proto DataStore
-        appScope.launch {
-            fStoreSource.userFlow.collect { userSnapshot ->
-                updateUserData(userSnapshot)
-            }
-        }
-
+        collectUserFlow()
     }
 
     /**
@@ -307,10 +300,22 @@ class UserDataRepository @Inject constructor(
     }
 
     /**
+     * Inside the application scope we listen to the user document and update the object stored in the Proto DataStore
+     */
+    fun collectUserFlow() {
+        appScope.launch {
+            fStoreSource.getUserFlow().collect { userSnapshot ->
+                updateUserData(userSnapshot)
+            }
+        }
+    }
+
+    /**
      * With a user document snapshot from the fStore flow we update the Proto DataStore object
      */
     private suspend fun updateUserData(userSnapshot: DocumentSnapshot?) {
         if (userSnapshot != null) {
+            Log.d(TAG, "updateUserData: user's name: ${userSnapshot.getString("nombre")}")
             userDataStore.updateData { user ->
                 user.toBuilder()
                     .setNombre(userSnapshot.getString(KEY_NOMBRE))
@@ -323,18 +328,5 @@ class UserDataRepository @Inject constructor(
                     .build()
             }
         }
-//        else {
-//            userDataStore.updateData { user ->
-//                user.toBuilder()
-//                    .setNombre("")
-//                    .setTelefono("")
-//                    .setEmail("")
-//                    .setToken("")
-//                    .setMesa("")
-//                    .setIsPresent(false)
-//                    .setBonos(0)
-//                    .build()
-//            }
-//        }
     }
 }

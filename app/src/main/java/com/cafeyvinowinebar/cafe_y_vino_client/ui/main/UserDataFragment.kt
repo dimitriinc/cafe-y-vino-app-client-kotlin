@@ -36,8 +36,9 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
             // navigate to the intro nav graph
             btnLogOut.setOnClickListener {
                 viewModel.logout()
-                findNavController().popBackStack(R.id.intro_nav_graph, false)
-                // TODO: pop up the main graph
+                val action = UserDataFragmentDirections.actionUserDataFragmentToIntroNavGraph2()
+                findNavController().navigate(action)
+
             }
 
             // for each pressed button we create an alert dialog, using the same layout resource, and configuring its edit text's hind

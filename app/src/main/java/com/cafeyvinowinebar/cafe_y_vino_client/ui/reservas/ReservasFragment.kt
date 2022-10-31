@@ -1,27 +1,26 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.navigation.navGraphViewModels
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavArgument
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ActivityReservasBinding
+import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentReservasBinding
 import kotlinx.coroutines.launch
 
-class ReservasActivity : AppCompatActivity() {
+class ReservasFragment : Fragment(R.layout.fragment_reservas) {
 
-    private val viewModel: ReservasViewModel by viewModels()
+    private val viewModel: ReservasViewModel by hiltNavGraphViewModels(R.id.reservas_nav_graph)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reservas)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val binding = ActivityReservasBinding.bind(window.decorView.rootView)
-        val host = supportFragmentManager.findFragmentById(R.id.reservas_host_fragment) as NavHostFragment? ?: return
+        val binding = FragmentReservasBinding.bind(view)
+        val host = parentFragmentManager.findFragmentById(R.id.reservas_host_fragment) as NavHostFragment? ?: return
         val navController = host.navController
         binding.reservasBottomNavigation.setupWithNavController(navController)
 
@@ -63,9 +62,5 @@ class ReservasActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
-
     }
 }

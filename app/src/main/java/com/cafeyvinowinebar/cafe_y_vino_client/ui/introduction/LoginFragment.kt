@@ -45,12 +45,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     // if some of the operations fails we get an error message and display it as a toast
                     if (it.errorMessage != null) {
                         Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG).show()
+                        viewModel.nullifyErrorMessage()
                     }
 
                     // specially for when an email with the password reset form is sent to the user's address
                     // we notify them with a message
                     if (it.message != null) {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        viewModel.nullifyMessage()
                     }
                 }
             }
