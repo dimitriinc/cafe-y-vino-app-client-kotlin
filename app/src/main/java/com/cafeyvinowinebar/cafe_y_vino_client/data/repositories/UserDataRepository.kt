@@ -18,12 +18,15 @@ import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateBonosWorker
 import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateEmailWorker
 import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateNombreWorker
 import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateTelefonoWorker
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -55,6 +58,7 @@ class UserDataRepository @Inject constructor(
             null -> null
             is FirebaseAuthUserCollisionException -> context.getString(R.string.email_collision)
             is FirebaseAuthInvalidUserException -> context.getString(R.string.wrong_email)
+            is FirebaseAuthInvalidCredentialsException -> context.getString(R.string.invalid_password)
             else -> it.localizedMessage
         }
 
@@ -210,7 +214,6 @@ class UserDataRepository @Inject constructor(
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
             val request = OneTimeWorkRequestBuilder<UpdateEmailWorker>()
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .setInputData(
                     workDataOf(
                         KEY_EMAIL to email,
@@ -242,7 +245,7 @@ class UserDataRepository @Inject constructor(
                         KEY_USER_ID to getUserId()
                     )
                 )
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+//                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .setConstraints(constraints)
                 .build()
             WorkManager.getInstance(context).enqueue(request)
@@ -267,7 +270,6 @@ class UserDataRepository @Inject constructor(
                         KEY_TELEFONO to telefono
                     )
                 )
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .setConstraints(constraints)
                 .build()
             WorkManager.getInstance(context).enqueue(request)
@@ -292,7 +294,6 @@ class UserDataRepository @Inject constructor(
                     KEY_BONOS to newBonos
                 )
             )
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .setConstraints(constraints)
             .build()
 
@@ -302,9 +303,13 @@ class UserDataRepository @Inject constructor(
     /**
      * Inside the application scope we listen to the user document and update the object stored in the Proto DataStore
      */
-    fun collectUserFlow() {
+    private fun collectUserFlow() {
         appScope.launch {
-            fStoreSource.getUserFlow().collect { userSnapshot ->
+            fStoreSource.getUserFlow()
+                .catch {
+                    currentCoroutineContext().cancel(null)
+                }
+                .collect { userSnapshot ->
                 updateUserData(userSnapshot)
             }
         }

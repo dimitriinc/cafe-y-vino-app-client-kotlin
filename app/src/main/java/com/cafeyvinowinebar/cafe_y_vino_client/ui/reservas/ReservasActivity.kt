@@ -1,26 +1,30 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas
 
 import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import android.os.PersistableBundle
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavArgument
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentReservasBinding
+import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ActivityReservasBinding
 import kotlinx.coroutines.launch
 
-class ReservasFragment : Fragment(R.layout.fragment_reservas) {
+class ReservasActivity : AppCompatActivity() {
 
-    private val viewModel: ReservasViewModel by hiltNavGraphViewModels(R.id.reservas_nav_graph)
+    private val viewModel: ReservasViewModel by viewModels()
+    private lateinit var binding: ActivityReservasBinding
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
 
-        val binding = FragmentReservasBinding.bind(view)
-        val host = parentFragmentManager.findFragmentById(R.id.reservas_host_fragment) as NavHostFragment? ?: return
+        binding = ActivityReservasBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        val host = supportFragmentManager.findFragmentById(R.id.reservas_host_fragment) as NavHostFragment? ?: return
         val navController = host.navController
         binding.reservasBottomNavigation.setupWithNavController(navController)
 
@@ -62,5 +66,6 @@ class ReservasFragment : Fragment(R.layout.fragment_reservas) {
                 }
             }
         }
+
     }
 }

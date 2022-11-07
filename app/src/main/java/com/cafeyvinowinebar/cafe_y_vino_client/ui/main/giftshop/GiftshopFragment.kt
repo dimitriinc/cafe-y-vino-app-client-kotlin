@@ -10,14 +10,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentGiftshopBinding
-import com.cafeyvinowinebar.cafe_y_vino_client.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class GiftshopFragment : Fragment(R.layout.fragment_giftshop) {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: GiftshopViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

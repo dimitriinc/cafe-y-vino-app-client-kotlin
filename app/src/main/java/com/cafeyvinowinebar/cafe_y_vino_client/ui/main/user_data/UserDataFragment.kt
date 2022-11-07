@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.main
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.main.user_data
 
 import android.os.Bundle
 import android.text.InputType
@@ -7,13 +7,14 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentUserDataBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 /**
@@ -21,9 +22,10 @@ import kotlinx.coroutines.launch
  * Allows the user to modify it
  * And to log out
  */
+@AndroidEntryPoint
 class UserDataFragment : Fragment(R.layout.fragment_user_data) {
 
-    private val viewModel: MainViewModel by hiltNavGraphViewModels(R.id.main_nav_graph)
+    private val viewModel: UserDataViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,8 +34,7 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
 
         binding.apply {
 
-            // log out of the session
-            // navigate to the intro nav graph
+            // log out of the session, navigate to the intro nav graph
             btnLogOut.setOnClickListener {
                 viewModel.logout()
                 val action = UserDataFragmentDirections.actionUserDataFragmentToIntroNavGraph2()
@@ -41,9 +42,10 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
 
             }
 
-            // for each pressed button we create an alert dialog, using the same layout resource, and configuring its edit text's hind
-            // and input type
-            // the implementation of the positive button is slightly different, calling different view model functions
+            /** for each pressed button we create an alert dialog, using the same layout resource, and configuring its edit text's hind
+             * and input type
+             * the implementation of the positive button is slightly different, calling different view model functions
+             */
             btnEmail.setOnClickListener {
                 val emailView = layoutInflater.inflate(R.layout.user_data_et, null)
                 val editText = emailView.findViewById<EditText>(R.id.edtUserEt)
@@ -108,9 +110,10 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
                         txtInfoTelefono.text = it.userTelefono
                     }
 
-                    // as a response to updating the user data, a message should appear on the screen
-                    // without updating the message value is null
-                    // and it returns to null right after displaying a message
+                    /** as a response to updating the user data, a message should appear on the screen
+                     * without updating the message value is null
+                     * and it returns to null right after displaying a message
+                     */
                     if (it.message != null) {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                         viewModel.nullifyMessage()

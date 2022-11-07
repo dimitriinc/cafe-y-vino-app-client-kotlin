@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.main
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.main.home
 
 import android.os.Bundle
 import android.view.View
@@ -9,14 +9,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.*
-import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentMainBinding
-import com.google.firebase.firestore.FirebaseFirestore
+import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,18 +26,17 @@ import kotlinx.coroutines.launch
  */
 
 @AndroidEntryPoint
-class MainFragment : Fragment(R.layout.fragment_main) {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private val viewModel: MainViewModel by hiltNavGraphViewModels(R.id.main_nav_graph)
+    private val viewModel: HomeViewModel by viewModels()
     private lateinit var entryRequestDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // check if the user is logged in
-        // if not, direct to the log in flow
+        // check if the user is logged in; if not, navigate to the login flow
         if (!viewModel.uiState.value.isLoggedIn) {
-            val action = MainFragmentDirections.actionMainFragmentToIntroNavGraph()
+            val action = HomeFragmentDirections.actionHomeFragmentToIntroNavGraph()
             findNavController().navigate(action)
         }
     }
@@ -46,35 +44,33 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentMainBinding.bind(view)
+        val binding = FragmentHomeBinding.bind(view)
 
         binding.apply {
 
-            // simple navigation to destinations
             imgBtnGiftshop.setOnClickListener {
-                val action = MainFragmentDirections.actionMainFragmentToGiftshopFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToGiftshopFragment()
                 findNavController().navigate(action)
             }
             imgBtnMenu.setOnClickListener {
-                val action = CartaNavGraphDirections.actionGlobalCategoriesFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToCategoriesFragment()
                 findNavController().navigate(action)
             }
             imgBtnReserv.setOnClickListener {
-                val action = MainFragmentDirections.actionMainFragmentToReservasNavGraph()
+                val action = HomeFragmentDirections.actionHomeFragmentToReservasActivity()
                 findNavController().navigate(action)
             }
             fabUserData.setOnClickListener {
-                val action = MainFragmentDirections.actionMainFragmentToUserDataFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToUserDataFragment()
                 findNavController().navigate(action)
             }
 
             fabCanastaMain.setOnClickListener {
-                val action = MainFragmentDirections.actionMainFragmentToWhenPresentNavGraph()
+                val action = HomeFragmentDirections.actionHomeFragmentToCanastaFragment()
                 findNavController().navigate(action)
             }
             fabCuentaMain.setOnClickListener {
-//                val request = NavDeepLinkRequest.Builder.fromUri(Uri.parse(CUENTA_URI)).build()
-                val action = WhenPresentNavGraphDirections.actionGlobalCuentaFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToCuentaFragment()
                 findNavController().navigate(action)
             }
 
@@ -91,9 +87,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     .setView(requestView)
                     .create()
 
-                // if the user wants to send a request, we don't do it right away
-                // we need to make sure the time is right (inside the attendance hours)
-                // so we tell the view model to set the request status
+                /**
+                 * if the user wants to send a request, we don't do it right away
+                 * we need to make sure the time is right (inside the attendance hours)
+                 * so we tell the view model to set the request status
+                 */
                 btnPositive.setOnClickListener {
                     if (!isOnline(requireContext())) {
                         Toast.makeText(requireContext(), R.string.no_connection, Toast.LENGTH_LONG)
@@ -136,11 +134,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                         }
                     }
 
-                    // the initial value of the UI state property is null
-                    // when the user tries to send the request, the view model decides if they're allowed to do it
-                    // when the decision is made, it sets the value to true or false
-                    // and this block is supposed to react to this action
-                    // after the appropriate reaction, the view model is asked to set the value to null again
+                    /**
+                     * the initial value of the UI state property is null
+                     * when the user tries to send the request, the view model decides if they're allowed to do it
+                     * when the decision is made, it sets the value to true or false
+                     * and this block is supposed to react to this action
+                     * after the appropriate reaction, the view model is asked to set the value to null again
+                     */
                     if (it.canUserSendEntryRequest != null) {
                         if (it.canUserSendEntryRequest == true) {
                             viewModel.sendEntryRequest()

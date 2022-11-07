@@ -49,11 +49,11 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
             }
 
             fabCuentaHome.setOnClickListener {
-                // we don't want the tasks to pop up, so we don't use the action here
+                // we don't want the tasks to pop up, so we don't use the global action here
                 findNavController().navigate(R.id.main_nav_graph)
             }
             fabCuentaMenu.setOnClickListener {
-                val action = CartaNavGraphDirections.actionGlobalCategoriesFragment()
+                val action = CuentaFragmentDirections.actionCuentaFragmentToCategoriesFragment()
                 findNavController().navigate(action)
             }
 
@@ -85,7 +85,7 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
                     // and they're navigated to the main screen
                     // the user can stay in the cuenta fragment while in negative presence status
                     if (!uiState.isPresent) {
-                        val action = MainNavGraphDirections.actionGlobalMainFragment()
+                        val action = MainNavGraphDirections.actionGlobalHomeFragment()
                         findNavController().navigate(action)
                     }
 

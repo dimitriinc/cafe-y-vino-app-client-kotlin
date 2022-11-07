@@ -10,6 +10,7 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +27,7 @@ import java.util.*
  */
 class FechaFragment : Fragment(R.layout.fragment_reservas_fecha) {
 
-    private val viewModel: ReservasViewModel by hiltNavGraphViewModels(R.id.reservas_nav_graph)
+    private val viewModel: ReservasViewModel by activityViewModels()
     private lateinit var horas: List<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

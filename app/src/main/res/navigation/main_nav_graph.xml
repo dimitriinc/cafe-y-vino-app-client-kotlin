@@ -4,37 +4,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.MainFragment"
+        android:id="@+id/homeFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.home.HomeFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_mainFragment_to_giftshopFragment"
+            android:id="@+id/action_homeFragment_to_giftshopFragment"
             app:destination="@id/giftshopFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
         <action
-            android:id="@+id/action_mainFragment_to_userDataFragment"
+            android:id="@+id/action_homeFragment_to_userDataFragment"
             app:destination="@id/userDataFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
         <action
-            android:id="@+id/action_mainFragment_to_when_present_nav_graph"
-            app:destination="@id/when_present_nav_graph" />
-        <action
-            android:id="@+id/action_mainFragment_to_carta_nav_graph"
-            app:destination="@id/carta_nav_graph" />
-        <action
-            android:id="@+id/action_mainFragment_to_intro_nav_graph"
+            android:id="@+id/action_homeFragment_to_intro_nav_graph"
             app:destination="@id/intro_nav_graph"
             app:popUpTo="@id/main_nav_graph"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_mainFragment_to_reservas_nav_graph"
-            app:destination="@id/reservas_nav_graph" />
+            android:id="@+id/action_homeFragment_to_reservasActivity"
+            app:destination="@id/reservasActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_canastaFragment"
+            app:destination="@id/canastaFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cuentaFragment"
+            app:destination="@id/cuentaFragment" />
     </fragment>
     <fragment
         android:id="@+id/giftshopFragment"
@@ -43,7 +46,7 @@
         tools:layout="@layout/fragment_giftshop" />
     <fragment
         android:id="@+id/userDataFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.UserDataFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.user_data.UserDataFragment"
         android:label="fragment_user_data"
         tools:layout="@layout/fragment_user_data" >
         <action
@@ -52,14 +55,90 @@
             app:popUpTo="@id/main_nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
-    <include app:graph="@navigation/when_present_nav_graph" />
     <action
-        android:id="@+id/action_global_mainFragment"
-        app:destination="@id/mainFragment"
-        app:popUpTo="@id/main_nav_graph"
-        app:popUpToInclusive="true"
-        app:launchSingleTop="true"/>
-    <include app:graph="@navigation/reservas_nav_graph" />
+        android:id="@+id/action_global_homeFragment"
+        app:destination="@id/homeFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/homeFragment"
+        app:popUpToInclusive="true" />
     <include app:graph="@navigation/intro_nav_graph" />
-    <include app:graph="@navigation/carta_nav_graph" />
+    <activity
+        android:id="@+id/reservasActivity"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.ReservasActivity"
+        android:label="activity_reservas"
+        tools:layout="@layout/activity_reservas" />
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.categories.CategoriesFragment"
+        android:label="fragment_categories"
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_vinosFragment"
+            app:destination="@id/vinosFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_itemsFragment"
+            app:destination="@id/itemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemsFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items.ItemsFragment"
+        android:label="fragment_items"
+        tools:layout="@layout/fragment_items" >
+        <argument
+            android:name="categoryPath"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_itemsFragment_to_itemSpecsHostFragment"
+            app:destination="@id/itemSpecsHostFragment" />
+        <action
+            android:id="@+id/action_itemsFragment_to_canastaFragment"
+            app:destination="@id/canastaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/canastaFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.canasta.CanastaFragment"
+        android:label="fragment_canasta"
+        tools:layout="@layout/fragment_canasta" >
+        <action
+            android:id="@+id/action_canastaFragment_to_cuentaFragment"
+            app:destination="@id/cuentaFragment" />
+        <action
+            android:id="@+id/action_canastaFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemSpecsHostFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsHostFragment"
+        android:label="fragment_item_specs_host"
+        tools:layout="@layout/fragment_item_specs_host" />
+    <fragment
+        android:id="@+id/cuentaFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.cuenta.CuentaFragment"
+        android:label="fragment_cuenta"
+        tools:layout="@layout/fragment_cuenta" >
+        <action
+            android:id="@+id/action_cuentaFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vinosFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.categories.VinosFragment"
+        android:label="fragment_vinos"
+        tools:layout="@layout/fragment_vinos" >
+        <action
+            android:id="@+id/action_vinosFragment_to_itemsFragment"
+            app:destination="@id/itemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemSpecsFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsFragment"
+        android:label="fragment_item_specs"
+        tools:layout="@layout/fragment_item_specs" >
+        <action
+            android:id="@+id/action_itemSpecsFragment_to_canastaFragment"
+            app:destination="@id/canastaFragment" />
+        <action
+            android:id="@+id/action_itemSpecsFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
 </navigation>

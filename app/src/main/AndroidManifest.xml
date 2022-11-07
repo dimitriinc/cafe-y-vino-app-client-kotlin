@@ -13,13 +13,16 @@
         android:theme="@style/Theme.CafeYVino">
 
         <activity
-            android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.MainActivity"
+            android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.reservas.ReservasActivity"
+            android:exported="false"/>
 
         <service
             android:name="com.cafeyvinowinebar.cafe_y_vino_client.services.MyFirebaseMessagingService"

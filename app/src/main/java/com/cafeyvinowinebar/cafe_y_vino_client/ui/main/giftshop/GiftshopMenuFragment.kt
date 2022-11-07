@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_IS_PRESENT
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.GiftFirestore
+import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnGiftClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.Gift
-import com.cafeyvinowinebar.cafe_y_vino_client.ui.main.MainViewModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,11 +29,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class GiftshopMenuFragment : DialogFragment(), OnGiftClickListener {
 
-    private val viewModel: MainViewModel by hiltNavGraphViewModels(R.id.main_nav_graph)
+    private val viewModel: GiftshopViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     @Inject
     lateinit var fStore: FirebaseFirestore
     private lateinit var adapterGifts: GiftshopMenuAdapter
+    @Inject lateinit var fStorage: FirebaseStorageSource
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +49,7 @@ class GiftshopMenuFragment : DialogFragment(), OnGiftClickListener {
         val options = FirestoreRecyclerOptions.Builder<GiftFirestore>()
             .setQuery(query, GiftFirestore::class.java)
             .build()
-        adapterGifts = GiftshopMenuAdapter(options, this)
+        adapterGifts = GiftshopMenuAdapter(options, this, requireContext(), fStorage)
         recycleView.apply {
             adapter = adapterGifts
             layoutManager = GridLayoutManager(requireContext(), 2)

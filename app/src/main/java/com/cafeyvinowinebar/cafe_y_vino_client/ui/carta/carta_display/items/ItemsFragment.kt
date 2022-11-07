@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -20,7 +20,6 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestor
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemsBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemLongClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnProductClickListener
-import com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.adapters.ItemsAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -41,7 +40,7 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
     @Inject
     lateinit var fStore: FirebaseFirestore
     private val args: ItemsFragmentArgs by navArgs()
-    private val viewModel: CartaDisplayViewModel by hiltNavGraphViewModels(R.id.carta_nav_graph)
+    private val viewModel: ItemsViewModel by viewModels()
 
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,9 +61,11 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
 
-                    // on the user's presence status depends what fabs we display
-                    // if not present, it's just a home button
-                    // if present, we have a fab, that expands to display some other fabs
+                    /**
+                     * on the user's presence status depends what fabs we display
+                     * if not present, it's just a home button
+                     * if present, we have a fab, that expands to display some other fabs
+                     */
                     if (it.isPresent) {
                         binding.apply {
                             fabItemsHome.visibility = GONE
@@ -132,11 +133,11 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
                 viewModel.collapseFabs()
             }
             fabItemsCanasta.setOnClickListener {
-                val action = ItemsFragmentDirections.actionItemsFragmentToWhenPresentNavGraph()
+                val action = ItemsFragmentDirections.actionItemsFragmentToCanastaFragment()
                 findNavController().navigate(action)
             }
             fabItemsHome.setOnClickListener {
-                findNavController().navigate(R.id.mainFragment)
+                findNavController().navigate(R.id.homeFragment)
 
             }
         }
@@ -159,7 +160,7 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
         val bundle = Bundle()
         bundle.putSerializable(KEY_ITEMS, items)
         bundle.putString(KEY_NOMBRE, document.getString(KEY_NOMBRE))
-        findNavController().navigate(R.id.action_global_itemSpecsHostFragment, bundle)
+        findNavController().navigate(R.id.itemSpecsHostFragment, bundle)
     }
 
     override fun onStart() {

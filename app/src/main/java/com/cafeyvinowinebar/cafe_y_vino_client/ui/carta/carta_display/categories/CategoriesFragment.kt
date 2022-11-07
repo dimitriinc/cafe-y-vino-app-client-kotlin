@@ -1,19 +1,21 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.categories
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.MenuCategoryFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentCategoriesBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemClickListener
-import com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.adapters.CategoriesAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,18 +27,27 @@ import javax.inject.Inject
  * The fragment displays them as a recycler view
  */
 @AndroidEntryPoint
-class CategoriesFragment @Inject constructor(
-    val fStore: FirebaseFirestore,
-    val fStorage: FirebaseStorageSource
-) : Fragment(R.layout.fragment_categories), OnItemClickListener {
+class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickListener {
 
-    private val viewModel: CartaDisplayViewModel by hiltNavGraphViewModels(R.id.carta_nav_graph)
+    private val viewModel: CategoriesViewModel by viewModels()
     lateinit var adapter: CategoriesAdapter
+    @Inject lateinit var fStore: FirebaseFirestore
+    @Inject lateinit var fStorage: FirebaseStorageSource
+
+    private var _binding: FragmentCategoriesBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val binding = FragmentCategoriesBinding.bind(view)
 
         // construct the adapter
         val query = fStore.collection("menu")
@@ -47,12 +58,12 @@ class CategoriesFragment @Inject constructor(
 
         binding.apply {
             fabHome.setOnClickListener {
-                findNavController().navigate(R.id.mainFragment)
+                findNavController().navigate(R.id.homeFragment)
             }
             recCategories.apply {
                 adapter = adapter
                 layoutManager = LinearLayoutManager(requireContext())
-                setHasFixedSize(true)
+                setHasFixedSize(false)
             }
         }
 
@@ -96,5 +107,10 @@ class CategoriesFragment @Inject constructor(
     override fun onStop() {
         super.onStop()
         adapter.stopListening()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -6,15 +6,11 @@ import android.view.View.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import com.bumptech.glide.Glide
-import com.cafeyvinowinebar.cafe_y_vino_client.CartaNavGraphDirections
-import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemSpecsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +19,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
 
-    private val viewModel: ItemSpecsViewModel by hiltNavGraphViewModels(R.id.item_specs_nav_graph)
+    private val viewModel: ItemSpecsViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,14 +28,14 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
 
         binding.apply {
             fabItemSpecsHome.setOnClickListener {
-                findNavController().navigate(R.id.mainFragment)
+                findNavController().navigate(R.id.homeFragment)
             }
             fabMainMenu.setOnClickListener {
-                val action = CartaNavGraphDirections.actionGlobalCategoriesFragment()
+                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToCategoriesFragment()
                 findNavController().navigate(action)
             }
             fabCanasta.setOnClickListener {
-                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToWhenPresentNavGraph()
+                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToCanastaFragment()
                 findNavController().navigate(action)
             }
 
@@ -65,8 +61,7 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                         val item = uiState.currentItem
                         require(item != null)
 
-                        // some new items may not have image in the Storage yet
-                        // in this case we give them a stand in image
+                        // some new items may not have image in the Storage yet; in this case we give them a stand in image
                         if (item.image != null) {
                             Glide.with(requireContext())
                                 .load(uiState.itemImgReference)
@@ -75,8 +70,7 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                             imgItem.setImageResource(R.drawable.logo_stand_in)
                         }
 
-                        // some new items also may not have a description
-                        // in this case we give them a default description
+                        // some new items also may not have a description; in this case we give them a default description
                         if (item.descripcion == null || item.descripcion.isEmpty()) {
                             txtDesc.text = getString(R.string.no_desc)
                         } else {
@@ -87,8 +81,7 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                         txtPrecioInt.text = item.precio
                         txtPrecio.visibility = VISIBLE
 
-                        // the first item in the collection shouldn't display the left arrow
-                        // the last one - the right arrow
+                        // the first item in the collection shouldn't display the left arrow; the last one - the right arrow
                         if (uiState.currentPosition == 0) {
                             arrowLeft.visibility = GONE
                         }
@@ -97,13 +90,11 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                         }
 
 
-
-
                         // the fabs visibility depends on a value stored in the UI state
                         if (uiState.isPresent) {
                             binding.apply {
-                               fabItemSpecsHome.visibility = GONE
-                               fabExpand.visibility = VISIBLE
+                                fabItemSpecsHome.visibility = GONE
+                                fabExpand.visibility = VISIBLE
                             }
                         } else {
                             binding.apply {

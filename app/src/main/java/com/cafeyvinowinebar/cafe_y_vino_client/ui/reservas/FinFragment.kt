@@ -74,7 +74,7 @@ class FinFragment : Fragment() {
                         if (uiState.isReservaSent) {
                             // if the value is true, the reserva sending is done, we can navigate to the main screen
                             Toast.makeText(requireContext(), getString(R.string.solicitud_reserva, uiState.firstName), Toast.LENGTH_SHORT).show()
-                            val action = MainNavGraphDirections.actionGlobalMainFragment()
+                            val action = MainNavGraphDirections.actionGlobalHomeFragment()
                             findNavController().navigate(action)
                             
                         } else {

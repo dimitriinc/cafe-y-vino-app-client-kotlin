@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.carta.carta_display.ItemsFragment"
+    tools:context=".ui.carta.carta_display.items.ItemsFragment"
     android:background="@drawable/bkg_items">
 
     <androidx.recyclerview.widget.RecyclerView

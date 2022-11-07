@@ -109,7 +109,7 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                     // if the isRegistered property of the UI state is true, that means the registration has terminated successfully
                     // so we start the session and navigate to the main screen
                     if (it.isRegistered) {
-                        val action = MainNavGraphDirections.actionGlobalMainFragment()
+                        val action = MainNavGraphDirections.actionGlobalHomeFragment()
                         findNavController().navigate(action)
                     }
 

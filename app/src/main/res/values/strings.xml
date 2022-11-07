@@ -191,6 +191,7 @@
     <string name="nombre_update_failure">No se pudo actulizar el nombre</string>
     <string name="telefono_update_success">El teléfono está actualizado</string>
     <string name="telefono_update_failure">No se pudo actualizar el teléfono</string>
+    <string name="invalid_password">Contraseña inválida</string>
 
     <string-array name="pager_headings">
         <item>Haz pedidos</item>

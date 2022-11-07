@@ -178,4 +178,6 @@
     <string name="telefono_update_success">The phone number is updated</string>
     <string name="telefono_update_failure">Failed to update the phone number</string>
 
+    <string name="invalid_password">Invalid password</string>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.adapters
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,6 @@ import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemLongClickListene
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnProductClickListener
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 class ItemsAdapter(

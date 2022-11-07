@@ -138,7 +138,8 @@ class IntroductionViewModel @Inject constructor(
     fun nullifyErrorMessage() {
         _uiState.update {
             it.copy(
-                errorMessage = null
+                errorMessage = null,
+                progressBarVisible = false
             )
         }
     }
@@ -154,7 +155,8 @@ class IntroductionViewModel @Inject constructor(
     fun nullifyMessage() {
         _uiState.update {
             it.copy(
-                message = null
+                message = null,
+                progressBarVisible = false
             )
         }
     }

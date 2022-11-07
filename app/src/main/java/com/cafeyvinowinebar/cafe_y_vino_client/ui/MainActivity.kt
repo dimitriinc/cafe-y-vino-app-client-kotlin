@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.main
+package com.cafeyvinowinebar.cafe_y_vino_client.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

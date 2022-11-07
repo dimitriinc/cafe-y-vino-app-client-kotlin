@@ -14,7 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.cafeyvinowinebar.cafe_y_vino_client.CartaNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.ItemCanasta
@@ -64,7 +63,7 @@ class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
                 viewModel.collapseCanastaFabs()
             }
             fabMenu.setOnClickListener {
-                val action = CartaNavGraphDirections.actionGlobalCategoriesFragment()
+                val action = CanastaFragmentDirections.actionCanastaFragmentToCategoriesFragment()
                 findNavController().navigate(action)
             }
             fabUpload.setOnClickListener {
@@ -116,7 +115,7 @@ class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
                         // if the user is in the Canasta fragment at the moment of the bill cancellation, the presence status will change,
                         // they should be navigated to the main screen automatically
                         // the user cannot be on the canasta screen while not present
-                        val action = MainNavGraphDirections.actionGlobalMainFragment()
+                        val action = MainNavGraphDirections.actionGlobalHomeFragment()
                         findNavController().navigate(action)
                     }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bkg_user_data"
-    tools:context=".ui.main.UserDataFragment">
+    tools:context=".ui.main.user_data.UserDataFragment">
 
     <TextView
         android:id="@+id/textView2"

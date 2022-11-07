@@ -1,5 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.main.giftshop
 
+import android.content.Context
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,10 +19,10 @@ import javax.inject.Inject
 
 class GiftshopMenuAdapter(
     options: FirestoreRecyclerOptions<GiftFirestore>,
-    private val listener: OnGiftClickListener
+    private val listener: OnGiftClickListener,
+    val context: Context,
+    val fStorage: FirebaseStorageSource
 ): FirestoreRecyclerAdapter<GiftFirestore, GiftshopMenuAdapter.ViewHolder>(options) {
-
-    @Inject lateinit var fStorage: FirebaseStorageSource
 
     inner class ViewHolder(
         private val binding: ListItemGiftBinding
@@ -46,9 +47,9 @@ class GiftshopMenuAdapter(
         fun bind(model: GiftFirestore) {
             binding.apply {
                 txtGift.text = model.nombre
-                txtGiftPrecio.text = Resources.getSystem().getString(R.string.gift_bonos, model.precio)
+                txtGiftPrecio.text = context.getString(R.string.gift_bonos, model.precio)
                 Glide.with(root)
-                    .load(fStorage.getImgReference(model.imagen))
+                    .load(fStorage.getImgReference(model.imagen!!))
                     .into(imgGift)
             }
         }

@@ -36,9 +36,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                     // if the log in operation was a success we display a greeting toast and navigate to the main screen
                     if (it.isLoggedIn) {
-                        binding.progressBarLogin.visibility = View.INVISIBLE
                         Toast.makeText(requireContext(), R.string.login_inicio, Toast.LENGTH_SHORT).show()
-                        val action = MainNavGraphDirections.actionGlobalMainFragment()
+                        val action = MainNavGraphDirections.actionGlobalHomeFragment()
                         findNavController().navigate(action)
                     }
 
@@ -46,6 +45,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     if (it.errorMessage != null) {
                         Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG).show()
                         viewModel.nullifyErrorMessage()
+                    }
+
+                    if (it.progressBarVisible) {
+                        binding.progressBarLogin.visibility = View.VISIBLE
+                    } else {
+                        binding.progressBarLogin.visibility = View.INVISIBLE
                     }
 
                     // specially for when an email with the password reset form is sent to the user's address

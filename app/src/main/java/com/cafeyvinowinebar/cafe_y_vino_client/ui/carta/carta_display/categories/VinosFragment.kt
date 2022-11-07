@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.categories
 
 import android.os.Bundle
 import android.view.View

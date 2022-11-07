@@ -2,14 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/reservas_nav_graph"
-    app:startDestination="@id/reservas_dest">
+    app:startDestination="@id/reservas_fecha_dest"
+    android:id="@+id/reservas_nav_graph">
 
-    <fragment
-        android:id="@+id/reservas_dest"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.ReservasFragment"
-        android:label="fragment_reservas"
-        tools:layout="@layout/fragment_reservas"/>
     <fragment
         android:id="@+id/reservas_fecha_dest"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.FechaFragment"

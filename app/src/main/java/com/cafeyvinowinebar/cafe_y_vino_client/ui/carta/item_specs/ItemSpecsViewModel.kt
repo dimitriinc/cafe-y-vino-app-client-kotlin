@@ -27,7 +27,6 @@ class ItemSpecsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SpecsUiState())
     val uiState: StateFlow<SpecsUiState> = _uiState.asStateFlow()
 
-    // listen to the presence status
     init {
         viewModelScope.launch(Dispatchers.IO) {
             userDataRepo.getUserPresenceFlow().collect { isPresent ->
@@ -47,9 +46,11 @@ class ItemSpecsViewModel @Inject constructor(
      */
     fun setArgsOnUiState(items: ArrayList<ItemMenuFirestore>, initialName: String) = viewModelScope.launch(Dispatchers.Default) {
 
-        // to define the initial position where the ViewPager should start, we iterate through the list, and compare the names of items to the name
-        // of the item chosen by the user
-        // when the name matches, we retrieve the position of the item
+        /**
+         * to define the initial position where the ViewPager should start, we iterate through the list, and compare the names of items to the name
+         * of the item chosen by the user
+         * when the name matches, we retrieve the position of the item
+         */
         var initialPosition = 0
         items.forEach {
             if (initialName == it.nombre) {

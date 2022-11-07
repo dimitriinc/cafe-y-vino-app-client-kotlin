@@ -1,5 +1,7 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.adapters
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.categories
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,14 +12,16 @@ import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ListItemMenuBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemClickListener
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 class CategoriesAdapter(
     options: FirestoreRecyclerOptions<MenuCategoryFirestore>,
     val listener: OnItemClickListener,
     val fStorage: FirebaseStorageSource
 ) : FirestoreRecyclerAdapter<MenuCategoryFirestore, CategoriesAdapter.ViewHolder>(options) {
+
+    init {
+        Log.d(TAG, "the adapter  categories: is initiated")
+    }
 
     inner class ViewHolder(
         private val binding: ListItemMenuBinding
@@ -44,11 +48,13 @@ class CategoriesAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        Log.d(TAG, "onCreateViewHolder: we are creating a view holder")
         val binding = ListItemMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: MenuCategoryFirestore) {
+        Log.d(TAG, "onBindViewHolder: we are binding a view holder")
         holder.bind(model)
     }
 }

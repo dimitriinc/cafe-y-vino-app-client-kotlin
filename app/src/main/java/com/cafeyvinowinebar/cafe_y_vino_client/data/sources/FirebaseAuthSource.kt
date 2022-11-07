@@ -77,6 +77,7 @@ class FirebaseAuthSource @Inject constructor(
             fAuth.signInWithEmailAndPassword(email, password).await()
             true
         } catch (e: Throwable) {
+            Log.d(TAG, "loginUser: exception: ${e.stackTraceToString()}")
             _errorFlow.update {
                 e
             }

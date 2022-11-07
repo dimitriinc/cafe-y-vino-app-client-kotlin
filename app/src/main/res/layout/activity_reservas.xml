@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.reservas.ReservasFragment">
+    tools:context=".ui.reservas.ReservasActivity">
     
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
@@ -20,10 +20,10 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIconTint="@color/purple_500"
-        app:itemTextColor="@color/darkest_teal"
-        android:background="@color/cream"
         android:id="@+id/reservas_bottom_navigation"
         app:menu="@menu/reservas_navigation_menu"/>
+<!--        app:itemIconTint="@color/purple_500"-->
+<!--        app:itemTextColor="@color/darkest_teal"-->
+<!--        android:background="@color/cream"/>-->
 
 </LinearLayout>

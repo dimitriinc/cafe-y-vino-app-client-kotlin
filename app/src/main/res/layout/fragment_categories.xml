@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.carta.carta_display.CategoriesFragment"
+    tools:context=".ui.carta.carta_display.categories.CategoriesFragment"
     android:orientation="vertical"
     android:background="@drawable/bkg_categories">
 
     <androidx.recyclerview.widget.RecyclerView
+        tools:listitem="@layout/list_item_menu"
         android:id="@+id/recCategories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp"
         android:layout_marginTop="15dp"
