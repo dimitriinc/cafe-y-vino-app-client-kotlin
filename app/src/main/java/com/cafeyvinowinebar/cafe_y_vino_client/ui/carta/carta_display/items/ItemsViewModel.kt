@@ -29,9 +29,9 @@ class ItemsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            userDataRepo.getUserPresenceFlow().collect {
+            userDataRepo.getUserPresenceFlow().collect { isUserPresent ->
                 _uiState.update {
-                    it.copy(isPresent = it.isPresent)
+                    it.copy(isPresent = isUserPresent)
                 }
             }
         }
@@ -46,7 +46,7 @@ class ItemsViewModel @Inject constructor(
             name = document.getString(KEY_NOMBRE)!!,
             category = document.getString(KEY_CATEGORIA)!!,
             icon = document.getString(KEY_ICON),
-            price = document.getLong(KEY_PRECIO)!!
+            price = document.getString(KEY_PRECIO)!!.toLong()
         )
         menuDataRepo.addProductToCanasta(item)
     }

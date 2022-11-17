@@ -17,11 +17,9 @@ import javax.inject.Inject
 class ItemsAdapter(
     options: FirestoreRecyclerOptions<ItemMenuFirestore>,
     val listener: OnProductClickListener,
-    val longListener: OnItemLongClickListener
+    val longListener: OnItemLongClickListener,
+    val fStorage: FirebaseStorageSource
 ) : FirestoreRecyclerAdapter<ItemMenuFirestore, ItemsAdapter.ViewHolder>(options) {
-
-    @Inject
-    lateinit var fStorage: FirebaseStorageSource
 
     inner class ViewHolder(
         private val binding: ListItemMenuItemBinding

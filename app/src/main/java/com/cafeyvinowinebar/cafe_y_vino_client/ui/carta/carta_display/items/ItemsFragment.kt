@@ -2,8 +2,10 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -17,6 +19,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore
+import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemsBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemLongClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnProductClickListener
@@ -31,31 +34,33 @@ import javax.inject.Inject
  * Displays the products of a category that have a positive presence status in form of a recycler view
  */
 @AndroidEntryPoint
-class ItemsFragment : Fragment(R.layout.fragment_items),
+class ItemsFragment : Fragment(),
     OnProductClickListener,
     OnItemLongClickListener {
 
-    lateinit var adapter: ItemsAdapter
+    lateinit var adapterItems: ItemsAdapter
 
     @Inject
     lateinit var fStore: FirebaseFirestore
+    @Inject
+    lateinit var fStorage: FirebaseStorageSource
     private val args: ItemsFragmentArgs by navArgs()
     private val viewModel: ItemsViewModel by viewModels()
 
+    private var _binding: FragmentItemsBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentItemsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val binding = FragmentItemsBinding.bind(view)
-
-        // build up the adapter
-        val query = fStore.collection(args.categoryPath)
-            .whereEqualTo(KEY_IS_PRESENT, true)
-            .orderBy(KEY_NOMBRE)
-        val options = FirestoreRecyclerOptions.Builder<ItemMenuFirestore>()
-            .setQuery(query, ItemMenuFirestore::class.java)
-            .build()
-        adapter = ItemsAdapter(options, this, this)
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -114,12 +119,6 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
         }
 
         binding.apply {
-            recItems.apply {
-                // configure the recycler view
-                adapter = adapter
-                layoutManager = LinearLayoutManager(requireContext())
-                setHasFixedSize(true)
-            }
 
             // display a dialog that explains the functionality of the clicks
             fabItemsInfo.setOnClickListener {
@@ -163,16 +162,34 @@ class ItemsFragment : Fragment(R.layout.fragment_items),
         findNavController().navigate(R.id.itemSpecsHostFragment, bundle)
     }
 
-    override fun onStart() {
-        super.onStart()
-        adapter.startListening()
-    }   
+    override fun onResume() {
+        super.onResume()
+
+        val query = fStore.collection(args.categoryPath)
+            .whereEqualTo(KEY_IS_PRESENT, true)
+            .orderBy(KEY_NOMBRE)
+        val options = FirestoreRecyclerOptions.Builder<ItemMenuFirestore>()
+            .setQuery(query, ItemMenuFirestore::class.java)
+            .build()
+        adapterItems = ItemsAdapter(options, this, this, fStorage)
+
+        binding.recItems.apply {
+            adapter = adapterItems
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
+        adapterItems.startListening()
+    }
 
     override fun onStop() {
         super.onStop()
-        adapter.stopListening()
+        adapterItems.stopListening()
         viewModel.collapseFabs()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

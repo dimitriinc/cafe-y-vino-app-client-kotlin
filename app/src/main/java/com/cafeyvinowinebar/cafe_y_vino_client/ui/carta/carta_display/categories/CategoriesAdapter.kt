@@ -41,7 +41,7 @@ class CategoriesAdapter(
             binding.apply {
                 txtCategoryName.text = model.name
                 Glide.with(root)
-                    .load(fStorage.getImgReference(model.image))
+                    .load(fStorage.getImgReference(model.image!!))
                     .into(imgCategory)
             }
         }

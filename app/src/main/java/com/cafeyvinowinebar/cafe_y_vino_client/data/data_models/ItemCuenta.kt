@@ -5,10 +5,10 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.data_models
  * Model for the AdapterCanasta
  */
 
-class ItemCuenta(
-    val name: String,
-    val price: Long,
-    val count: Long,
-    val total: Long
+data class ItemCuenta(
+    val name: String? = null,
+    val price: Long? = null,
+    val count: Long? = null,
+    val total: Long? = null
 ) {
 }

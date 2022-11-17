@@ -12,20 +12,20 @@ import kotlinx.android.parcel.Parcelize
 
 @Keep
 data class ItemMenuFirestore(
-    val nombre: String,
-    val categoria: String,
-    val descripcion: String?,
-    val precio: String,
-    val image: String?,
-    val icon: String?,
-    val isPresent: Boolean
+    val nombre: String? = null,
+    val categoria: String? = null,
+    val descripcion: String? = null,
+    val precio: String? = null,
+    val image: String? = null,
+    val icon: String? = null,
+    val isPresent: Boolean? = null
 ) : java.io.Serializable {
 }
 
 fun ItemMenuFirestore.asItemCanasta(): ItemCanasta =
     ItemCanasta(
-        name = nombre,
-        category = categoria,
+        name = nombre!!,
+        category = categoria!!,
         icon = icon,
-        price = precio.toLong()
+        price = precio!!.toLong()
     )

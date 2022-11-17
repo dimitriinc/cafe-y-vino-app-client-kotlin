@@ -14,6 +14,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.KEY_IS_PRESENT
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.GiftFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
+import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentDialogGiftshopBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnGiftClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.Gift
@@ -36,28 +37,16 @@ class GiftshopMenuFragment : DialogFragment(), OnGiftClickListener {
     private lateinit var adapterGifts: GiftshopMenuAdapter
     @Inject lateinit var fStorage: FirebaseStorageSource
 
+    private var _binding: FragmentDialogGiftshopBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        // build a recycler view and return it as the fragment's view
-
-        val recycleView = RecyclerView(requireContext())
-        val query = fStore.collection("regalos").whereEqualTo(KEY_IS_PRESENT, true)
-        val options = FirestoreRecyclerOptions.Builder<GiftFirestore>()
-            .setQuery(query, GiftFirestore::class.java)
-            .build()
-        adapterGifts = GiftshopMenuAdapter(options, this, requireContext(), fStorage)
-        recycleView.apply {
-            adapter = adapterGifts
-            layoutManager = GridLayoutManager(requireContext(), 2)
-            setHasFixedSize(true)
-
-        }
-
-        return recycleView
+        _binding = FragmentDialogGiftshopBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onClick(gift: Gift) {
@@ -81,13 +70,30 @@ class GiftshopMenuFragment : DialogFragment(), OnGiftClickListener {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
+
+        val query = fStore.collection("regalos").whereEqualTo(KEY_IS_PRESENT, true)
+        val options = FirestoreRecyclerOptions.Builder<GiftFirestore>()
+            .setQuery(query, GiftFirestore::class.java)
+            .build()
+        adapterGifts = GiftshopMenuAdapter(options, this, requireContext(), fStorage)
+
+        binding.root.apply {
+            adapter = adapterGifts
+            layoutManager = GridLayoutManager(requireContext(), 2)
+        }
+
         adapterGifts.startListening()
     }
 
     override fun onStop() {
         super.onStop()
         adapterGifts.stopListening()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

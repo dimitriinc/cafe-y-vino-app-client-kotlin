@@ -1,8 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.categories
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,12 +25,15 @@ import javax.inject.Inject
  * The fragment displays them as a recycler view
  */
 @AndroidEntryPoint
-class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickListener {
+class CategoriesFragment : Fragment(), OnItemClickListener {
 
     private val viewModel: CategoriesViewModel by viewModels()
-    lateinit var adapter: CategoriesAdapter
-    @Inject lateinit var fStore: FirebaseFirestore
-    @Inject lateinit var fStorage: FirebaseStorageSource
+    lateinit var adapterCategories: CategoriesAdapter
+
+    @Inject
+    lateinit var fStore: FirebaseFirestore
+    @Inject
+    lateinit var fStorage: FirebaseStorageSource
 
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
@@ -49,24 +50,9 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickLi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // construct the adapter
-        val query = fStore.collection("menu")
-        val options = FirestoreRecyclerOptions.Builder<MenuCategoryFirestore>()
-            .setQuery(query, MenuCategoryFirestore::class.java)
-            .build()
-        adapter = CategoriesAdapter(options, this, fStorage)
-
-        binding.apply {
-            fabHome.setOnClickListener {
-                findNavController().navigate(R.id.homeFragment)
-            }
-            recCategories.apply {
-                adapter = adapter
-                layoutManager = LinearLayoutManager(requireContext())
-                setHasFixedSize(false)
-            }
+        binding.fabHome.setOnClickListener {
+            findNavController().navigate(R.id.homeFragment)
         }
-
     }
 
     /**
@@ -78,7 +64,8 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickLi
     override fun onItemClick(item: DocumentSnapshot) {
         val categoryName = item.getString("name")!!
         val categoryPath = item.getString("catPath")!!
-        val toItemsAction = CategoriesFragmentDirections.actionCategoriesFragmentToItemsFragment(categoryPath)
+        val toItemsAction =
+            CategoriesFragmentDirections.actionCategoriesFragmentToItemsFragment(categoryPath)
         val toVinosAction = CategoriesFragmentDirections.actionCategoriesFragmentToVinosFragment()
 
         when (categoryName) {
@@ -89,7 +76,11 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickLi
                 } else {
                     val uiState = viewModel.uiState.value
                     if (uiState.isHappyHour == false) {
-                        Toast.makeText(requireContext(), R.string.main_menu_ofertas_404, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.main_menu_ofertas_404,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else if (uiState.isHappyHour == true) {
                         findNavController().navigate(toItemsAction)
                     }
@@ -99,14 +90,25 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories), OnItemClickLi
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        adapter.startListening()
+    override fun onResume() {
+        super.onResume()
+
+        val query = fStore.collection("menu")
+        val options = FirestoreRecyclerOptions.Builder<MenuCategoryFirestore>()
+            .setQuery(query, MenuCategoryFirestore::class.java)
+            .build()
+        adapterCategories = CategoriesAdapter(options, this, fStorage)
+
+        binding.recCategories.apply {
+            adapter = adapterCategories
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+        adapterCategories.startListening()
     }
 
     override fun onStop() {
         super.onStop()
-        adapter.stopListening()
+        adapterCategories.stopListening()
     }
 
     override fun onDestroyView() {

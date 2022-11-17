@@ -19,7 +19,7 @@ buildscript {
         hiltAndroidXVersion = "1.0.0-alpha03"
         hiltVersion = "2.44"
         junitVersion = "4.13.2"
-        kotlinVersion = "1.7.10"
+        kotlinVersion = "1.7.20"
         ktxVersion = "1.9.0"
         lifecycleVersion = "2.6.0-alpha02"
         materialVersion = "1.8.0-alpha01"

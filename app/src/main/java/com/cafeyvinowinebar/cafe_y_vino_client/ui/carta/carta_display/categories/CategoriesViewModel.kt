@@ -28,9 +28,9 @@ class CategoriesViewModel @Inject constructor(
     init {
         // set the presence status in the UI state
         viewModelScope.launch {
-            userDataRepo.getUserPresenceFlow().collect {
+            userDataRepo.getUserPresenceFlow().collect { isUserPresent ->
                 _uiState.update {
-                    it.copy(isPresent = it.isPresent)
+                    it.copy(isPresent = isUserPresent)
                 }
             }
         }

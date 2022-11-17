@@ -9,10 +9,10 @@ import com.google.firebase.firestore.PropertyName
  */
 
 data class GiftFirestore(
-    var nombre: String ?= null,
-    var precio: String ?= null,
-    var imagen: String ?= null,
+    val nombre: String ?= null,
+    val precio: String ?= null,
+    val imagen: String ?= null,
     @PropertyName("isPresent")
-    var isPresent: Boolean ?= null
+    val isPresent: Boolean ?= null
 ) {
 }

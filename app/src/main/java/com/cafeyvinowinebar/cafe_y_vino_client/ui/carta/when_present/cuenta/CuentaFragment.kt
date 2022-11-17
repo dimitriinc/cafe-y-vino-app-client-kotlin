@@ -1,8 +1,10 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.cuenta
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,7 +23,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
+class CuentaFragment : Fragment() {
 
     private val viewModel: CuentaViewModel by viewModels()
     private lateinit var adapterCuenta: CuentaAdapter
@@ -29,24 +31,22 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
     @Inject
     lateinit var fStore: FirebaseFirestore
 
+    private var _binding: FragmentCuentaBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentCuentaBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentCuentaBinding.bind(view)
-
-        val query =
-            fStore.collection("cuentas/${getCurrentDate()}/cuentas corrientes/${viewModel.uiState.value.userId}/cuenta")
-        val options = FirestoreRecyclerOptions.Builder<ItemCuenta>()
-            .setQuery(query, ItemCuenta::class.java)
-            .build()
-        adapterCuenta = CuentaAdapter(options)
 
         binding.apply {
-
-            recCuenta.apply {
-                adapter = adapterCuenta
-                layoutManager = LinearLayoutManager(requireContext())
-                setHasFixedSize(true)
-            }
 
             fabCuentaHome.setOnClickListener {
                 // we don't want the tasks to pop up, so we don't use the global action here
@@ -156,8 +156,21 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
+
+        val query =
+            fStore.collection("cuentas/${getCurrentDate()}/cuentas corrientes/${viewModel.uiState.value.userId}/cuenta")
+        val options = FirestoreRecyclerOptions.Builder<ItemCuenta>()
+            .setQuery(query, ItemCuenta::class.java)
+            .build()
+        adapterCuenta = CuentaAdapter(options)
+
+        binding.recCuenta.apply {
+            adapter = adapterCuenta
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
         adapterCuenta.startListening()
     }
 
@@ -190,5 +203,10 @@ class CuentaFragment : Fragment(R.layout.fragment_cuenta) {
     private fun collapseAllFabs() {
         viewModel.collapsePayModeFabs()
         viewModel.collapsePedirCuentaFab()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

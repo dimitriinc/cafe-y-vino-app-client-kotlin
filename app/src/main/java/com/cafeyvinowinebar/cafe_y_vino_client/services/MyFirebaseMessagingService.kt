@@ -1,5 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.services
 
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.cafeyvinowinebar.cafe_y_vino_client.*
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
 
+private const val TAG = "MESSAGING_SERVICE"
 @AndroidEntryPoint
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -47,6 +49,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
+
+        Log.d(TAG, "onMessageReceived: the action of the message: ${message.data["action"]}")
 
         when (message.data[KEY_ACTION]) {
 
@@ -188,6 +192,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun processMsg(message: RemoteMessage) {
 
+        Log.d(TAG, "processMsg: the builder is about to start")
+
         val builder = NotificationCompat.Builder(this, DATOS)
             .setContentTitle(getString(R.string.noti_msg_title))
             .setStyle(
@@ -197,9 +203,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setSmallIcon(R.drawable.logo_mini)
             .setColor(getColor(R.color.disco))
 
-        with(NotificationManagerCompat.from(this)) {
-            notify(Random.nextInt(), builder.build())
+        Log.d(TAG, "processMsg: the builder has been initialized")
+
+        try {
+            with(NotificationManagerCompat.from(this)) {
+                notify(Random.nextInt(), builder.build())
+            }
+        } catch (e: Throwable) {
+            Log.d(TAG, "processMsg: the notifying has failed, \nexception: ${e.printStackTrace()}")
         }
+
     }
 
     override fun onDestroy() {
