@@ -8,7 +8,7 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.data_models
  * The objects of this class will be used in a Set to prevent duplication, that's why we override equals() and hashCode()
  */
 
-class ItemPedido(
+data class ItemPedido(
     val name: String,
     val category: String,
     val price: Long,

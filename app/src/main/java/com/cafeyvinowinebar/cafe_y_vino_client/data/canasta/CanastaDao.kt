@@ -26,4 +26,7 @@ interface CanastaDao {
     @Query("SELECT * FROM canasta WHERE name = :name")
     fun getItemsByName(name: String): List<ItemCanasta>
 
+    @Query("DELETE FROM canasta")
+    fun emptyCanasta()
+
 }

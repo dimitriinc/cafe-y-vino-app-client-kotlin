@@ -36,6 +36,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                     // if the log in operation was a success we display a greeting toast and navigate to the main screen
                     if (it.isLoggedIn) {
+                        viewModel.updateToken()
                         Toast.makeText(requireContext(), R.string.login_inicio, Toast.LENGTH_SHORT).show()
                         val action = MainNavGraphDirections.actionGlobalHomeFragment()
                         findNavController().navigate(action)

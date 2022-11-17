@@ -102,19 +102,24 @@ class MenuDataRepository @Inject constructor(
         var servidoBarra = true
         var servidoCocina = true
 
-        // convert canasta to pedido
-        // the main difference is that in canasta each product is one entity, so it has the same products stored separately
-        // in pedido all the items of a product stored in one instance, and the quantity is stores as the 'count' property
-        // so to represent the pedido we use a set of unique objects, and we get the count value with a special query
+        /**
+         * convert canasta to pedido
+         * the main difference is that in canasta each product is one entity, so it has the same products stored separately
+         * in pedido all the items of a product stored in one instance, and the quantity is stores as the 'count' property
+         * so to represent the pedido we use a set of unique objects, and we get the count value with a special query
+         */
         canasta.forEach { canastaItem ->
             val itemCount = canastaDao.getItemsByName(canastaItem.name).size.toLong()
-            canastaDao.deleteItemsByName(canastaItem.name)
+//            canastaDao.deleteItemsByName(canastaItem.name)
             pedido.add(canastaItem.asItemPedido(itemCount))
         }
+        canastaDao.emptyCanasta()
 
-        // the admin app can display one pedido in different ways: only kitchen products, only bar products, or all together
-        // to help it display the items correctly we need to define the metadata values
-        // if there is at least one bar item in the pedido, we set the value to false, the same for the kitchen products
+        /**
+         * the admin app can display one pedido in different ways: only kitchen products, only bar products, or all together
+         * to help it display the items correctly we need to define the metadata values
+         * if there is at least one bar item in the pedido, we set the value to false, the same for the kitchen products
+         */
         pedido.forEach { pedidoItem ->
             if (pedidoItem.category == "barra") {
                 servidoBarra = false

@@ -15,11 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 class CanastaAdapter(
-    private val listener: OnCanastaListener
+    private val listener: OnCanastaListener,
+    private val fStorage: FirebaseStorageSource
 ) : ListAdapter<ItemCanasta, CanastaAdapter.CanastaViewHolder>(DiffCallback()) {
-
-    @Inject
-    lateinit var fStorage: FirebaseStorageSource
 
     inner class CanastaViewHolder(
         private val binding: ListItemCanastaBinding

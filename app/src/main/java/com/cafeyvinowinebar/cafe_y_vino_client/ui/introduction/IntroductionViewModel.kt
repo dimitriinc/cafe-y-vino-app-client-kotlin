@@ -160,4 +160,8 @@ class IntroductionViewModel @Inject constructor(
             )
         }
     }
+
+    fun updateToken() = applicationScope.launch {
+        userDataRepo.updateToken()
+    }
 }

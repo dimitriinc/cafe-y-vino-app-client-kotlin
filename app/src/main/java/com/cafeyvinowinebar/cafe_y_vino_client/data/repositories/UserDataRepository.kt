@@ -14,10 +14,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseAuthSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
 import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
-import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateBonosWorker
-import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateEmailWorker
-import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateNombreWorker
-import com.cafeyvinowinebar.cafe_y_vino_client.workers.UpdateTelefonoWorker
+import com.cafeyvinowinebar.cafe_y_vino_client.workers.*
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -201,10 +198,34 @@ class UserDataRepository @Inject constructor(
     }
 
     /**
-     * The following four functions update different user data values according to the offline-first principles
+     * The following functions update different user data values according to the offline-first principles
      * First we update the local data (the UserData object in the Proto DataStore)
      * And then we submit a worker to the WorkManager to update the value in the Firestore DB
      */
+
+    suspend fun updateToken() {
+        val token = fMessagingSource.getToken()
+        val userId = getUserId()
+
+        userDataStore.updateData { user ->
+            user.toBuilder().setToken(token).build()
+        }
+
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        val request = OneTimeWorkRequestBuilder<UpdateTokenWorker>()
+            .setInputData(
+                workDataOf(
+                    KEY_TOKEN to token,
+                    KEY_USER_ID to userId
+                )
+            )
+            .setConstraints(constraints)
+            .build()
+        WorkManager.getInstance(context).enqueue(request)
+    }
+
     suspend fun updateEmail(email: String): Boolean {
         return try {
             userDataStore.updateData { user ->

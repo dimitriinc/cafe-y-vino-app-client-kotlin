@@ -61,11 +61,11 @@ class CanastaViewModel @Inject constructor(
         }
     }
 
-    fun addItemToCanasta(item: ItemCanasta) = viewModelScope.launch {
+    fun addItemToCanasta(item: ItemCanasta) = viewModelScope.launch(Dispatchers.IO) {
         menuDataRepo.addProductToCanasta(item)
     }
 
-    fun removeItemFromCanasta(item: ItemCanasta) = viewModelScope.launch {
+    fun removeItemFromCanasta(item: ItemCanasta) = viewModelScope.launch(Dispatchers.IO) {
         menuDataRepo.removeProductFromCanasta(item)
     }
 

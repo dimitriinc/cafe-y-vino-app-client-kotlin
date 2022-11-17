@@ -17,15 +17,19 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.ItemCanasta
+import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentCanastaBinding
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnCanastaListener
 import com.cafeyvinowinebar.cafe_y_vino_client.isOnline
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
 
+    @Inject
+    lateinit var fStorage: FirebaseStorageSource
     private val viewModel: CanastaViewModel by viewModels()
 
     @SuppressLint("InflateParams")
@@ -33,26 +37,26 @@ class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentCanastaBinding.bind(view)
-        val adapterCanasta = CanastaAdapter(this)
+        val adapterCanasta = CanastaAdapter(this, fStorage)
 
         binding.apply {
 
-            // configure the recycler view
             recCanasta.apply {
                 adapter = adapterCanasta
                 layoutManager = GridLayoutManager(requireContext(), 2)
-                setHasFixedSize(true)
+                setHasFixedSize(false)
             }
             fabCuenta.setOnClickListener {
                 val action = CanastaFragmentDirections.actionCanastaFragmentToCuentaFragment()
                 findNavController().navigate(action)
             }
             fabInicio.setOnClickListener {
-                // without popping up
+
+                // without popping up the stack
                 findNavController().navigate(R.id.main_nav_graph)
             }
             fabInfo.setOnClickListener {
-                // display a dialog with tips on how to manage the canasta
+
                 val infoView = layoutInflater.inflate(R.layout.alert_info, null)
                 val txtMsg = infoView.findViewById<TextView>(R.id.txtInfoMsg)
                 txtMsg.text = getString(R.string.message_canasta_info)
@@ -67,7 +71,7 @@ class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
                 findNavController().navigate(action)
             }
             fabUpload.setOnClickListener {
-                // check if connected
+
                 if (isOnline(requireContext())) {
 
                     // check if the Canasta Room table is empty
@@ -99,10 +103,11 @@ class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
                     Toast.makeText(requireContext(), R.string.no_connection, Toast.LENGTH_SHORT)
                         .show()
                 }
+
+                viewModel.collapseCanastaFabs()
             }
         }
 
-        // observe the live data, submit it to the recycler view
         viewModel.uiState.value.items.observe(viewLifecycleOwner) { items ->
             adapterCanasta.submitList(items)
         }
@@ -112,14 +117,16 @@ class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
                 viewModel.uiState.collect {
 
                     if (!it.isPresent) {
-                        // if the user is in the Canasta fragment at the moment of the bill cancellation, the presence status will change,
-                        // they should be navigated to the main screen automatically
-                        // the user cannot be on the canasta screen while not present
+
+                        /**
+                         * if the user is in the Canasta fragment at the moment of the bill cancellation, the presence status will change,
+                         * they should be navigated to the main screen automatically
+                         * the user cannot be on the canasta screen while not present
+                         */
                         val action = MainNavGraphDirections.actionGlobalHomeFragment()
                         findNavController().navigate(action)
                     }
 
-                    // manage the expanding behavior of the fabs
                     if (it.areCanastaFabsExpanded) {
                         binding.apply {
                             fabParent.apply {
@@ -165,7 +172,12 @@ class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
     }
 
     override fun onCanastaClick(item: ItemCanasta) {
-        viewModel.addItemToCanasta(item)
+        viewModel.addItemToCanasta(ItemCanasta(
+            name = item.name,
+            category = item.category,
+            price = item.price,
+            icon = item.icon
+        ))
     }
 
     override fun onCanastaLongClick(item: ItemCanasta) {

@@ -1,5 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.main.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cafeyvinowinebar.cafe_y_vino_client.GMT
@@ -16,6 +17,8 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
+
+private const val TAG = "HOME_VIEW_MODEL"
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -59,31 +62,33 @@ class HomeViewModel @Inject constructor(
     fun setEntryRequestStatus() = viewModelScope.launch(Dispatchers.IO) {
         val utils = utilsRepo.getUtilsForEntryRequest()
         val day = LocalDate.now().dayOfWeek.name
+
         utils.offDays.forEach { offDay ->
             if (offDay == day) {
                 _uiState.update { uiState ->
                     uiState.copy(canUserSendEntryRequest = false)
                 }
-            } else {
-                val calendar = Calendar.getInstance()
-                calendar.timeZone = TimeZone.getTimeZone(GMT)
-                val hour = calendar.get(Calendar.HOUR_OF_DAY)
-                utils.attendanceHours.forEach { attendanceHour ->
-                    if (hour == attendanceHour.toInt()) {
-                        _uiState.update {
-                            it.copy(
-                                canUserSendEntryRequest = true
-                            )
-                        }
-                    } else {
-                        _uiState.update {
-                            it.copy(
-                                canUserSendEntryRequest = false
-                            )
-                        }
-                    }
-                }
+                return@launch
             }
+        }
+
+        val calendar = Calendar.getInstance()
+        calendar.timeZone = TimeZone.getTimeZone(GMT)
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        utils.attendanceHours.forEach { attendanceHour ->
+            if (hour == attendanceHour.toInt()) {
+                _uiState.update {
+                    it.copy(
+                        canUserSendEntryRequest = true
+                    )
+                }
+                return@launch
+            }
+        }
+        _uiState.update {
+            it.copy(
+                canUserSendEntryRequest = false
+            )
         }
     }
 

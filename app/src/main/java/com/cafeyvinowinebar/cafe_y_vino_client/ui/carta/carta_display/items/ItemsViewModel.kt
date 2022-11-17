@@ -11,6 +11,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.MenuDataReposit
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UserDataRepository
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -41,7 +42,7 @@ class ItemsViewModel @Inject constructor(
      * Transform the received snapshot to a room entity
      * Pass it to repo for storage
      */
-    fun addProductToCanasta(document: DocumentSnapshot) = viewModelScope.launch {
+    fun addProductToCanasta(document: DocumentSnapshot) = viewModelScope.launch(Dispatchers.IO) {
         val item = ItemCanasta(
             name = document.getString(KEY_NOMBRE)!!,
             category = document.getString(KEY_CATEGORIA)!!,
