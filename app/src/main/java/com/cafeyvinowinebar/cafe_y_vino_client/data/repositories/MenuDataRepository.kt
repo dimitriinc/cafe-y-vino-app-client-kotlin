@@ -110,7 +110,6 @@ class MenuDataRepository @Inject constructor(
          */
         canasta.forEach { canastaItem ->
             val itemCount = canastaDao.getItemsByName(canastaItem.name).size.toLong()
-//            canastaDao.deleteItemsByName(canastaItem.name)
             pedido.add(canastaItem.asItemPedido(itemCount))
         }
         canastaDao.emptyCanasta()

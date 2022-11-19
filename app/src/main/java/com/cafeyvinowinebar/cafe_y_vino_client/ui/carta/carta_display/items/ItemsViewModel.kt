@@ -7,6 +7,8 @@ import com.cafeyvinowinebar.cafe_y_vino_client.KEY_ICON
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_NOMBRE
 import com.cafeyvinowinebar.cafe_y_vino_client.KEY_PRECIO
 import com.cafeyvinowinebar.cafe_y_vino_client.data.canasta.ItemCanasta
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.asItemCanasta
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.MenuDataRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UserDataRepository
 import com.google.firebase.firestore.DocumentSnapshot
@@ -52,20 +54,68 @@ class ItemsViewModel @Inject constructor(
         menuDataRepo.addProductToCanasta(item)
     }
 
+    fun addProductToCanasta(item: ItemMenuFirestore) = viewModelScope.launch(Dispatchers.IO) {
+        menuDataRepo.addProductToCanasta(item.asItemCanasta())
+    }
 
-    fun collapseFabs() {
+    fun setItems(items: ArrayList<ItemMenuFirestore>) {
         _uiState.update {
             it.copy(
-                areFabsExpanded = false
+                items = items
+            )
+        }
+    }
+    fun setItemsFabs(expanded: Boolean) {
+        _uiState.update {
+            it.copy(
+                areItemsFabsExpanded = expanded
             )
         }
     }
 
-    fun expandFabs() {
+    fun setSpecsFabs(expanded: Boolean) {
         _uiState.update {
             it.copy(
-                areFabsExpanded = true
+                areSpecsFabsExpanded = expanded
             )
         }
     }
+
+    fun setInitPosition(initialName: String) {
+        var initialPosition = 0
+        _uiState.value.items?.forEach {
+            if (initialName == it.nombre) {
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        currentItem = it
+                    )
+                }
+                initialPosition = _uiState.value.items!!.indexOf(it)
+            }
+        }
+        _uiState.update {
+            it.copy(
+                initialPosition = initialPosition
+            )
+        }
+    }
+
+    /**
+     * Called whenever a new fragment is introduced to the ViewPager
+     */
+    fun setThePagingFragment(
+        currentPosition: Int
+    ) = viewModelScope.launch {
+        _uiState.update {
+            it.copy(
+                currentPosition = currentPosition,
+                currentItem = it.items?.get(currentPosition),
+                setSize = it.items?.size,
+                itemImgReference = it.items?.get(currentPosition)?.image?.let { imgPath ->
+                    menuDataRepo.getImgReference(imgPath)
+                }
+            )
+        }
+    }
+
 }

@@ -32,11 +32,9 @@ const val KEY_USER_ID = "userId"
 const val KEY_REGALO = "regalo"
 const val KEY_EMAIL = "email"
 const val KEY_TELEFONO = "telefono"
+const val KEY_CAT_PATH = "categoryPath"
 
 const val TO_ADMIN_NEW = "toAdminNew"
-
-const val CUENTA_URI = "myapp://cafeyvino.com/cuenta"
-
 const val DATE_FORMAT = "dd-MM-yyyy"
 const val GMT = "GMT-5"
 

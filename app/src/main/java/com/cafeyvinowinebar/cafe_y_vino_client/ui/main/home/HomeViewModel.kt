@@ -1,6 +1,5 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.main.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cafeyvinowinebar.cafe_y_vino_client.GMT
@@ -17,8 +16,6 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
-
-private const val TAG = "HOME_VIEW_MODEL"
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(

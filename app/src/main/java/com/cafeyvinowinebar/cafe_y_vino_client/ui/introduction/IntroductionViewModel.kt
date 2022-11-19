@@ -21,8 +21,7 @@ import javax.inject.Inject
 class IntroductionViewModel @Inject constructor(
 
     private val userDataRepo: UserDataRepository,
-    @ApplicationScope private val applicationScope: CoroutineScope,
-    @ApplicationContext val context: Context
+    @ApplicationScope private val applicationScope: CoroutineScope
 
 ) : ViewModel() {
 
@@ -34,7 +33,7 @@ class IntroductionViewModel @Inject constructor(
             userDataRepo.errorMessageFlow.collect {
                 _uiState.update { state ->
                     state.copy(
-                        errorMessage = it
+                        errorMessageId = it
                     )
                 }
             }
@@ -103,7 +102,7 @@ class IntroductionViewModel @Inject constructor(
         if (formSent) {
             _uiState.update {
                 it.copy(
-                    message = context.getString(R.string.sent_email_toast)
+                    messageId = R.string.sent_email_toast
                 )
             }
         }
@@ -138,7 +137,7 @@ class IntroductionViewModel @Inject constructor(
     fun nullifyErrorMessage() {
         _uiState.update {
             it.copy(
-                errorMessage = null,
+                errorMessageId = null,
                 progressBarVisible = false
             )
         }
@@ -155,7 +154,7 @@ class IntroductionViewModel @Inject constructor(
     fun nullifyMessage() {
         _uiState.update {
             it.copy(
-                message = null,
+                messageId = null,
                 progressBarVisible = false
             )
         }

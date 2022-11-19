@@ -1,7 +1,17 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items
 
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore
+import com.google.firebase.storage.StorageReference
+
 data class ItemsUiState(
     val isPresent: Boolean = false,
-    val areFabsExpanded: Boolean = false
+    val areItemsFabsExpanded: Boolean = false,
+    val items: ArrayList<ItemMenuFirestore>? = null,
+    val initialPosition: Int = 0,
+    val areSpecsFabsExpanded: Boolean = false,
+    val currentItem: ItemMenuFirestore? = null,
+    val currentPosition: Int? = null,
+    val setSize: Int? = null,
+    val itemImgReference: StorageReference? = null
 ) {
 }

@@ -4,5 +4,5 @@ data class UserDataUiState(
     val userName: String = "",
     val userTelefono: String = "",
     val userEmail: String = "",
-    val message: String? = null
+    val messageId: Int? = null
 )

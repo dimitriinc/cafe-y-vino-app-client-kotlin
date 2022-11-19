@@ -1,10 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data
 
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
@@ -13,7 +10,8 @@ import java.io.IOException
 import javax.inject.Inject
 
 data class UserPreferences(
-    val canSendPedidos: Boolean
+    val canSendPedidos: Boolean,
+    val catPath: String
 )
 
 class PreferencesManager @Inject constructor(
@@ -30,7 +28,8 @@ class PreferencesManager @Inject constructor(
         }
         .map { preferences ->
             val canSendPedidos = preferences[PreferencesKeys.CAN_SEND_PEDIDOS] ?: true
-            UserPreferences(canSendPedidos)
+            val catPath = preferences[PreferencesKeys.CAT_PATH] ?: ""
+            UserPreferences(canSendPedidos, catPath)
         }
 
     suspend fun updateCanSendPedidos(canSendPedidos: Boolean) {
@@ -39,8 +38,15 @@ class PreferencesManager @Inject constructor(
         }
     }
 
+    suspend fun updateCatPath(catPath: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.CAT_PATH] = catPath
+        }
+    }
+
     private object PreferencesKeys {
         val CAN_SEND_PEDIDOS = booleanPreferencesKey("canSendPedidos")
+        val CAT_PATH = stringPreferencesKey("categoryPath")
     }
 
 }

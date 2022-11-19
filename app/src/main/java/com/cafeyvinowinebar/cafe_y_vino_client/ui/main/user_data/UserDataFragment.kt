@@ -114,8 +114,8 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
                      * without updating the message value is null
                      * and it returns to null right after displaying a message
                      */
-                    if (it.message != null) {
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                    if (it.messageId != null) {
+                        Toast.makeText(requireContext(), it.messageId, Toast.LENGTH_LONG).show()
                         viewModel.nullifyMessage()
                     }
                 }

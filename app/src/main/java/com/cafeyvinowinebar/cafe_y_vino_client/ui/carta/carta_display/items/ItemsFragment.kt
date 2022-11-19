@@ -9,8 +9,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -44,8 +45,8 @@ class ItemsFragment : Fragment(),
     lateinit var fStore: FirebaseFirestore
     @Inject
     lateinit var fStorage: FirebaseStorageSource
+    private val viewModel: ItemsViewModel by hiltNavGraphViewModels(R.id.menu_items_nav_graph)
     private val args: ItemsFragmentArgs by navArgs()
-    private val viewModel: ItemsViewModel by viewModels()
 
     private var _binding: FragmentItemsBinding? = null
     private val binding get() = _binding!!
@@ -66,7 +67,7 @@ class ItemsFragment : Fragment(),
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
 
-                    /**
+                    /**iewModels()
                      * on the user's presence status depends what fabs we display
                      * if not present, it's just a home button
                      * if present, we have a fab, that expands to display some other fabs
@@ -81,17 +82,17 @@ class ItemsFragment : Fragment(),
                             fabItemsHome.visibility = VISIBLE
                             fabItemsParent.visibility = GONE
                         }
-                        viewModel.collapseFabs()
+                        viewModel.setItemsFabs(false)
                     }
 
                     // if the fabs are expanded is controlled by a UI state property
                     // the parent fab takes one different images depending on the value, and different functions to perform on click
-                    if (it.areFabsExpanded) {
+                    if (it.areItemsFabsExpanded) {
                         binding.apply {
                             fabItemsParent.apply {
                                 setImageResource(R.drawable.ic_collapse)
                                 setOnClickListener {
-                                    viewModel.collapseFabs()
+                                    viewModel.setItemsFabs(false)
                                 }
                             }
                             fabItemsCanasta.show()
@@ -105,7 +106,7 @@ class ItemsFragment : Fragment(),
                             fabItemsParent.apply {
                                 setImageResource(R.drawable.ic_expand)
                                 setOnClickListener {
-                                    viewModel.expandFabs()
+                                    viewModel.setItemsFabs(true)
                                 }
                             }
                             fabItemsCanasta.hide()
@@ -129,11 +130,10 @@ class ItemsFragment : Fragment(),
                     .setView(dialogView)
                     .create()
                     .show()
-                viewModel.collapseFabs()
+                viewModel.setItemsFabs(false)
             }
             fabItemsCanasta.setOnClickListener {
-                val action = ItemsFragmentDirections.actionItemsFragmentToCanastaFragment()
-                findNavController().navigate(action)
+                findNavController().navigate(R.id.canastaFragment)
             }
             fabItemsHome.setOnClickListener {
                 findNavController().navigate(R.id.homeFragment)
@@ -155,17 +155,15 @@ class ItemsFragment : Fragment(),
      * Which is a ViewPager, that displays all the available items of the category, starting with the one that has been pressed
      * So as arguments to the new activity, we pass the list of all the items, represented as instances of the ItemMenu class
      */
-    override fun onClick(document: DocumentSnapshot, items: ArrayList<ItemMenuFirestore>) {
-        val bundle = Bundle()
-        bundle.putSerializable(KEY_ITEMS, items)
-        bundle.putString(KEY_NOMBRE, document.getString(KEY_NOMBRE))
-        findNavController().navigate(R.id.itemSpecsHostFragment, bundle)
+    override fun onClick(document: DocumentSnapshot) {
+        viewModel.setInitPosition(document.getString(KEY_NOMBRE)!!)
+        findNavController().navigate(R.id.itemSpecsHostFragment)
     }
 
     override fun onResume() {
         super.onResume()
 
-        val query = fStore.collection(args.categoryPath)
+        val query = fStore.collection(args.catPath)
             .whereEqualTo(KEY_IS_PRESENT, true)
             .orderBy(KEY_NOMBRE)
         val options = FirestoreRecyclerOptions.Builder<ItemMenuFirestore>()
@@ -176,6 +174,11 @@ class ItemsFragment : Fragment(),
         binding.recItems.apply {
             adapter = adapterItems
             layoutManager = LinearLayoutManager(requireContext())
+            doOnLayout {
+                if (viewModel.uiState.value.items == null) {
+                    viewModel.setItems(ArrayList(adapterItems.snapshots))
+                }
+            }
         }
 
         adapterItems.startListening()
@@ -184,7 +187,7 @@ class ItemsFragment : Fragment(),
     override fun onStop() {
         super.onStop()
         adapterItems.stopListening()
-        viewModel.collapseFabs()
+        viewModel.setItemsFabs(false)
     }
 
     override fun onDestroyView() {

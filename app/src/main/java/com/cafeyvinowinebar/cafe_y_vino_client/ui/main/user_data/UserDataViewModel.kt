@@ -18,8 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserDataViewModel @Inject constructor(
-    private val userDataRepo: UserDataRepository,
-    @ApplicationContext val context: Context
+    private val userDataRepo: UserDataRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserDataUiState())
@@ -55,13 +54,13 @@ class UserDataViewModel @Inject constructor(
         if (emailUpdated) {
             _uiState.update {
                 it.copy(
-                    message = context.getString(R.string.email_update_success)
+                    messageId = R.string.email_update_success
                 )
             }
         } else {
             _uiState.update {
                 it.copy(
-                    message = context.getString(R.string.email_update_failure)
+                    messageId = R.string.email_update_failure
                 )
             }
         }
@@ -72,13 +71,13 @@ class UserDataViewModel @Inject constructor(
         if (nombreUpdated) {
             _uiState.update {
                 it.copy(
-                    message = context.getString(R.string.nombre_update_success)
+                    messageId = R.string.nombre_update_success
                 )
             }
         } else {
             _uiState.update {
                 it.copy(
-                    message = context.getString(R.string.nombre_update_failure)
+                    messageId = R.string.nombre_update_failure
                 )
             }
         }
@@ -89,13 +88,13 @@ class UserDataViewModel @Inject constructor(
         if (telefonoUpdated) {
             _uiState.update {
                 it.copy(
-                    message = context.getString(R.string.telefono_update_success)
+                    messageId = R.string.telefono_update_success
                 )
             }
         } else {
             _uiState.update {
                 it.copy(
-                    message = context.getString(R.string.telefono_update_failure)
+                    messageId = R.string.telefono_update_failure
                 )
             }
         }
@@ -108,7 +107,7 @@ class UserDataViewModel @Inject constructor(
     fun nullifyMessage() {
         _uiState.update {
             it.copy(
-                message = null
+                messageId = null
             )
         }
     }

@@ -6,6 +6,7 @@ import android.view.View.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -13,13 +14,14 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemSpecsBinding
+import com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items.ItemsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
 
-    private val viewModel: ItemSpecsViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val viewModel: ItemsViewModel by hiltNavGraphViewModels(R.id.menu_items_nav_graph)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,19 +33,17 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                 findNavController().navigate(R.id.homeFragment)
             }
             fabMainMenu.setOnClickListener {
-                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToCategoriesFragment()
-                findNavController().navigate(action)
+                findNavController().navigate(R.id.categoriesFragment)
             }
             fabCanasta.setOnClickListener {
-                val action = ItemSpecsFragmentDirections.actionItemSpecsFragmentToCanastaFragment()
-                findNavController().navigate(action)
+                findNavController().navigate(R.id.canastaFragment)
             }
 
             /**
              * Add the current item on display to the Canasta Room table
              */
             fabAdd.setOnClickListener {
-                viewModel.addItemToCanastaDb(viewModel.uiState.value.currentItem!!)
+                viewModel.addProductToCanasta(viewModel.uiState.value.currentItem!!)
                 Toast.makeText(requireContext(), R.string.on_adding_item, Toast.LENGTH_SHORT).show()
             }
         }
@@ -100,17 +100,16 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                             binding.apply {
                                 fabItemSpecsHome.visibility = VISIBLE
                                 fabExpand.visibility = GONE
-                                viewModel.collapseFabs()
+                                viewModel.setSpecsFabs(false)
                             }
                         }
 
-                        // expanding fabs' behaviour
-                        if (uiState.areFabsExpended) {
+                        if (uiState.areSpecsFabsExpanded) {
                             binding.apply {
                                 fabExpand.apply {
                                     setImageResource(R.drawable.ic_collapse)
                                     setOnClickListener {
-                                        viewModel.collapseFabs()
+                                        viewModel.setSpecsFabs(false)
                                     }
                                 }
                                 fabAdd.show()
@@ -125,7 +124,7 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
                                 fabExpand.apply {
                                     setImageResource(R.drawable.ic_expand)
                                     setOnClickListener {
-                                        viewModel.expandFabs()
+                                        viewModel.setSpecsFabs(true)
                                     }
                                 }
                                 fabAdd.hide()

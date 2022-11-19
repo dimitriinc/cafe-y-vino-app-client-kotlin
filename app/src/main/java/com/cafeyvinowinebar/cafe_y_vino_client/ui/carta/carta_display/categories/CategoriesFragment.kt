@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cafeyvinowinebar.cafe_y_vino_client.KEY_CAT_PATH
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.MenuCategoryFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
@@ -64,15 +65,13 @@ class CategoriesFragment : Fragment(), OnItemClickListener {
     override fun onItemClick(item: DocumentSnapshot) {
         val categoryName = item.getString("name")!!
         val categoryPath = item.getString("catPath")!!
-        val toItemsAction =
-            CategoriesFragmentDirections.actionCategoriesFragmentToItemsFragment(categoryPath)
-        val toVinosAction = CategoriesFragmentDirections.actionCategoriesFragmentToVinosFragment()
+        val action = CategoriesFragmentDirections.actionCategoriesFragmentToMenuItemsNavGraph(categoryPath)
 
         when (categoryName) {
-            "Vinos" -> findNavController().navigate(toVinosAction)
+            "Vinos" -> findNavController().navigate(R.id.vinosFragment)
             "Ofertas" -> {
                 if (!viewModel.uiState.value.isPresent) {
-                    findNavController().navigate(toItemsAction)
+                    findNavController().navigate(action)
                 } else {
                     val uiState = viewModel.uiState.value
                     if (uiState.isHappyHour == false) {
@@ -82,11 +81,11 @@ class CategoriesFragment : Fragment(), OnItemClickListener {
                             Toast.LENGTH_SHORT
                         ).show()
                     } else if (uiState.isHappyHour == true) {
-                        findNavController().navigate(toItemsAction)
+                        findNavController().navigate(action)
                     }
                 }
             }
-            else -> findNavController().navigate(toItemsAction)
+            else -> findNavController().navigate(action)
         }
     }
 

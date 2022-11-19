@@ -120,9 +120,9 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                     }
 
                     // when the registration operation fails we get an error message and display it as a toast
-                    if (it.errorMessage != null) {
+                    if (it.errorMessageId != null) {
                         viewModel.setProgressBarVisibility(false)
-                        Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), it.errorMessageId, Toast.LENGTH_LONG).show()
                         viewModel.nullifyErrorMessage()
                     }
                 }

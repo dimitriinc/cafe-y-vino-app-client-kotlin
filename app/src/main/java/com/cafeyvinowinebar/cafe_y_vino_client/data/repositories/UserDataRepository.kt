@@ -50,13 +50,13 @@ class UserDataRepository @Inject constructor(
      * Listens to the error flow from the fAuth source, and according to the exception type,
      * transforms it into an error message
      */
-    val errorMessageFlow: Flow<String?> = fAuthSource.errorFlow.map {
+    val errorMessageFlow: Flow<Int?> = fAuthSource.errorFlow.map {
         when (it) {
             null -> null
-            is FirebaseAuthUserCollisionException -> context.getString(R.string.email_collision)
-            is FirebaseAuthInvalidUserException -> context.getString(R.string.wrong_email)
-            is FirebaseAuthInvalidCredentialsException -> context.getString(R.string.invalid_password)
-            else -> it.localizedMessage
+            is FirebaseAuthUserCollisionException -> R.string.email_collision
+            is FirebaseAuthInvalidUserException -> R.string.wrong_email
+            is FirebaseAuthInvalidCredentialsException -> R.string.invalid_password
+            else -> R.string.error
         }
 
     }
@@ -91,13 +91,6 @@ class UserDataRepository @Inject constructor(
     fun getUserPresenceFlow(): Flow<Boolean> = userDataStore.data.map {
         it.isPresent
     }
-
-    /**
-     * Gets the flow from the Proto DataStore, converts it to a flow of the bonos property for its exposure to the UI layer
-     */
-//    fun getUserBonosFlow(): Flow<Long> = userDataStore.data.map {
-//        it.bonos
-//    }
 
     /**
      * Returns an Auth object for the start destination to decided if the user is logged in

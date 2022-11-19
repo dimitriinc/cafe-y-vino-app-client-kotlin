@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_items_nav_graph"
+    app:startDestination="@id/itemsFragment">
+    <fragment
+        android:id="@+id/itemsFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items.ItemsFragment"
+        android:label="fragment_items"
+        tools:layout="@layout/fragment_items" >
+        <argument
+            android:name="catPath"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_itemsFragment_to_itemSpecsHostFragment"
+            app:destination="@id/itemSpecsHostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemSpecsHostFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsHostFragment"
+        android:label="fragment_item_specs_host"
+        tools:layout="@layout/fragment_item_specs_host" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/itemSpecsFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsFragment"
+        android:label="fragment_item_specs"
+        tools:layout="@layout/fragment_item_specs" />
+</navigation>

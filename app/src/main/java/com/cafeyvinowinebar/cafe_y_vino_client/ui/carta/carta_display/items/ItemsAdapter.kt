@@ -29,8 +29,7 @@ class ItemsAdapter(
                 root.setOnClickListener {
                     if (absoluteAdapterPosition != RecyclerView.NO_POSITION) {
                         listener.onClick(
-                            snapshots.getSnapshot(absoluteAdapterPosition),
-                            ArrayList(snapshots)
+                            snapshots.getSnapshot(absoluteAdapterPosition)
                         )
                     }
                 }
