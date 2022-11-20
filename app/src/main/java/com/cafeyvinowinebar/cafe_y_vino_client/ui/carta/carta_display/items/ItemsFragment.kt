@@ -2,6 +2,7 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -22,6 +23,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemsBinding
+import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.ItemsSetter
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemLongClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnProductClickListener
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -31,18 +33,22 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "ItemsFragment"
+
 /**
  * Displays the products of a category that have a positive presence status in form of a recycler view
  */
 @AndroidEntryPoint
 class ItemsFragment : Fragment(),
     OnProductClickListener,
-    OnItemLongClickListener {
+    OnItemLongClickListener,
+    ItemsSetter {
 
     lateinit var adapterItems: ItemsAdapter
 
     @Inject
     lateinit var fStore: FirebaseFirestore
+
     @Inject
     lateinit var fStorage: FirebaseStorageSource
     private val viewModel: ItemsViewModel by hiltNavGraphViewModels(R.id.menu_items_nav_graph)
@@ -56,9 +62,18 @@ class ItemsFragment : Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+//        FirebaseFirestore.getInstance().collection(arguments?.getString(KEY_CAT_PATH)!!)
+//            .get().addOnSuccessListener {
+//                val itemsArray = arrayListOf<ItemMenuFirestore>()
+//                it.forEach { docSnapshot ->
+//                    itemsArray.add(docSnapshot.toObject(ItemMenuFirestore::class.java))
+//                }
+//                viewModel.setItems(itemsArray)
+//            }
         _binding = FragmentItemsBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -169,16 +184,11 @@ class ItemsFragment : Fragment(),
         val options = FirestoreRecyclerOptions.Builder<ItemMenuFirestore>()
             .setQuery(query, ItemMenuFirestore::class.java)
             .build()
-        adapterItems = ItemsAdapter(options, this, this, fStorage)
+        adapterItems = ItemsAdapter(options, this, this, fStorage, this)
 
         binding.recItems.apply {
             adapter = adapterItems
             layoutManager = LinearLayoutManager(requireContext())
-            doOnLayout {
-                if (viewModel.uiState.value.items == null) {
-                    viewModel.setItems(ArrayList(adapterItems.snapshots))
-                }
-            }
         }
 
         adapterItems.startListening()
@@ -193,6 +203,14 @@ class ItemsFragment : Fragment(),
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun passItems(items: ArrayList<ItemMenuFirestore>) {
+        items.forEach {
+            Log.d(TAG, "passItems: THE_ITEMS_ARRAY: \nITEM_NAME - ${it.nombre}")
+        }
+
+        viewModel.setItems(items)
     }
 
 }

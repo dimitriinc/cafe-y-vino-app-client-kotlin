@@ -1,6 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +17,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items.Item
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+private const val TAG = "ItemSpecsHostFragment"
 /**
  * Hosts a ViewPager2 that displays a collection of menu items of the chosen category
  */
@@ -28,30 +30,25 @@ class ItemSpecsHostFragment : Fragment(R.layout.fragment_item_specs_host) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentItemSpecsHostBinding.bind(view)
 
+        Log.d(TAG, "onViewCreated: VIEW_CREATED")
+
         binding.root.apply {
             adapter = Adapter()
             setPageTransformer(ZoomOutPageTransformer())
             currentItem = viewModel.uiState.value.initialPosition
         }
-
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                viewModel.uiState.collect {
-//                    // it might happen that the initial position in the UI state is set after the onCreate call (?)
-//                    binding.root.currentItem = it.initialPosition
-//                }
-//            }
-//        }
     }
 
     inner class Adapter : FragmentStateAdapter(this) {
 
         override fun getItemCount(): Int {
+            Log.d(TAG, "getItemCount: GET_ITEM_COUNT: ${viewModel.uiState.value.items!!.size}")
             return viewModel.uiState.value.items!!.size
         }
 
         override fun createFragment(position: Int): Fragment {
             viewModel.setThePagingFragment(position)
+            Log.d(TAG, "createFragment: CREATE_FRAGMENT")
             return ItemSpecsFragment()
         }
 

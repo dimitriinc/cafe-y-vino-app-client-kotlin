@@ -8,6 +8,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ListItemMenuItemBinding
+import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.ItemsSetter
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemLongClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnProductClickListener
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -18,7 +19,8 @@ class ItemsAdapter(
     options: FirestoreRecyclerOptions<ItemMenuFirestore>,
     val listener: OnProductClickListener,
     val longListener: OnItemLongClickListener,
-    val fStorage: FirebaseStorageSource
+    val fStorage: FirebaseStorageSource,
+    private val itemsSetter: ItemsSetter
 ) : FirestoreRecyclerAdapter<ItemMenuFirestore, ItemsAdapter.ViewHolder>(options) {
 
     inner class ViewHolder(
@@ -66,5 +68,10 @@ class ItemsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: ItemMenuFirestore) {
         holder.bind(model)
+    }
+
+    override fun onViewAttachedToWindow(holder: ViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        itemsSetter.passItems(ArrayList(snapshots))
     }
 }

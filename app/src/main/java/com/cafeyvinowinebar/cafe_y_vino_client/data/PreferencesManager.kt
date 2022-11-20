@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 data class UserPreferences(
     val canSendPedidos: Boolean,
-    val catPath: String
 )
 
 class PreferencesManager @Inject constructor(
@@ -28,8 +27,7 @@ class PreferencesManager @Inject constructor(
         }
         .map { preferences ->
             val canSendPedidos = preferences[PreferencesKeys.CAN_SEND_PEDIDOS] ?: true
-            val catPath = preferences[PreferencesKeys.CAT_PATH] ?: ""
-            UserPreferences(canSendPedidos, catPath)
+            UserPreferences(canSendPedidos)
         }
 
     suspend fun updateCanSendPedidos(canSendPedidos: Boolean) {
@@ -38,15 +36,8 @@ class PreferencesManager @Inject constructor(
         }
     }
 
-    suspend fun updateCatPath(catPath: String) {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKeys.CAT_PATH] = catPath
-        }
-    }
-
     private object PreferencesKeys {
         val CAN_SEND_PEDIDOS = booleanPreferencesKey("canSendPedidos")
-        val CAT_PATH = stringPreferencesKey("categoryPath")
     }
 
 }

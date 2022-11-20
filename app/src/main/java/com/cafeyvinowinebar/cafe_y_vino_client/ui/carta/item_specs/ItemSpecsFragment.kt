@@ -1,6 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.*
 import android.widget.Toast
@@ -18,6 +19,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items.Item
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+private const val TAG = "ItemSpecsFragment"
 @AndroidEntryPoint
 class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
 
@@ -26,6 +28,7 @@ class ItemSpecsFragment : Fragment(R.layout.fragment_item_specs) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d(TAG, "onViewCreated: VIEW_CREATED")
         val binding = FragmentItemSpecsBinding.bind(view)
 
         binding.apply {
