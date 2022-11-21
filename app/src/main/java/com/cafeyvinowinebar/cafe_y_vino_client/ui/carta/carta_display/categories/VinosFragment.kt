@@ -38,9 +38,8 @@ class VinosFragment : Fragment(R.layout.fragment_vinos) {
     }
 
     private fun navigateToItems(catPath: String) {
-        val bundle = Bundle()
-        bundle.putString(KEY_CAT_PATH, catPath)
-        findNavController().navigate(R.id.itemsFragment, bundle)
+        val action = VinosFragmentDirections.actionVinosFragmentToMenuItemsNavGraph(catPath)
+        findNavController().navigate(action)
     }
 
 }

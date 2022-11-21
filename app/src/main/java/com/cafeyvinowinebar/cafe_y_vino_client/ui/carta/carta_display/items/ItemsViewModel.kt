@@ -85,35 +85,12 @@ class ItemsViewModel @Inject constructor(
         var initialPosition = 0
         _uiState.value.items?.forEach {
             if (initialName == it.nombre) {
-                _uiState.update { uiState ->
-                    uiState.copy(
-                        currentItem = it
-                    )
-                }
                 initialPosition = _uiState.value.items!!.indexOf(it)
             }
         }
         _uiState.update {
             it.copy(
                 initialPosition = initialPosition
-            )
-        }
-    }
-
-    /**
-     * Called whenever a new fragment is introduced to the ViewPager
-     */
-    fun setThePagingFragment(
-        currentPosition: Int
-    ) = viewModelScope.launch {
-        _uiState.update {
-            it.copy(
-                currentPosition = currentPosition,
-                currentItem = it.items?.get(currentPosition),
-                setSize = it.items?.size,
-                itemImgReference = it.items?.get(currentPosition)?.image?.let { imgPath ->
-                    menuDataRepo.getImgReference(imgPath)
-                }
             )
         }
     }

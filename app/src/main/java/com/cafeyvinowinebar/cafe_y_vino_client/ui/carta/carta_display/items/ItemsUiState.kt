@@ -9,9 +9,5 @@ data class ItemsUiState(
     val items: ArrayList<ItemMenuFirestore>? = null,
     val initialPosition: Int = 0,
     val areSpecsFabsExpanded: Boolean = false,
-    val currentItem: ItemMenuFirestore? = null,
-    val currentPosition: Int? = null,
-    val setSize: Int? = null,
-    val itemImgReference: StorageReference? = null
 ) {
 }

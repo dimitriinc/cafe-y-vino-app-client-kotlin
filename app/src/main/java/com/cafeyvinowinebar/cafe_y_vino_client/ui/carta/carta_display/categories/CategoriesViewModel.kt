@@ -1,5 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.categories
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cafeyvinowinebar.cafe_y_vino_client.GMT
@@ -16,6 +17,7 @@ import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 
+private const val TAG = "CategoriesViewModel"
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
     private val utilsRepo: UtilsRepository,
@@ -36,7 +38,7 @@ class CategoriesViewModel @Inject constructor(
         }
 
         // set the happy hour value in the UI state
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.IO) {
 
             val utilsHappyHour = utilsRepo.getUtilsForHappyHour()
 
@@ -57,13 +59,16 @@ class CategoriesViewModel @Inject constructor(
                                 it.copy(
                                     isHappyHour = true
                                 )
+
                             }
+                            Log.d(TAG, "HAPPY HOUR IS TRUE")
                         } else {
                             _uiState.update {
                                 it.copy(
                                     isHappyHour = false
                                 )
                             }
+                            Log.d(TAG, "HAPPY HOUR IS FALSE")
                         }
                     }
                 } else {
@@ -72,6 +77,7 @@ class CategoriesViewModel @Inject constructor(
                             isHappyHour = false
                         )
                     }
+                    Log.d(TAG, "HAPPY HOUR IS FALSE")
                 }
             }
         }

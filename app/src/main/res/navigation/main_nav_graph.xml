@@ -111,7 +111,11 @@
         tools:layout="@layout/fragment_vinos" >
         <action
             android:id="@+id/action_vinosFragment_to_menu_items_nav_graph"
-            app:destination="@id/menu_items_nav_graph" />
+            app:destination="@id/menu_items_nav_graph">
+            <argument
+                android:name="catPath"
+                app:argType="string"/>
+        </action>
     </fragment>
     <include app:graph="@navigation/menu_items_nav_graph" />
 </navigation>

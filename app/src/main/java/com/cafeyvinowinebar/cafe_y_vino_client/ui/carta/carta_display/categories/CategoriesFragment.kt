@@ -1,6 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.categories
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
+private const val TAG = "CategoriesFragment"
+
 /**
  * All the products in the menu are divided into categories
  * The fragment displays them as a recycler view
@@ -33,6 +37,7 @@ class CategoriesFragment : Fragment(), OnItemClickListener {
 
     @Inject
     lateinit var fStore: FirebaseFirestore
+
     @Inject
     lateinit var fStorage: FirebaseStorageSource
 
@@ -65,22 +70,26 @@ class CategoriesFragment : Fragment(), OnItemClickListener {
     override fun onItemClick(item: DocumentSnapshot) {
         val categoryName = item.getString("name")!!
         val categoryPath = item.getString("catPath")!!
-        val action = CategoriesFragmentDirections.actionCategoriesFragmentToMenuItemsNavGraph(categoryPath)
+        val action =
+            CategoriesFragmentDirections.actionCategoriesFragmentToMenuItemsNavGraph(categoryPath)
 
         when (categoryName) {
             "Vinos" -> findNavController().navigate(R.id.vinosFragment)
             "Ofertas" -> {
+                Log.d(TAG, "onItemClick: OFERTAS IS CLICKED")
                 if (!viewModel.uiState.value.isPresent) {
                     findNavController().navigate(action)
                 } else {
+                    Log.d(TAG, "onItemClick: USER IS PRESENT")
                     val uiState = viewModel.uiState.value
                     if (uiState.isHappyHour == false) {
+                        Log.d(TAG, "onItemClick: NOT HAPPY HOUR")
                         Toast.makeText(
                             requireContext(),
                             R.string.main_menu_ofertas_404,
                             Toast.LENGTH_SHORT
                         ).show()
-                    } else if (uiState.isHappyHour == true) {
+                    } else {
                         findNavController().navigate(action)
                     }
                 }

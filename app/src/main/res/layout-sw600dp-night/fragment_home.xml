@@ -15,11 +15,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.745"
-        app:tint="@color/cream"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.178"
-        app:srcCompat="@drawable/btn_carta" />
+        app:layout_constraintVertical_bias="0.183"
+        app:srcCompat="@drawable/btn_carta"
+        app:tint="@color/cream" />
 
     <ImageView
         android:id="@+id/imgBtnReserv"
@@ -27,12 +27,11 @@
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:tint="@color/cream"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.432"
-        app:srcCompat="@drawable/btn_reservas" />
+        app:layout_constraintVertical_bias="0.426"
+        app:srcCompat="@drawable/btn_reservas"
+        app:tint="@color/cream" />
 
     <ImageView
         android:id="@+id/imgBtnGiftshop"
@@ -40,12 +39,12 @@
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.247"
+        app:layout_constraintHorizontal_bias="0.305"
         app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/cream"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.697"
-        app:srcCompat="@drawable/btn_giftshop" />
+        app:layout_constraintVertical_bias="0.669"
+        app:srcCompat="@drawable/btn_giftshop"
+        app:tint="@color/cream" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPuerta"
@@ -57,10 +56,10 @@
         app:fabCustomSize="95dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintHorizontal_bias="0.588"
         app:layout_constraintStart_toEndOf="@+id/imgBtnGiftshop"
         app:layout_constraintTop_toBottomOf="@+id/imgBtnReserv"
-        app:layout_constraintVertical_bias="0.091"
+        app:layout_constraintVertical_bias="0.127"
         app:maxImageSize="60dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

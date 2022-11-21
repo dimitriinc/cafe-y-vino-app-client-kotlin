@@ -21,7 +21,9 @@
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsHostFragment"
         android:label="fragment_item_specs_host"
         tools:layout="@layout/fragment_item_specs_host" >
-
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/itemSpecsFragment"

@@ -14,10 +14,10 @@
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.919"
+        app:layout_constraintHorizontal_bias="0.89"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.197"
+        app:layout_constraintVertical_bias="0.196"
         app:srcCompat="@drawable/btn_carta"
         app:tint="@color/cream" />
 
@@ -27,12 +27,12 @@
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.625"
+        app:layout_constraintHorizontal_bias="0.629"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/cream"
-        app:layout_constraintVertical_bias="0.548"
-        app:srcCompat="@drawable/btn_reservas" />
+        app:layout_constraintVertical_bias="0.478"
+        app:srcCompat="@drawable/btn_reservas"
+        app:tint="@color/cream" />
 
     <ImageView
         android:id="@+id/imgBtnGiftshop"
@@ -40,10 +40,10 @@
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.322"
+        app:layout_constraintHorizontal_bias="0.366"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.851"
+        app:layout_constraintVertical_bias="0.778"
         app:srcCompat="@drawable/btn_giftshop"
         app:tint="@color/cream" />
 

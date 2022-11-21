@@ -62,14 +62,6 @@ class ItemsFragment : Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        FirebaseFirestore.getInstance().collection(arguments?.getString(KEY_CAT_PATH)!!)
-//            .get().addOnSuccessListener {
-//                val itemsArray = arrayListOf<ItemMenuFirestore>()
-//                it.forEach { docSnapshot ->
-//                    itemsArray.add(docSnapshot.toObject(ItemMenuFirestore::class.java))
-//                }
-//                viewModel.setItems(itemsArray)
-//            }
         _binding = FragmentItemsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -171,8 +163,15 @@ class ItemsFragment : Fragment(),
      * So as arguments to the new activity, we pass the list of all the items, represented as instances of the ItemMenu class
      */
     override fun onClick(document: DocumentSnapshot) {
-        viewModel.setInitPosition(document.getString(KEY_NOMBRE)!!)
-        findNavController().navigate(R.id.itemSpecsHostFragment)
+        val name = document.getString(KEY_NOMBRE)
+        var initialPosition = 0
+        viewModel.uiState.value.items?.forEach {
+            if (name == it.nombre) {
+                initialPosition = viewModel.uiState.value.items!!.indexOf(it)
+            }
+        }
+        val action = ItemsFragmentDirections.actionItemsFragmentToItemSpecsHostFragment(initialPosition)
+        findNavController().navigate(action)
     }
 
     override fun onResume() {
@@ -206,10 +205,6 @@ class ItemsFragment : Fragment(),
     }
 
     override fun passItems(items: ArrayList<ItemMenuFirestore>) {
-        items.forEach {
-            Log.d(TAG, "passItems: THE_ITEMS_ARRAY: \nITEM_NAME - ${it.nombre}")
-        }
-
         viewModel.setItems(items)
     }
 
