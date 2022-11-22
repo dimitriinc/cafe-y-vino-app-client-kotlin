@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bkg_item_specs"
-    tools:context=".ui.carta.item_specs.ItemSpecsFragment">
+    tools:context=".ui.carta.carta_display.items.item_specs.ItemSpecsFragment">
 
     <ScrollView
         android:id="@+id/scroll"

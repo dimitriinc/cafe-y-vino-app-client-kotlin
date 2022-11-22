@@ -6,6 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/menuProductPager"
-    tools:context=".ui.carta.item_specs.ItemSpecsHostFragment">
+    tools:context=".ui.carta.carta_display.items.item_specs.ItemSpecsHostFragment">
 
 </androidx.viewpager2.widget.ViewPager2>

@@ -1,5 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
+import android.util.Log
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.UtilsEntryRequest
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.UtilsHappyHour
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.UtilsReservas
@@ -10,11 +11,11 @@ import com.cafeyvinowinebar.cafe_y_vino_client.di.ApplicationScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "UtilsRepository"
 /**
  * A repository for data related to access to some functionalities, like sending an entry request and adding happy hour products to canasta
  * And also the data concerning the available hours for reservations
@@ -53,7 +54,7 @@ class UtilsRepository @Inject constructor(
     }
 
     /**
-     * Three functions to get specific for each purpose utils
+     * Three functions to get utils specific for each purpose
      */
     fun getUtilsForEntryRequest(): UtilsEntryRequest {
         val utils = utilsDao.getUtils()[0]
@@ -63,13 +64,25 @@ class UtilsRepository @Inject constructor(
         )
     }
 
-    fun getUtilsForHappyHour(): UtilsHappyHour {
-        val utils = utilsDao.getUtils()[0]
-        return UtilsHappyHour(
-            happyDays = utils.diasDeHappyHour,
-            happyHours = utils.horasDeHappyHour
-        )
-    }
+    fun getUtilsForHappyHour(): Flow<UtilsHappyHour> = utilsDao.getUtilsFlow()
+        .catch {
+            cause: Throwable ->  throw cause
+        }
+        .map {
+            Log.d(TAG, "getUtilsForHappyHour: WE ARE AT THE MAP BLOCK")
+            val utils = it[0]
+            UtilsHappyHour(
+                happyDays = utils.diasDeHappyHour,
+                happyHours = utils.horasDeHappyHour
+            )
+        }
+//    {
+//        val utils = utilsDao.getUtils()[0]
+//        return UtilsHappyHour(
+//            happyDays = utils.diasDeHappyHour,
+//            happyHours = utils.horasDeHappyHour
+//        )
+//    }
 
     fun getUtilsForReservas(): UtilsReservas {
         val utils = utilsDao.getUtils()[0]

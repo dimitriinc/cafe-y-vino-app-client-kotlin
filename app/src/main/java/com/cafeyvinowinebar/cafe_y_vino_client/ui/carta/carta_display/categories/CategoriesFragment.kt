@@ -50,6 +50,7 @@ class CategoriesFragment : Fragment(), OnItemClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        viewModel.setHappyHour()
         return binding.root
     }
 
@@ -76,20 +77,17 @@ class CategoriesFragment : Fragment(), OnItemClickListener {
         when (categoryName) {
             "Vinos" -> findNavController().navigate(R.id.vinosFragment)
             "Ofertas" -> {
-                Log.d(TAG, "onItemClick: OFERTAS IS CLICKED")
                 if (!viewModel.uiState.value.isPresent) {
                     findNavController().navigate(action)
                 } else {
-                    Log.d(TAG, "onItemClick: USER IS PRESENT")
-                    val uiState = viewModel.uiState.value
-                    if (uiState.isHappyHour == false) {
-                        Log.d(TAG, "onItemClick: NOT HAPPY HOUR")
+                    if (!viewModel.uiState.value.isHappyHour) {
                         Toast.makeText(
                             requireContext(),
                             R.string.main_menu_ofertas_404,
                             Toast.LENGTH_SHORT
                         ).show()
-                    } else {
+                    }
+                    else {
                         findNavController().navigate(action)
                     }
                 }

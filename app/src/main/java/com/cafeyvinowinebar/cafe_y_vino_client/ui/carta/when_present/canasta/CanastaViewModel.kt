@@ -41,7 +41,6 @@ class CanastaViewModel @Inject constructor(
     val uiState: StateFlow<CanastaUiState> = _uiState.asStateFlow()
 
     init {
-        // listen to the user's presence state, and if they can make orders
         viewModelScope.launch(Dispatchers.IO) {
             userDataRepo.getUserPresenceFlow().collect { isPresent ->
                 _uiState.update {
@@ -50,14 +49,16 @@ class CanastaViewModel @Inject constructor(
                     )
                 }
             }
-            preferencesManager.preferencesFlow.collect { preferences ->
-                _uiState.update {
-                    it.copy(
-                        canSendPedidos = preferences.canSendPedidos
-                    )
-                }
-            }
+        }
+    }
 
+    fun observeCanSendPedidos() = viewModelScope.launch(Dispatchers.IO) {
+        preferencesManager.preferencesFlow.collect { preferences ->
+            _uiState.update {
+                it.copy(
+                    canSendPedidos = preferences.canSendPedidos
+                )
+            }
         }
     }
 

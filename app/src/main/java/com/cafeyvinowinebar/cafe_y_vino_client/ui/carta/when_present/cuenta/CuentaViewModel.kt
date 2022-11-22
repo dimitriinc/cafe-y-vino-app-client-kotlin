@@ -1,5 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.cuenta
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cafeyvinowinebar.cafe_y_vino_client.data.PreferencesManager
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "CuentaViewModel"
 @HiltViewModel
 class CuentaViewModel @Inject constructor(
     val userDataRepo: UserDataRepository,
@@ -34,15 +36,6 @@ class CuentaViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            // listen to the user's presence state
-            userDataRepo.getUserPresenceFlow().collect { isPresent ->
-                _uiState.update {
-                    it.copy(
-                        isPresent = isPresent
-                    )
-                }
-            }
-
             // observe the bill's total price
             menuDataRepo.getCuentaTotalFlow(userDataRepo.getUserId()).collect { total ->
                 _uiState.update { uiState ->
@@ -51,18 +44,28 @@ class CuentaViewModel @Inject constructor(
                     )
                 }
             }
-
-            // collect the preference about sending new orders or cuenta requests
-            preferencesManager.preferencesFlow.collect { preferences ->
-                _uiState.update {
-                    it.copy(
-                        canSendPedidos = preferences.canSendPedidos
-                    )
-                }
-            }
-
         }
+    }
 
+    fun observePresence() = viewModelScope.launch(Dispatchers.IO) {
+        userDataRepo.getUserPresenceFlow().collect { isPresent ->
+            Log.d(TAG, "COLLECTING THE PRESENCE STATE")
+            _uiState.update {
+                it.copy(
+                    isPresent = isPresent
+                )
+            }
+        }
+    }
+
+    fun observeCanSendPedidos() = viewModelScope.launch(Dispatchers.IO) {
+        preferencesManager.preferencesFlow.collect { preferences ->
+            _uiState.update {
+                it.copy(
+                    canSendPedidos = preferences.canSendPedidos
+                )
+            }
+        }
     }
 
     /**

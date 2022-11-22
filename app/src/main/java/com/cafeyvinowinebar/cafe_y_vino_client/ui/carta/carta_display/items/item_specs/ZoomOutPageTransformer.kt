@@ -1,4 +1,4 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items.item_specs
 
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2

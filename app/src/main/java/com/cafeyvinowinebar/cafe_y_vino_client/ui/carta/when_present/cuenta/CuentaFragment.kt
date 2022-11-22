@@ -40,6 +40,8 @@ class CuentaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCuentaBinding.inflate(inflater, container, false)
+        viewModel.observePresence()
+        viewModel.observeCanSendPedidos()
         return binding.root
     }
 
@@ -81,13 +83,16 @@ class CuentaFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
 
-                    // when the bill is cancelled by the admin app, the presence status of the user becomes false
-                    // and they're navigated to the main screen
-                    // the user can stay in the cuenta fragment while in negative presence status
+                    /** when the bill is cancelled by the admin app, the presence status of the user becomes false
+                     * and they're navigated to the main screen
+                     * the user can't stay in the cuenta fragment while in negative presence status
+                     */
                     if (!uiState.isPresent) {
                         val action = MainNavGraphDirections.actionGlobalHomeFragment()
                         findNavController().navigate(action)
                     }
+
+                    binding.txtMontoTotal.text = uiState.totalCuentaCost.toString()
 
                     // configure the parent fab's behavior
                     if (uiState.isPedirCuentaFabExpanded) {

@@ -1,7 +1,6 @@
-package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs
+package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items.item_specs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -23,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "ItemSpecsFragment"
 @AndroidEntryPoint
 class ItemSpecsFragment : Fragment() {
 

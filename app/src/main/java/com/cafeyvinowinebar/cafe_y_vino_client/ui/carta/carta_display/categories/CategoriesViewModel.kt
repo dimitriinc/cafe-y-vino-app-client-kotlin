@@ -8,10 +8,7 @@ import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UserDataReposit
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.UtilsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
@@ -36,16 +33,16 @@ class CategoriesViewModel @Inject constructor(
                 }
             }
         }
+    }
 
-        // set the happy hour value in the UI state
-        viewModelScope.launch(Dispatchers.IO) {
+    fun setHappyHour() = viewModelScope.launch(Dispatchers.IO) {
 
-            val utilsHappyHour = utilsRepo.getUtilsForHappyHour()
-
+        utilsRepo.getUtilsForHappyHour().collect { utilsHappyHour ->
             val day = LocalDate.now().dayOfWeek.name
 
             // iterate through the list of happy days and check if the current day is one of them
             // if not, set 'false'
+            var happyHourIsSetToTrue = false
             utilsHappyHour.happyDays.forEach { happyDay ->
                 if (day == happyDay) {
                     // the day is happy, now we have to find out if the current hour is happy
@@ -59,25 +56,17 @@ class CategoriesViewModel @Inject constructor(
                                 it.copy(
                                     isHappyHour = true
                                 )
-
                             }
-                            Log.d(TAG, "HAPPY HOUR IS TRUE")
-                        } else {
-                            _uiState.update {
-                                it.copy(
-                                    isHappyHour = false
-                                )
-                            }
-                            Log.d(TAG, "HAPPY HOUR IS FALSE")
+                            happyHourIsSetToTrue = true
                         }
                     }
-                } else {
-                    _uiState.update {
-                        it.copy(
-                            isHappyHour = false
-                        )
-                    }
-                    Log.d(TAG, "HAPPY HOUR IS FALSE")
+                }
+            }
+            if (!happyHourIsSetToTrue) {
+                _uiState.update {
+                    it.copy(
+                        isHappyHour = false
+                    )
                 }
             }
         }

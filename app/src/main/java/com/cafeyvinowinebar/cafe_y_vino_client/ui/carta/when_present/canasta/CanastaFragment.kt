@@ -2,8 +2,10 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.canasta
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -26,17 +28,29 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
+class CanastaFragment : Fragment(), OnCanastaListener {
 
     @Inject
     lateinit var fStorage: FirebaseStorageSource
     private val viewModel: CanastaViewModel by viewModels()
 
+    private var _binding: FragmentCanastaBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentCanastaBinding.inflate(inflater, container, false)
+        viewModel.observeCanSendPedidos()
+        return binding.root
+    }
+
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentCanastaBinding.bind(view)
         val adapterCanasta = CanastaAdapter(this, fStorage)
 
         binding.apply {
@@ -187,6 +201,11 @@ class CanastaFragment : Fragment(R.layout.fragment_canasta), OnCanastaListener {
     override fun onStop() {
         super.onStop()
         viewModel.collapseCanastaFabs()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

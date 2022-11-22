@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/itemSpecsHostFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsHostFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items.item_specs.ItemSpecsHostFragment"
         android:label="fragment_item_specs_host"
         tools:layout="@layout/fragment_item_specs_host" >
         <argument
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/itemSpecsFragment"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.item_specs.ItemSpecsFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items.item_specs.ItemSpecsFragment"
         android:label="fragment_item_specs"
         tools:layout="@layout/fragment_item_specs" />
 </navigation>

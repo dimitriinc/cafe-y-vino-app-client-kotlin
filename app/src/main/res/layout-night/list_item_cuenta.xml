@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="10dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="15dp">
@@ -30,7 +31,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/aladin"
                 android:paddingHorizontal="10dp"
-                android:text="3"
+                tools:text="3"
                 android:textSize="20sp" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -44,30 +45,33 @@
             android:layout_margin="5dp"
             app:cardCornerRadius="7dp"
             app:cardElevation="10dp"
-            android:layout_toRightOf="@+id/cardCount">
+            android:layout_toEndOf="@+id/cardCount"
+            android:layout_toStartOf="@+id/cardPrecio">
 
             <TextView
                 android:id="@+id/cuentaName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="start"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:fontFamily="@font/aladin"
                 android:paddingHorizontal="10dp"
-                android:text="Gin Tonic Premio Boticario"
+                tools:text="Gin Tonic "
                 android:textSize="20sp" />
 
         </com.google.android.material.card.MaterialCardView>
 
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardText"
+            android:id="@+id/cardPrecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
             app:cardCornerRadius="7dp"
             app:cardElevation="10dp"
-            android:layout_toLeftOf="@+id/cardTotal">
+            android:layout_toStartOf="@+id/cardTotal">
 
             <TextView
                 android:id="@+id/cuentaPrice"
@@ -76,7 +80,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/aladin"
                 android:paddingHorizontal="10dp"
-                android:text="32"
+                tools:text="32"
                 android:textSize="20sp" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -85,7 +89,7 @@
             android:id="@+id/cardTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
             app:cardCornerRadius="7dp"
@@ -98,7 +102,7 @@
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/aladin"
                 android:paddingHorizontal="10dp"
-                android:text="320"
+                tools:text="320"
                 android:textSize="20sp" />
 
         </com.google.android.material.card.MaterialCardView>

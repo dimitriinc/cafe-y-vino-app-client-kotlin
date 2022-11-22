@@ -2,6 +2,7 @@ package com.cafeyvinowinebar.cafe_y_vino_client
 
 import android.content.Context
 import android.content.res.Configuration
+import android.util.Log
 import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.Dispatchers
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlin.coroutines.CoroutineContext
 
+private const val TAG = "Extensions"
 fun Context.isDarkThemeOn(): Boolean {
     return resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 }
@@ -66,6 +68,7 @@ fun Query.asCuentaTotalFlow(
             total += itemTotal
         }
     }
+    Log.d(TAG, "asCuentaTotalFlow: TOTAL_CUENTA: $total")
     total
 
 }
