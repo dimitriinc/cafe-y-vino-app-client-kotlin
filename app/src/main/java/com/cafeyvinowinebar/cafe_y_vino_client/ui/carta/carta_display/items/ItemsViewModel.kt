@@ -61,7 +61,8 @@ class ItemsViewModel @Inject constructor(
     fun setItems(items: ArrayList<ItemMenuFirestore>) {
         _uiState.update {
             it.copy(
-                items = items
+                items = items,
+                itemsSize = items.size
             )
         }
     }

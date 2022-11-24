@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="Typos">
 
-    <string name="app_name" translatable="false">Cafe y Vino</string>
+    <string name="app_name" translatable="false">Café y Vino</string>
 
     // notifications
     <string name="noti_farewell_title">Gracias por la visita!</string>

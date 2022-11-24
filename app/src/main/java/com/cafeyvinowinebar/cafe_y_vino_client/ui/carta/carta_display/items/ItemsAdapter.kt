@@ -8,19 +8,16 @@ import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.ListItemMenuItemBinding
-import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.ItemsSetter
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemLongClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnProductClickListener
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import javax.inject.Inject
 
 class ItemsAdapter(
     options: FirestoreRecyclerOptions<ItemMenuFirestore>,
     val listener: OnProductClickListener,
     val longListener: OnItemLongClickListener,
-    val fStorage: FirebaseStorageSource,
-    private val itemsSetter: ItemsSetter
+    val fStorage: FirebaseStorageSource
 ) : FirestoreRecyclerAdapter<ItemMenuFirestore, ItemsAdapter.ViewHolder>(options) {
 
     inner class ViewHolder(
@@ -31,7 +28,8 @@ class ItemsAdapter(
                 root.setOnClickListener {
                     if (absoluteAdapterPosition != RecyclerView.NO_POSITION) {
                         listener.onClick(
-                            snapshots.getSnapshot(absoluteAdapterPosition)
+                            snapshots.getSnapshot(absoluteAdapterPosition),
+                            ArrayList(snapshots)
                         )
                     }
                 }
@@ -70,8 +68,4 @@ class ItemsAdapter(
         holder.bind(model)
     }
 
-    override fun onViewAttachedToWindow(holder: ViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        itemsSetter.passItems(ArrayList(snapshots))
-    }
 }

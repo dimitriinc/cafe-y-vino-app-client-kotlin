@@ -1,6 +1,5 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.when_present.cuenta
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cafeyvinowinebar.cafe_y_vino_client.data.PreferencesManager
@@ -49,7 +48,6 @@ class CuentaViewModel @Inject constructor(
 
     fun observePresence() = viewModelScope.launch(Dispatchers.IO) {
         userDataRepo.getUserPresenceFlow().collect { isPresent ->
-            Log.d(TAG, "COLLECTING THE PRESENCE STATE")
             _uiState.update {
                 it.copy(
                     isPresent = isPresent

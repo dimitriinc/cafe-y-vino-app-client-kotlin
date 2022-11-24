@@ -2,7 +2,6 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
@@ -23,7 +21,6 @@ import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ItemMenuFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemsBinding
-import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.ItemsSetter
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemLongClickListener
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnProductClickListener
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -33,18 +30,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "ItemsFragment"
-
 /**
  * Displays the products of a category that have a positive presence status in form of a recycler view
  */
 @AndroidEntryPoint
 class ItemsFragment : Fragment(),
     OnProductClickListener,
-    OnItemLongClickListener,
-    ItemsSetter {
+    OnItemLongClickListener {
 
     lateinit var adapterItems: ItemsAdapter
+    lateinit var options: FirestoreRecyclerOptions<ItemMenuFirestore>
 
     @Inject
     lateinit var fStore: FirebaseFirestore
@@ -62,6 +57,13 @@ class ItemsFragment : Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val query = fStore.collection(args.catPath)
+            .whereEqualTo(KEY_IS_PRESENT, true)
+            .orderBy(KEY_NOMBRE)
+        options = FirestoreRecyclerOptions.Builder<ItemMenuFirestore>()
+            .setQuery(query, ItemMenuFirestore::class.java)
+            .build()
+
         _binding = FragmentItemsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -162,10 +164,11 @@ class ItemsFragment : Fragment(),
      * Which is a ViewPager, that displays all the available items of the category, starting with the one that has been pressed
      * So as arguments to the new activity, we pass the list of all the items, represented as instances of the ItemMenu class
      */
-    override fun onClick(document: DocumentSnapshot) {
+    override fun onClick(document: DocumentSnapshot, items: ArrayList<ItemMenuFirestore>) {
+        viewModel.setItems(items)
         val name = document.getString(KEY_NOMBRE)
         var initialPosition = 0
-        viewModel.uiState.value.items?.forEach {
+        items.forEach {
             if (name == it.nombre) {
                 initialPosition = viewModel.uiState.value.items!!.indexOf(it)
             }
@@ -177,13 +180,7 @@ class ItemsFragment : Fragment(),
     override fun onResume() {
         super.onResume()
 
-        val query = fStore.collection(args.catPath)
-            .whereEqualTo(KEY_IS_PRESENT, true)
-            .orderBy(KEY_NOMBRE)
-        val options = FirestoreRecyclerOptions.Builder<ItemMenuFirestore>()
-            .setQuery(query, ItemMenuFirestore::class.java)
-            .build()
-        adapterItems = ItemsAdapter(options, this, this, fStorage, this)
+        adapterItems = ItemsAdapter(options, this, this, fStorage)
 
         binding.recItems.apply {
             adapter = adapterItems
@@ -202,10 +199,6 @@ class ItemsFragment : Fragment(),
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun passItems(items: ArrayList<ItemMenuFirestore>) {
-        viewModel.setItems(items)
     }
 
 }

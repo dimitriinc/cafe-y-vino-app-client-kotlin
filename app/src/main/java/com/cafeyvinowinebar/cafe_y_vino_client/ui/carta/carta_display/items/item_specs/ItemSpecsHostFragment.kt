@@ -30,11 +30,13 @@ class ItemSpecsHostFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val position = args.position
         _binding = FragmentItemSpecsHostBinding.inflate(inflater, container, false)
         binding.root.apply {
             adapter = Adapter()
+            currentItem = position
             setPageTransformer(ZoomOutPageTransformer())
-            currentItem = args.position
+            offscreenPageLimit = 3
         }
         return binding.root
     }
@@ -45,14 +47,7 @@ class ItemSpecsHostFragment : Fragment() {
     }
 
     inner class Adapter : FragmentStateAdapter(this) {
-
-        override fun getItemCount(): Int {
-            return viewModel.uiState.value.items!!.size
-        }
-
-        override fun createFragment(position: Int): Fragment {
-            return ItemSpecsFragment.newInstance(position)
-        }
-
+        override fun getItemCount() = viewModel.uiState.value.itemsSize
+        override fun createFragment(position: Int) = ItemSpecsFragment.newInstance(position)
     }
 }
