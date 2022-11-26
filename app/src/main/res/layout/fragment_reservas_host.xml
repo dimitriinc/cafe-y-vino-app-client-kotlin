@@ -6,24 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.reservas.ReservasActivity">
+    tools:context=".ui.reservas.HostFragment">
     
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/reservas_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/reservas_nav_graph"/>
+        android:id="@+id/reservas_host_fragment"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/reservas_bottom_navigation"
         app:menu="@menu/reservas_navigation_menu"/>
-<!--        app:itemIconTint="@color/purple_500"-->
-<!--        app:itemTextColor="@color/darkest_teal"-->
-<!--        android:background="@color/cream"/>-->
 
 </LinearLayout>

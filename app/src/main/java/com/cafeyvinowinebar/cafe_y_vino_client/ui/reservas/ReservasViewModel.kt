@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.*
 @HiltViewModel
 class ReservasViewModel @Inject constructor(
     private val userDataRepo: UserDataRepository,
-    utilsRepo: UtilsRepository,
+    private val utilsRepo: UtilsRepository,
     private val fMessaging: FirebaseMessagingSource,
     private val reservasRepo: ReservasDataRepository,
     @ApplicationScope

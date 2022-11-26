@@ -53,11 +53,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 findNavController().navigate(action)
             }
             imgBtnMenu.setOnClickListener {
+
                 val action = HomeFragmentDirections.actionHomeFragmentToCategoriesFragment()
                 findNavController().navigate(action)
             }
             imgBtnReserv.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToReservasActivity()
+                val action = HomeFragmentDirections.actionHomeFragmentToHostFragment()
                 findNavController().navigate(action)
             }
             fabUserData.setOnClickListener {

@@ -10,6 +10,7 @@
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.FechaFragment"
         android:label="fragment_reservas_fecha"
         tools:layout="@layout/fragment_reservas_fecha" />
+
     <fragment
         android:id="@+id/reservas_mesa_dest"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.MesaFragment"

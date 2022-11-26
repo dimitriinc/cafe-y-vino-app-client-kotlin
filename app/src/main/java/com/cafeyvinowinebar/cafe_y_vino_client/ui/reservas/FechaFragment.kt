@@ -11,12 +11,14 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentReservasFechaBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,9 +27,10 @@ import java.util.*
  * First screen in the reservas graph
  * User is expected to choose the date and the part of day (day/night) for his reservation
  */
+@AndroidEntryPoint
 class FechaFragment : Fragment(R.layout.fragment_reservas_fecha) {
 
-    private val viewModel: ReservasViewModel by activityViewModels()
+    private val viewModel: ReservasViewModel by viewModels(ownerProducer = { requireParentFragment() })
     private lateinit var horas: List<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

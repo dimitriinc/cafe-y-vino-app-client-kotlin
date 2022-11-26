@@ -20,9 +20,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.reservas.ReservasActivity"
-            android:exported="false"/>
-
         <service
             android:name="com.cafeyvinowinebar.cafe_y_vino_client.services.MyFirebaseMessagingService"
             android:exported="false">

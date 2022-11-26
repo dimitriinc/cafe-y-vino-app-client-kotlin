@@ -10,6 +10,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
+import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,12 +20,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentReservasMesaBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
-    private val viewModel: ReservasViewModel by hiltNavGraphViewModels(R.id.reservas_nav_graph)
-    private val passAllowed = arguments?.getBoolean("passAllowed") ?: false
+    private val viewModel: ReservasViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private var passAllowed = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,13 +36,15 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     ): View? {
         // if date or part or both weren't chosen by the user, we should display a denial screen
         // when both values are selected, the safe arg will be true, and we can proceed
-        return if (!passAllowed) {
-            val view = inflater.inflate(R.layout.fragment_mesa_denied, container)
+        val uiState = viewModel.uiState.value
+        return if (uiState.fecha == null || uiState.part == null) {
+            val view = inflater.inflate(R.layout.fragment_mesa_denied, container, false)
             view.findViewById<TextView>(R.id.txtReservaDenied).text =
                 getString(R.string.reserva_error_fecha)
             view
         } else {
-            inflater.inflate(R.layout.fragment_reservas_mesa, container)
+            passAllowed = true
+            inflater.inflate(R.layout.fragment_reservas_mesa, container, false)
         }
 
     }
@@ -67,7 +74,7 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
                         popup = it.mesasPopup
 
                         // if the mesa is chosen, display it
-                        if(it.mesa != null) {
+                        if (it.mesa != null) {
                             binding.txtMesa.apply {
                                 text = it.mesa
                                 visibility = View.VISIBLE
@@ -92,8 +99,11 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
                 // navigate to the fragment that displays the tables arrangement
                 imgSala.setOnClickListener {
-                    val action = MesaFragmentDirections.actionReservasMesaDestToSalaPlanFragment()
-                    findNavController().navigate(action)
+                    SalaPlanFragment().show(childFragmentManager, "TAG")
+//                    parentFragmentManager.commit {
+//                        setReorderingAllowed(true)
+//                        add<SalaPlanFragment>(R.id.reservas_host_fragment)
+//                    }
                 }
                 imgEscogerMesa.setOnClickListener {
                     popup?.show()

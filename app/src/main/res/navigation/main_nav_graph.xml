@@ -27,9 +27,6 @@
             app:popUpTo="@id/main_nav_graph"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_homeFragment_to_reservasActivity"
-            app:destination="@id/reservasActivity" />
-        <action
             android:id="@+id/action_homeFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
         <action
@@ -38,6 +35,9 @@
         <action
             android:id="@+id/action_homeFragment_to_cuentaFragment"
             app:destination="@id/cuentaFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_hostFragment"
+            app:destination="@id/hostFragment" />
     </fragment>
     <fragment
         android:id="@+id/giftshopFragment"
@@ -62,11 +62,6 @@
         app:popUpTo="@id/homeFragment"
         app:popUpToInclusive="true" />
     <include app:graph="@navigation/intro_nav_graph" />
-    <activity
-        android:id="@+id/reservasActivity"
-        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.ReservasActivity"
-        android:label="activity_reservas"
-        tools:layout="@layout/activity_reservas" />
     <fragment
         android:id="@+id/categoriesFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.categories.CategoriesFragment"
@@ -118,4 +113,9 @@
         </action>
     </fragment>
     <include app:graph="@navigation/menu_items_nav_graph" />
+    <fragment
+        android:id="@+id/hostFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.HostFragment"
+        android:label="fragment_reservas_host"
+        tools:layout="@layout/fragment_reservas_host" />
 </navigation>
