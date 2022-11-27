@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -97,13 +99,14 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
                         .show()
                 }
 
-                // navigate to the fragment that displays the tables arrangement
                 imgSala.setOnClickListener {
-                    SalaPlanFragment().show(childFragmentManager, "TAG")
-//                    parentFragmentManager.commit {
-//                        setReorderingAllowed(true)
-//                        add<SalaPlanFragment>(R.id.reservas_host_fragment)
-//                    }
+                    val image = ImageView(requireContext())
+                    image.setImageResource(R.drawable.plan)
+                    AlertDialog.Builder(requireContext())
+                        .setView(image)
+                        .create()
+                        .show()
+
                 }
                 imgEscogerMesa.setOnClickListener {
                     popup?.show()

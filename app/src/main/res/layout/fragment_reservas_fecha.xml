@@ -46,7 +46,7 @@
         android:id="@+id/txtPartOfDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/aladin"
         android:text="@string/part_of_day_picker"
         android:textSize="24sp"

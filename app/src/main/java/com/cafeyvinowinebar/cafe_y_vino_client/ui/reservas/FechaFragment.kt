@@ -3,6 +3,7 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas
 import android.app.DatePickerDialog
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -61,9 +62,14 @@ class FechaFragment : Fragment(R.layout.fragment_reservas_fecha) {
                         }
                     }
                     if (it.part != null) {
-                        binding.txtPartOfDay.apply {
-                            text = it.part
+                        binding.imgPartOfDayDisplay.apply {
                             visibility = View.VISIBLE
+                            if (it.part == "dia") {
+                                setImageResource(R.drawable.ic_day)
+                            } else {
+                                setImageResource(R.drawable.ic_night)
+                            }
+
                         }
                     }
                 }
@@ -87,7 +93,7 @@ class FechaFragment : Fragment(R.layout.fragment_reservas_fecha) {
                     val sdf = SimpleDateFormat("EEEE", Locale.ENGLISH)
                     val date = Date(year, monthOfYear, dayOfMonth - 1)
                     val dayOfWeek = sdf.format(date)
-                    if (dayOfWeek.equals("friday") || dayOfWeek.equals("saturday") || dayOfWeek.equals("sunday")) {
+                    if (dayOfWeek.equals("Friday") || dayOfWeek.equals("Saturday") || dayOfWeek.equals("Sunday")) {
                         showAlertDialog()
                     } else {
 
@@ -99,6 +105,7 @@ class FechaFragment : Fragment(R.layout.fragment_reservas_fecha) {
 
                 // instantiate a date picker
                 val datePicker = DatePickerDialog(requireContext())
+                datePicker.datePicker.minDate = System.currentTimeMillis() - 1000
                 datePicker.setOnDateSetListener(dateSetListener)
                 datePicker.show()
 
