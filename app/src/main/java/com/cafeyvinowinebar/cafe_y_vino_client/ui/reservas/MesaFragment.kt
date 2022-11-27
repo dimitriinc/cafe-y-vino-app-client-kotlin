@@ -1,6 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -25,6 +26,8 @@ import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentReservasMesaB
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+private const val TAG = "MesaFragment"
+
 @AndroidEntryPoint
 class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
@@ -36,8 +39,10 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // if date or part or both weren't chosen by the user, we should display a denial screen
-        // when both values are selected, the safe arg will be true, and we can proceed
+        /**
+         * if date or part or both weren't chosen by the user, we should display a denial screen
+         * when both values are selected, we can proceed
+         */
         val uiState = viewModel.uiState.value
         return if (uiState.fecha == null || uiState.part == null) {
             val view = inflater.inflate(R.layout.fragment_mesa_denied, container, false)
@@ -58,24 +63,23 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         } else {
             super.onViewCreated(view, savedInstanceState)
 
+            viewModel.getReservedTables()
             val binding = FragmentReservasMesaBinding.bind(view)
             // create a wrapper for a customized popup menu look
             val wrapper = ContextThemeWrapper(requireContext(), R.style.popupMenuStyle)
 
-            // build a popup menu
-            var popup: PopupMenu? = PopupMenu(wrapper, binding.imgEscogerMesa)
-            popup?.setOnMenuItemClickListener(this)
-            popup?.inflate(R.menu.popup_mesa)
-            // send it to view model to block the items that correspond to existing reservations
-            viewModel.blockReservedTables(popup)
+            val popup = PopupMenu(wrapper, binding.imgEscogerMesa)
+            popup.setOnMenuItemClickListener(this)
+            popup.inflate(R.menu.popup_mesa)
 
             viewLifecycleOwner.lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.uiState.collect {
 
-                        popup = it.mesasPopup
+                        if (it.listOfReservedTables.isNotEmpty()) {
+                            blockReservedTables(popup, it.listOfReservedTables)
+                        }
 
-                        // if the mesa is chosen, display it
                         if (it.mesa != null) {
                             binding.txtMesa.apply {
                                 text = it.mesa
@@ -88,7 +92,6 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
             binding.apply {
 
-                // display a dialog explaining the functioning of the mesa picker
                 imgInfoMesa.setOnClickListener {
                     val dialogView = layoutInflater.inflate(R.layout.alert_info, null)
                     val txtMsg = dialogView.findViewById<TextView>(R.id.txtInfoMsg)
@@ -109,8 +112,32 @@ class MesaFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
                 }
                 imgEscogerMesa.setOnClickListener {
-                    popup?.show()
+                    popup.show()
                 }
+            }
+        }
+    }
+
+    /**
+     * For each string in the list of reserved mesas stored in the UI state
+     * We disable the corresponding menu item
+     */
+    private fun blockReservedTables(popupMenu: PopupMenu, listOfTables: List<String>) {
+        val menu = popupMenu.menu
+        listOfTables.forEach {
+            when (it) {
+                "01" -> menu.findItem(R.id.m01).isEnabled = false
+                "02" -> menu.findItem(R.id.m02).isEnabled = false
+                "03" -> menu.findItem(R.id.m03).isEnabled = false
+                "04" -> menu.findItem(R.id.m04).isEnabled = false
+                "05" -> menu.findItem(R.id.m05).isEnabled = false
+                "06" -> menu.findItem(R.id.m06).isEnabled = false
+                "07" -> menu.findItem(R.id.m07).isEnabled = false
+                "08" -> menu.findItem(R.id.m08).isEnabled = false
+                "09" -> menu.findItem(R.id.m09).isEnabled = false
+                "10" -> menu.findItem(R.id.m10).isEnabled = false
+                "11" -> menu.findItem(R.id.m11).isEnabled = false
+                "12" -> menu.findItem(R.id.m12).isEnabled = false
             }
         }
     }

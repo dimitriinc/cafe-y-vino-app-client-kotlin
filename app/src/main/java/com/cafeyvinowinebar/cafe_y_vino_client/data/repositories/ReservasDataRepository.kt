@@ -16,8 +16,15 @@ class ReservasDataRepository @Inject constructor(
 
     /**
      * Requests a set of reservas from the fStore source
+     * Converts it to a list of strings of reserved tables (id of the document in fStore is the table's number)
+     * Returns the list so that the viewModel can store it
      */
-    suspend fun getSetOfReservas(fecha: String?, part: String?): QuerySnapshot? {
-        return fStoreSource.getReservasQuery(fecha, part)
+    suspend fun getSetOfReservas(fecha: String?, part: String?): List<String> {
+        val querySnapshot = fStoreSource.getReservasQuery(fecha, part)
+        val listOfReservedTables = mutableListOf<String>()
+        querySnapshot?.forEach {
+            listOfReservedTables.add(it.id)
+        }
+        return listOfReservedTables
     }
 }

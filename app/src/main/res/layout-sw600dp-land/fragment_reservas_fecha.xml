@@ -12,11 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:layout_marginEnd="150dp"
         android:fontFamily="@font/aladin"
         android:text="@string/date_picker"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgInfo"
         app:layout_constraintTop_toBottomOf="@+id/imgInfo" />
 
     <ImageView
@@ -33,6 +33,7 @@
         android:id="@+id/txtDateDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/aladin"
         android:text="TextView"
         android:textSize="20sp"
@@ -45,12 +46,12 @@
         android:id="@+id/txtPartOfDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/aladin"
         android:text="@string/part_of_day_picker"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline8"
+        app:layout_constraintStart_toEndOf="@+id/imgInfo"
         app:layout_constraintTop_toBottomOf="@+id/imgInfo" />
 
     <ImageView
@@ -68,7 +69,7 @@
         android:id="@+id/imgPartOfDayDisplay"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/imgDayNight"
         app:layout_constraintStart_toStartOf="@+id/imgDayNight"
@@ -84,12 +85,5 @@
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="472dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

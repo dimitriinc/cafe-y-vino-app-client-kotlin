@@ -95,43 +95,18 @@ class ReservasViewModel @Inject constructor(
     }
 
     /**
-     * Two functions to set the availability flags of the mesa and fin screens
+     * We request the repository to query the existing reservations for the chosen period of time and return a list of tables
+     * And we store the returned value in the UI state, so that the view layer can disable the menu items based on the list
      */
-    fun setPassToMesas(isAllowed: Boolean) {
-        _uiState.update { it.copy(passToMesasAllowed = isAllowed) }
-    }
-
-    fun setPassToFin(isAllowed: Boolean) {
-        _uiState.update { it.copy(passToFinAllowed = isAllowed) }
-    }
-
-    /**
-     * Receives a popup menu instance to block unavailable items
-     * We request a query snapshot from the repository which will contain a list of document snapshots each corresponding to an existing reservation
-     * The id of the document snapshot is the table numeric value, so if the id exists, we block this table in the popup's menu
-     * If the collection doesn't exist, and the repo returns null, that means there is no reservation in this set, we block no items
-     */
-    fun blockReservedTables(popup: PopupMenu?) = appScope.launch {
-        reservasRepo.getSetOfReservas(_uiState.value.fecha, _uiState.value.part)?.forEach {
-
-            val menu = popup?.menu
-            when (it.id) {
-                "01" -> menu?.findItem(R.id.m01)?.isEnabled = false
-                "02" -> menu?.findItem(R.id.m02)?.isEnabled = false
-                "03" -> menu?.findItem(R.id.m03)?.isEnabled = false
-                "04" -> menu?.findItem(R.id.m04)?.isEnabled = false
-                "05" -> menu?.findItem(R.id.m05)?.isEnabled = false
-                "06" -> menu?.findItem(R.id.m06)?.isEnabled = false
-                "07" -> menu?.findItem(R.id.m07)?.isEnabled = false
-                "08" -> menu?.findItem(R.id.m08)?.isEnabled = false
-                "09" -> menu?.findItem(R.id.m09)?.isEnabled = false
-                "10" -> menu?.findItem(R.id.m10)?.isEnabled = false
-                "11" -> menu?.findItem(R.id.m11)?.isEnabled = false
-                "12" -> menu?.findItem(R.id.m12)?.isEnabled = false
-            }
-            _uiState.update { uiState ->
-                uiState.copy(mesasPopup = popup)
-            }
+    fun getReservedTables() = appScope.launch(Dispatchers.IO) {
+        _uiState.update {
+            it.copy(
+                listOfReservedTables = emptyList()
+            )
+        }
+        val listOfTables = reservasRepo.getSetOfReservas(_uiState.value.fecha, _uiState.value.part)
+        _uiState.update { uiState ->
+            uiState.copy(listOfReservedTables = listOfTables)
         }
     }
 

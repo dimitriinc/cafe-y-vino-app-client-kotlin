@@ -133,7 +133,7 @@
     <string name="entry_request_positive_btn">Send the request</string>
     <string name="reservas_fecha">Date</string>
     <string name="reservas_mesa">Table</string>
-    <string name="reservas_fin">Final</string>
+    <string name="reservas_fin">Hour</string>
     <string name="privacy_msg">Allow us to gather and store the provided data</string>
     <string name="requireAge">I am 18 years old or more</string>
     <string name="age_restriction">You have to be at least 18 years old</string>

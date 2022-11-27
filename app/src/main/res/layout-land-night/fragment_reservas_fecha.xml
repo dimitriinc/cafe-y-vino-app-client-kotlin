@@ -12,11 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
+        android:layout_marginEnd="75dp"
         android:fontFamily="@font/aladin"
         android:text="@string/date_picker"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline7"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgInfo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -48,12 +48,12 @@
         android:id="@+id/txtPartOfDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
         android:layout_marginTop="100dp"
         android:fontFamily="@font/aladin"
         android:text="@string/part_of_day_picker"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toEndOf="@+id/imgInfo"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -84,11 +84,10 @@
         android:layout_height="50dp"
         android:layout_marginTop="100dp"
         android:src="@drawable/btn_info"
-        app:layout_constraintEnd_toStartOf="@+id/txtPartOfDay"
-        app:tint="@color/yellow_dark"
-        app:layout_constraintHorizontal_bias="0.581"
-        app:layout_constraintStart_toEndOf="@+id/txtDateAnouncement"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/yellow_dark" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"

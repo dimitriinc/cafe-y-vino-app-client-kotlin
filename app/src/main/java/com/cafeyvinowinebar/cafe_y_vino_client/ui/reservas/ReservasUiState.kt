@@ -12,10 +12,7 @@ data class ReservasUiState(
     val horas: List<String> = emptyList(),
     val horasDeDia: List<String> = emptyList(),
     val horasDeNoche: List<String> = emptyList(),
-    val userMessage: String? = null,
-    val mesasPopup: PopupMenu? = null,
-    val passToMesasAllowed: Boolean = false,
-    val passToFinAllowed: Boolean = false,
+    val listOfReservedTables: List<String> = emptyList(),
     val isReservaSent: Boolean? = null,
     val firstName: String = ""
 ) {

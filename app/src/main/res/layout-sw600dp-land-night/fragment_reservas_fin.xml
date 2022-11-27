@@ -15,7 +15,7 @@
         android:fontFamily="@font/aladin"
         android:text="@string/escoger_hora"
         android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/fabUpload"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +28,7 @@
         android:text="@string/escoger_pax"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toEndOf="@+id/fabUpload"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -37,8 +37,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_cloud_upload"
         app:layout_constraintBottom_toTopOf="@+id/edtComment"
-        app:layout_constraintEnd_toStartOf="@+id/imgPax"
-        app:layout_constraintStart_toEndOf="@+id/imgClock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.79"
         app:maxImageSize="30dp" />
@@ -108,12 +108,5 @@
         app:layout_constraintEnd_toEndOf="@+id/imgPax"
         app:layout_constraintStart_toStartOf="@+id/imgPax"
         app:layout_constraintTop_toBottomOf="@+id/imgPax" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="481dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

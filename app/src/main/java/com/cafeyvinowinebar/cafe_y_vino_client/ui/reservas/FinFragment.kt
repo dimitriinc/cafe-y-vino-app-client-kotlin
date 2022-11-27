@@ -148,12 +148,13 @@ class FinFragment : Fragment() {
                             findViewById<TextView>(R.id.txtReservaMesa).text = uiState.mesa
                             findViewById<TextView>(R.id.txtReservaHora).text = uiState.hora
                             findViewById<TextView>(R.id.txtReservaPax).text = uiState.pax
+                            findViewById<TextView>(R.id.txtReservaComentario).text = comentario
                             if (comentario.isEmpty()) {
                                 findViewById<TextView>(R.id.txtReservaComentario).text =
                                     getString(R.string.no_comment)
                             } else {
                                 findViewById<TextView>(R.id.txtReservaComentario).text =
-                                    uiState.comentario
+                                    comentario
                             }
 
                         }
@@ -169,6 +170,8 @@ class FinFragment : Fragment() {
                         val confirmationDialog = dialogBuilder.create()
                         confirmationDialog.show()
 
+                        // change the buttons color if the dark theme is on
+                        // TODO: do it with styles better
                         if (requireContext().isDarkThemeOn()) {
                             val buttonPositive =
                                 confirmationDialog.getButton(DialogInterface.BUTTON_POSITIVE)
