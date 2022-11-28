@@ -10,8 +10,9 @@
         android:id="@+id/imgStop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="50dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="75dp"
         app:srcCompat="@drawable/img_denied" />
 
     <TextView
@@ -19,14 +20,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_fab_txt"
-        android:layout_below="@+id/imgStop"
-        android:layout_centerHorizontal="true"
         android:fontFamily="@font/david_libre"
-        android:layout_marginHorizontal="40dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="75dp"
         android:gravity="center_horizontal"
         android:padding="10dp"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
-        tools:text="Por favor, escoge la fecha" />
+        tools:text="Por favor, escoge una fecha" />
 </RelativeLayout>

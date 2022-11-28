@@ -99,6 +99,10 @@ class FinFragment : Fragment() {
                                 Toast.makeText(requireContext(), R.string.error, Toast.LENGTH_SHORT)
                                     .show()
                                 viewModel.nullifyReservaSent()
+                                binding.apply {
+                                    fabUpload.visibility = View.VISIBLE
+                                    progressReserva.visibility = View.GONE
+                                }
                             }
 
                         }
@@ -170,6 +174,8 @@ class FinFragment : Fragment() {
                             setPositiveButton(R.string.confirmar) { _, _ ->
                                 // when the user confirms, the view model is ready to start the process
                                 viewModel.makeReservation()
+                                fabUpload.visibility = View.GONE
+                                progressReserva.visibility = View.VISIBLE
                             }
                         }
 
