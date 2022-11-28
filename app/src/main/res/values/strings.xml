@@ -21,8 +21,8 @@
 
     // text views
 
-    <string name="reserva_error_mesa">Por favor, escoge una mesa</string>
-    <string name="reserva_error_fecha">Por favor, escoge una fecha y una parte del día</string>
+    <string name="reserva_error_mesa">Por favor, escoge la mesa</string>
+    <string name="reserva_error_fecha">Por favor, escoge la fecha y la parte del día</string>
 
     <string name="crypto">Cripto</string>
     <string name="pedir_cuenta">Pedir cuenta</string>

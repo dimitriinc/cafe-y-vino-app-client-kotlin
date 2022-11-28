@@ -3,7 +3,6 @@ package com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas
 import android.app.DatePickerDialog
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -11,9 +10,7 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -100,6 +97,7 @@ class FechaFragment : Fragment(R.layout.fragment_reservas_fecha) {
                         // the day is a workweek day - we can set the date officially
                         calendar.set(year, monthOfYear, dayOfMonth)
                         viewModel.setDate(calendar)
+                        viewModel.nullifyData()
                     }
                 }
 
@@ -145,6 +143,7 @@ class FechaFragment : Fragment(R.layout.fragment_reservas_fecha) {
 
         // we also define an on menu item click listener
         popupMenu.setOnMenuItemClickListener {
+            viewModel.nullifyData()
             when (it.itemId) {
                 R.id.day -> {
                     viewModel.setPartOfDay("dia")

@@ -1,6 +1,5 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas
 
-import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,7 +8,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import com.cafeyvinowinebar.cafe_y_vino_client.DATE_FORMAT
-import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseMessagingSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.ReservaFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.ReservasDataRepository
@@ -154,6 +152,20 @@ class ReservasViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 isReservaSent = null
+            )
+        }
+    }
+
+    /**
+     * Every time fecha or part of day gets changed we want to set mesa, hora, and pax to null, because we deal with a new set of reservation
+     * The chosen mesa might be reserved already, and the hora and pax will not correspond either
+     */
+    fun nullifyData() {
+        _uiState.update {
+            it.copy(
+                mesa = null,
+                hora = null,
+                pax = null
             )
         }
     }

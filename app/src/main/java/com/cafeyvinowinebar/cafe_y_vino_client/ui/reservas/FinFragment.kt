@@ -77,6 +77,12 @@ class FinFragment : Fragment() {
                                 visibility = View.VISIBLE
                             }
                         }
+                        if (uiState.pax != null) {
+                            binding.txtPaxDisplay.apply {
+                                text = uiState.pax
+                                visibility = View.VISIBLE
+                            }
+                        }
 
                         if (uiState.isReservaSent != null) {
                             if (uiState.isReservaSent) {
@@ -171,7 +177,7 @@ class FinFragment : Fragment() {
                         confirmationDialog.show()
 
                         // change the buttons color if the dark theme is on
-                        // TODO: do it with styles better
+                        // TODO: do it with styles better (?)
                         if (requireContext().isDarkThemeOn()) {
                             val buttonPositive =
                                 confirmationDialog.getButton(DialogInterface.BUTTON_POSITIVE)
