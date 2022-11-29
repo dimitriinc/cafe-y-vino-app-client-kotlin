@@ -1,7 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.categories
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cafeyvinowinebar.cafe_y_vino_client.KEY_CAT_PATH
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.MenuCategoryFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseStorageSource
@@ -58,7 +56,8 @@ class CategoriesFragment : Fragment(), OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         binding.fabHome.setOnClickListener {
-            findNavController().navigate(R.id.homeFragment)
+            val action = CategoriesFragmentDirections.actionCategoriesFragmentToHomeFragment()
+            findNavController().navigate(action)
         }
     }
 
@@ -75,7 +74,10 @@ class CategoriesFragment : Fragment(), OnItemClickListener {
             CategoriesFragmentDirections.actionCategoriesFragmentToMenuItemsNavGraph(categoryPath)
 
         when (categoryName) {
-            "Vinos" -> findNavController().navigate(R.id.vinosFragment)
+            "Vinos" -> {
+                val actionToVinos = CategoriesFragmentDirections.actionCategoriesFragmentToVinosFragment()
+                findNavController().navigate(actionToVinos)
+            }
             "Ofertas" -> {
                 if (!viewModel.uiState.value.isPresent) {
                     findNavController().navigate(action)
@@ -86,8 +88,7 @@ class CategoriesFragment : Fragment(), OnItemClickListener {
                             R.string.main_menu_ofertas_404,
                             Toast.LENGTH_SHORT
                         ).show()
-                    }
-                    else {
+                    } else {
                         findNavController().navigate(action)
                     }
                 }

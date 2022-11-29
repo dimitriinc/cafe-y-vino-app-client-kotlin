@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.cafeyvinowinebar.cafe_y_vino_client.MainNavGraphDirections
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.data.repositories.MenuDataRepository
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentItemSpecsBinding
@@ -85,13 +86,16 @@ class ItemSpecsFragment : Fragment() {
             }
 
             fabItemSpecsHome.setOnClickListener {
-                findNavController().navigate(R.id.homeFragment)
+                val action = MainNavGraphDirections.actionGlobalHomeFragmentNoPopup()
+                findNavController().navigate(action)
             }
             fabMainMenu.setOnClickListener {
-                findNavController().navigate(R.id.categoriesFragment)
+                val action = MainNavGraphDirections.actionGlobalCategoriesFragment()
+                findNavController().navigate(action)
             }
             fabCanasta.setOnClickListener {
-                findNavController().navigate(R.id.canastaFragment)
+                val action = MainNavGraphDirections.actionGlobalCanastaFragment()
+                findNavController().navigate(action)
             }
 
             /**

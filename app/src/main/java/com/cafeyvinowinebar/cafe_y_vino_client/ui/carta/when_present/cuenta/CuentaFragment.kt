@@ -51,8 +51,8 @@ class CuentaFragment : Fragment() {
         binding.apply {
 
             fabCuentaHome.setOnClickListener {
-                // we don't want the tasks to pop up, so we don't use the global action here
-                findNavController().navigate(R.id.main_nav_graph)
+                val action = CuentaFragmentDirections.actionCuentaFragmentToHomeFragment()
+                findNavController().navigate(action)
             }
             fabCuentaMenu.setOnClickListener {
                 val action = CuentaFragmentDirections.actionCuentaFragmentToCategoriesFragment()

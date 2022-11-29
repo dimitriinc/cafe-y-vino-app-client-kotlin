@@ -121,7 +121,7 @@ class FirebaseFirestoreSource @Inject constructor(
      * After a new user is registered, we save a document with some personal and necessary for the functioning of the app data
      */
     suspend fun storeUserDoc(
-        user: UserFirestore,
+        user: Map<String, Any>,
         userId: String
     ): Boolean {
         return try {

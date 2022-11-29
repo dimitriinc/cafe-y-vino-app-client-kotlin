@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.cafeyvinowinebar.cafe_y_vino_client.KEY_CAT_PATH
 import com.cafeyvinowinebar.cafe_y_vino_client.R
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentVinosBinding
 

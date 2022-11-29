@@ -12,10 +12,18 @@
         tools:layout="@layout/fragment_bienvenido">
         <action
             android:id="@+id/action_bienvenidoFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
+            app:destination="@id/registrationFragment"
+            app:enterAnim="@anim/slide_in_to_bottom"
+            app:exitAnim="@anim/slide_out_to_bottom"
+            app:popEnterAnim="@anim/slide_in_to_top"
+            app:popExitAnim="@anim/slide_out_to_top"/>
         <action
             android:id="@+id/action_bienvenidoFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_to_bottom"
+            app:exitAnim="@anim/slide_out_to_bottom"
+            app:popEnterAnim="@anim/slide_in_to_top"
+            app:popExitAnim="@anim/slide_out_to_top"/>
     </fragment>
     <fragment
         android:id="@+id/walkthroughFragment"
@@ -24,7 +32,11 @@
         tools:layout="@layout/fragment_on_boarding">
         <action
             android:id="@+id/action_walkthroughFragment_to_bienvenidoFragment"
-            app:destination="@id/bienvenidoFragment" />
+            app:destination="@id/bienvenidoFragment"
+            app:enterAnim="@anim/slide_in_to_left"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popExitAnim="@anim/slide_out_to_right"
+            app:popEnterAnim="@anim/slide_in_to_right"/>
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
@@ -33,9 +45,7 @@
         tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/action_registrationFragment_to_privacyDialog"
-            app:destination="@id/privacyDialog"
-            app:enterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
+            app:destination="@id/privacyDialog" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -55,7 +65,9 @@
         <action
             android:id="@+id/action_privacyDialog_to_privacyFragment"
             app:destination="@id/privacyFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@anim/slide_in_to_top"
+            app:exitAnim="@anim/slide_out_to_top"
+            app:popEnterAnim="@anim/slide_in_to_bottom"
+            app:popExitAnim="@anim/slide_out_to_bottom"/>
     </dialog>
 </navigation>

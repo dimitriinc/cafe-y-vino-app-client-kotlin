@@ -65,9 +65,8 @@ class CanastaFragment : Fragment(), OnCanastaListener {
                 findNavController().navigate(action)
             }
             fabInicio.setOnClickListener {
-
-                // without popping up the stack
-                findNavController().navigate(R.id.main_nav_graph)
+                val action = CanastaFragmentDirections.actionCanastaFragmentToHomeFragment()
+                findNavController().navigate(action)
             }
             fabInfo.setOnClickListener {
 

@@ -2,13 +2,11 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.content.res.Resources
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.work.*
 import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.R
-import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.UserFirestore
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.User
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseAuthSource
 import com.cafeyvinowinebar.cafe_y_vino_client.data.sources.FirebaseFirestoreSource
@@ -145,17 +143,17 @@ class UserDataRepository @Inject constructor(
         val authenticated = fAuthSource.registerUser(email, password)
         if (authenticated) {
             val token = fMessagingSource.getToken()
-            val user = UserFirestore(
-                nombre = name,
-                telefono = phone,
-                fechaDeNacimiento = birthdate,
-                email = email,
-                isPresent = false,
-                mesa = "00",
-                token = token,
-                bonos = 0
+            val userObject = mapOf(
+                KEY_NOMBRE to name,
+                KEY_TELEFONO to phone,
+                KEY_FECHA_NACIMIENTO to birthdate,
+                KEY_EMAIL to email,
+                KEY_IS_PRESENT to false,
+                KEY_MESA to "00",
+                KEY_TOKEN to token,
+                KEY_BONOS to 0
             )
-            return storeUserDoc(user)
+            return storeUserDoc(userObject)
         } else {
             return false
         }
@@ -165,7 +163,7 @@ class UserDataRepository @Inject constructor(
      * Stores a User document in the "usuarios" collection into the Firebase DB, using the Uid as the ID of the document
      * Return the result
      */
-    private suspend fun storeUserDoc(user: UserFirestore): Boolean {
+    private suspend fun storeUserDoc(user: Map<String, Any>): Boolean {
         val userId = getUserId()
         return fStoreSource.storeUserDoc(user, userId)
     }

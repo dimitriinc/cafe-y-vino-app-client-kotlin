@@ -14,13 +14,17 @@
         <action
             android:id="@+id/action_homeFragment_to_giftshopFragment"
             app:destination="@id/giftshopFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@anim/slide_in_to_bottom"
+            app:exitAnim="@anim/slide_out_to_bottom"
+            app:popEnterAnim="@anim/slide_in_to_top"
+            app:popExitAnim="@anim/slide_out_to_top"/>
         <action
             android:id="@+id/action_homeFragment_to_userDataFragment"
             app:destination="@id/userDataFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@anim/slide_in_to_right"
+            app:exitAnim="@anim/slide_out_to_right"
+            app:popExitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_to_left"/>
         <action
             android:id="@+id/action_homeFragment_to_intro_nav_graph"
             app:destination="@id/intro_nav_graph"
@@ -28,22 +32,40 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_homeFragment_to_categoriesFragment"
-            app:destination="@id/categoriesFragment" />
+            app:destination="@id/categoriesFragment"
+            app:enterAnim="@anim/slide_in_to_bottom"
+            app:exitAnim="@anim/slide_out_to_bottom"
+            app:popEnterAnim="@anim/slide_in_to_top"
+            app:popExitAnim="@anim/slide_out_to_top"/>
         <action
             android:id="@+id/action_homeFragment_to_canastaFragment"
-            app:destination="@id/canastaFragment" />
+            app:destination="@id/canastaFragment"
+            app:enterAnim="@anim/slide_in_to_left"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popExitAnim="@anim/slide_out_to_right"
+            app:popEnterAnim="@anim/slide_in_to_right"/>
         <action
             android:id="@+id/action_homeFragment_to_cuentaFragment"
-            app:destination="@id/cuentaFragment" />
+            app:destination="@id/cuentaFragment"
+            app:enterAnim="@anim/slide_in_to_left"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popExitAnim="@anim/slide_out_to_right"
+            app:popEnterAnim="@anim/slide_in_to_right"/>
         <action
             android:id="@+id/action_homeFragment_to_hostFragment"
-            app:destination="@id/hostFragment" />
+            app:destination="@id/hostFragment"
+            app:enterAnim="@anim/slide_in_to_bottom"
+            app:exitAnim="@anim/slide_out_to_bottom"
+            app:popEnterAnim="@anim/slide_in_to_top"
+            app:popExitAnim="@anim/slide_out_to_top"/>
     </fragment>
     <fragment
         android:id="@+id/giftshopFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.giftshop.GiftshopFragment"
         android:label="fragment_giftshop"
-        tools:layout="@layout/fragment_giftshop" />
+        tools:layout="@layout/fragment_giftshop" >
+
+    </fragment>
     <fragment
         android:id="@+id/userDataFragment"
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.user_data.UserDataFragment"
@@ -53,14 +75,40 @@
             android:id="@+id/action_userDataFragment_to_intro_nav_graph2"
             app:destination="@id/intro_nav_graph"
             app:popUpTo="@id/main_nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_to_top"
+            app:exitAnim="@anim/slide_out_to_top"/>
     </fragment>
     <action
         android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment"
         app:launchSingleTop="true"
-        app:popUpTo="@id/homeFragment"
-        app:popUpToInclusive="true" />
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true"
+        app:enterAnim="@anim/slide_in_to_top"
+        app:exitAnim="@anim/slide_out_to_top"/>
+    <action
+        android:id="@+id/action_global_homeFragment_no_popup"
+        app:destination="@+id/homeFragment"
+        app:enterAnim="@anim/slide_in_to_top"
+        app:exitAnim="@anim/slide_out_to_top"
+        app:popEnterAnim="@anim/slide_in_to_bottom"
+        app:popExitAnim="@anim/slide_out_to_bottom"/>
+    <action
+        android:id="@+id/action_global_canastaFragment"
+        app:destination="@+id/canastaFragment"
+        app:enterAnim="@anim/slide_in_to_left"
+        app:exitAnim="@anim/slide_out_to_left"
+        app:popExitAnim="@anim/slide_out_to_right"
+        app:popEnterAnim="@anim/slide_in_to_right"/>
+    <action
+        android:id="@+id/action_global_categoriesFragment"
+        app:destination="@+id/categoriesFragment"
+        app:enterAnim="@anim/slide_in_to_right"
+        app:exitAnim="@anim/slide_out_to_right"
+        app:popExitAnim="@anim/slide_out_to_left"
+        app:popEnterAnim="@anim/slide_in_to_left"/>
+
     <include app:graph="@navigation/intro_nav_graph" />
     <fragment
         android:id="@+id/categoriesFragment"
@@ -69,14 +117,30 @@
         tools:layout="@layout/fragment_categories" >
         <action
             android:id="@+id/action_categoriesFragment_to_vinosFragment"
-            app:destination="@id/vinosFragment" />
+            app:destination="@id/vinosFragment"
+            app:enterAnim="@anim/slide_in_to_left"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popExitAnim="@anim/slide_out_to_right"
+            app:popEnterAnim="@anim/slide_in_to_right"/>
         <action
             android:id="@+id/action_categoriesFragment_to_menu_items_nav_graph"
-            app:destination="@id/menu_items_nav_graph">
+            app:destination="@id/menu_items_nav_graph"
+            app:enterAnim="@anim/slide_in_to_left"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popExitAnim="@anim/slide_out_to_right"
+            app:popEnterAnim="@anim/slide_in_to_right">
             <argument
                 android:name="catPath"
                 app:argType="string"/>
         </action>
+
+        <action
+            android:id="@+id/action_categoriesFragment_to_homeFragment"
+            app:destination="@+id/homeFragment"
+            app:enterAnim="@anim/slide_in_to_top"
+            app:exitAnim="@anim/slide_out_to_top"
+            app:popEnterAnim="@anim/slide_in_to_bottom"
+            app:popExitAnim="@anim/slide_out_to_bottom"/>
     </fragment>
     <fragment
         android:id="@+id/canastaFragment"
@@ -85,10 +149,25 @@
         tools:layout="@layout/fragment_canasta" >
         <action
             android:id="@+id/action_canastaFragment_to_cuentaFragment"
-            app:destination="@id/cuentaFragment" />
+            app:destination="@id/cuentaFragment"
+            app:enterAnim="@anim/slide_in_to_left"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popExitAnim="@anim/slide_out_to_right"
+            app:popEnterAnim="@anim/slide_in_to_right"/>
         <action
             android:id="@+id/action_canastaFragment_to_categoriesFragment"
-            app:destination="@id/categoriesFragment" />
+            app:destination="@id/categoriesFragment"
+            app:enterAnim="@anim/slide_in_to_right"
+            app:exitAnim="@anim/slide_out_to_right"
+            app:popExitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_to_left"/>
+        <action
+            android:id="@+id/action_canastaFragment_to_homeFragment"
+            app:destination="@+id/homeFragment"
+            app:enterAnim="@anim/slide_in_to_top"
+            app:exitAnim="@anim/slide_out_to_top"
+            app:popEnterAnim="@anim/slide_in_to_bottom"
+            app:popExitAnim="@anim/slide_out_to_bottom"/>
     </fragment>
     <fragment
         android:id="@+id/cuentaFragment"
@@ -97,7 +176,18 @@
         tools:layout="@layout/fragment_cuenta" >
         <action
             android:id="@+id/action_cuentaFragment_to_categoriesFragment"
-            app:destination="@id/categoriesFragment" />
+            app:destination="@id/categoriesFragment"
+            app:enterAnim="@anim/slide_in_to_right"
+            app:exitAnim="@anim/slide_out_to_right"
+            app:popExitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_to_left"/>
+        <action
+            android:id="@+id/action_cuentaFragment_to_homeFragment"
+            app:destination="@+id/homeFragment"
+            app:enterAnim="@anim/slide_in_to_top"
+            app:exitAnim="@anim/slide_out_to_top"
+            app:popEnterAnim="@anim/slide_in_to_bottom"
+            app:popExitAnim="@anim/slide_out_to_bottom"/>
     </fragment>
     <fragment
         android:id="@+id/vinosFragment"
@@ -106,7 +196,11 @@
         tools:layout="@layout/fragment_vinos" >
         <action
             android:id="@+id/action_vinosFragment_to_menu_items_nav_graph"
-            app:destination="@id/menu_items_nav_graph">
+            app:destination="@id/menu_items_nav_graph"
+            app:enterAnim="@anim/slide_in_to_left"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popExitAnim="@anim/slide_out_to_right"
+            app:popEnterAnim="@anim/slide_in_to_right">
             <argument
                 android:name="catPath"
                 app:argType="string"/>
@@ -118,4 +212,5 @@
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.HostFragment"
         android:label="fragment_reservas_host"
         tools:layout="@layout/fragment_reservas_host" />
+
 </navigation>

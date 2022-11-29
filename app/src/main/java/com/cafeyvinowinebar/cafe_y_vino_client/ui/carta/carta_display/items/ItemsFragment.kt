@@ -142,10 +142,12 @@ class ItemsFragment : Fragment(),
                 viewModel.setItemsFabs(false)
             }
             fabItemsCanasta.setOnClickListener {
-                findNavController().navigate(R.id.canastaFragment)
+                val action = MainNavGraphDirections.actionGlobalCanastaFragment()
+                findNavController().navigate(action)
             }
             fabItemsHome.setOnClickListener {
-                findNavController().navigate(R.id.homeFragment)
+                val action = MainNavGraphDirections.actionGlobalHomeFragmentNoPopup()
+                findNavController().navigate(action)
 
             }
         }

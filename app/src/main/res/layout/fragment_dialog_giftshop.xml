@@ -3,6 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/recGiftshop">
+    android:id="@+id/recGiftshop"
+    tools:listitem="@layout/list_item_gift"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.main.giftshop.GiftshopMenuFragment">
 
 </androidx.recyclerview.widget.RecyclerView>
