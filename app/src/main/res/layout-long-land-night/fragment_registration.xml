@@ -90,11 +90,11 @@
         android:layout_width="64dp"
         android:layout_height="68dp"
         android:layout_marginTop="20dp"
-        android:indeterminateTint="@color/light_green"
+        android:indeterminateTint="@color/pastel"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/button"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintEnd_toEndOf="@+id/btnRegistration"
+        app:layout_constraintStart_toStartOf="@+id/btnRegistration"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegistration" />
 
     <CheckBox
         android:id="@+id/checkBoxPassword"

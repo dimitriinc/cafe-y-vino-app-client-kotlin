@@ -11,6 +11,20 @@ plugins {
 
 android {
 
+    signingConfigs {
+        debug {
+            storeFile file('/home/zaphod/Cafe-y-Vino/Android/keystores/client-keystore.jks')
+            storePassword 'cafevino'
+            keyAlias 'upload'
+            keyPassword 'cafevino'
+        }
+        release {
+            storeFile file('/home/zaphod/Cafe-y-Vino/Android/keystores/client-keystore.jks')
+            storePassword 'cafevino'
+            keyAlias 'upload'
+            keyPassword 'cafevino'
+        }
+    }
     namespace 'com.cafeyvinowinebar.cafe_y_vino_client'
     compileSdk rootProject.compileSdkVersion
 
@@ -18,15 +32,17 @@ android {
         applicationId "com.cafeyvinowinebar.Cafe_y_Vino"
         minSdk rootProject.minSdkVersion
         targetSdk rootProject.targetSdkVersion
-        versionCode 16
+        versionCode 18
         versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
 
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
