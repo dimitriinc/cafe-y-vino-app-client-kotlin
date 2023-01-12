@@ -1,6 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.main.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.*
 import android.widget.Button
@@ -16,6 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentHomeBinding
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -24,7 +26,6 @@ import kotlinx.coroutines.launch
  * Directs to the nested graphs
  * Sends entry requests
  */
-
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -39,6 +40,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             val action = HomeFragmentDirections.actionHomeFragmentToIntroNavGraph()
             findNavController().navigate(action)
         }
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

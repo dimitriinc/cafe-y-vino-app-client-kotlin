@@ -1,6 +1,5 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
@@ -26,6 +25,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
+
+private const val TAG = "UserDataRepository"
 
 /**
  * A repository for the operations that manipulate the data stored in the user document in the 'usuarios' collection in the Firestore
@@ -257,7 +258,6 @@ class UserDataRepository @Inject constructor(
                         KEY_USER_ID to getUserId()
                     )
                 )
-//                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .setConstraints(constraints)
                 .build()
             WorkManager.getInstance(context).enqueue(request)
@@ -322,8 +322,8 @@ class UserDataRepository @Inject constructor(
                     currentCoroutineContext().cancel(null)
                 }
                 .collect { userSnapshot ->
-                updateUserData(userSnapshot)
-            }
+                    updateUserData(userSnapshot)
+                }
         }
     }
 
@@ -331,18 +331,23 @@ class UserDataRepository @Inject constructor(
      * With a user document snapshot from the fStore flow we update the Proto DataStore object
      */
     private suspend fun updateUserData(userSnapshot: DocumentSnapshot?) {
+
         if (userSnapshot != null) {
-            Log.d(TAG, "updateUserData: user's name: ${userSnapshot.getString("nombre")}")
-            userDataStore.updateData { user ->
-                user.toBuilder()
-                    .setNombre(userSnapshot.getString(KEY_NOMBRE))
-                    .setTelefono(userSnapshot.getString(KEY_TELEFONO))
-                    .setEmail(userSnapshot.getString(KEY_EMAIL))
-                    .setToken(userSnapshot.getString(KEY_TOKEN))
-                    .setMesa(userSnapshot.getString(KEY_MESA))
-                    .setIsPresent(userSnapshot.getBoolean(KEY_IS_PRESENT)!!)
-                    .setBonos(userSnapshot.getLong(KEY_BONOS)!!)
-                    .build()
+
+            if (!userSnapshot.exists()) {
+                // TODO: send the user to the apology screen
+            } else {
+                userDataStore.updateData { user ->
+                    user.toBuilder()
+                        .setNombre(userSnapshot.getString(KEY_NOMBRE))
+                        .setTelefono(userSnapshot.getString(KEY_TELEFONO))
+                        .setEmail(userSnapshot.getString(KEY_EMAIL))
+                        .setToken(userSnapshot.getString(KEY_TOKEN))
+                        .setMesa(userSnapshot.getString(KEY_MESA))
+                        .setIsPresent(userSnapshot.getBoolean(KEY_IS_PRESENT)!!)
+                        .setBonos(userSnapshot.getLong(KEY_BONOS)!!)
+                        .build()
+                }
             }
         }
     }
