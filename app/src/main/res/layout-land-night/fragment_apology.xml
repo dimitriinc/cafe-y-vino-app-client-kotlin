@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bkg_cuenta"
+    tools:context=".ui.main.apology.ApologyFragment">
+
+    <ImageView
+        android:id="@+id/img_broken_glass"
+        android:layout_width="65dp"
+        android:layout_height="195dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:scaleType="centerCrop"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:src="@drawable/broken_glass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/edt_apology_nombre"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_rounded_corners_for_edt"
+        android:fontFamily="@font/david_libre"
+        android:hint="@string/cuenta_nombre"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/img_broken_glass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <EditText
+        android:id="@+id/edt_apology_telefono"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_apology_nombre"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="50dp"
+        android:background="@drawable/shape_rounded_corners_for_edt"
+        android:fontFamily="@font/david_libre"
+        android:hint="@string/telefono"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_apology_nombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_broken_glass"
+        app:layout_constraintTop_toTopOf="@+id/edt_apology_nombre" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_apology_telefono"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_fab_txt"
+        android:fontFamily="@font/david_libre"
+        android:padding="10dp"
+        android:text="@string/apology_bonos"
+        android:textColor="@color/soft_light_teal"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_broken_glass"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_apology_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/ic_ok"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_fab_txt"
+        android:fontFamily="@font/david_libre"
+        android:padding="10dp"
+        android:text="@string/apology"
+        android:textColor="@color/soft_light_teal"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/img_broken_glass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

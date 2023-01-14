@@ -1,6 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.work.*
@@ -164,7 +165,7 @@ class UserDataRepository @Inject constructor(
      * Stores a User document in the "usuarios" collection into the Firebase DB, using the Uid as the ID of the document
      * Return the result
      */
-    private suspend fun storeUserDoc(user: Map<String, Any>): Boolean {
+    suspend fun storeUserDoc(user: Map<String, Any>): Boolean {
         val userId = getUserId()
         return fStoreSource.storeUserDoc(user, userId)
     }
@@ -327,6 +328,7 @@ class UserDataRepository @Inject constructor(
         }
     }
 
+    // 25749166edith
     /**
      * With a user document snapshot from the fStore flow we update the Proto DataStore object
      */
@@ -335,8 +337,16 @@ class UserDataRepository @Inject constructor(
         if (userSnapshot != null) {
 
             if (!userSnapshot.exists()) {
-                // TODO: send the user to the apology screen
+
+                Log.d(TAG, "updateUserData: snapshot doesn't exist!")
+                Log.d(TAG, "updateUserData: snapshot's ID: ${userSnapshot.id}")
+                Log.d(TAG, "updateUserData: current user's UID: ${fAuthSource.getUserObject()!!.uid}")
+
+                val intent = Intent("com.cafeyvinowinebar.RESTORE_DATA")
+                context.sendBroadcast(intent)
+
             } else {
+
                 userDataStore.updateData { user ->
                     user.toBuilder()
                         .setNombre(userSnapshot.getString(KEY_NOMBRE))

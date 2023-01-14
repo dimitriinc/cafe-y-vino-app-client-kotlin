@@ -21,6 +21,10 @@
 
     // text views
 
+    <string name="apology">Lo sentimos. La migración a la nueva versión de la app produjo un quebranto en nuestro banco de datos y como resultado, no podemos acceder a sus datos personales.\nPor favor, amablemente provéanos con su nombre y su número de teléfono de nuevo. </string>
+
+    <string name="apology_bonos">Si desea restablecer sus puntos de bono en nuestro sistema de lealtad, solicítelo al personal del restaurante. Gracias por la comprensión.</string>
+
     <string name="reserva_error_mesa">Por favor, escoge la mesa</string>
     <string name="reserva_error_fecha">Por favor, escoge la fecha y la parte del día</string>
 

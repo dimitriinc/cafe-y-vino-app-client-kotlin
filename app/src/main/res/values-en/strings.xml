@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="apology">We are sorry. The migration to the new version of the app produced a disconnect with our database. As a result, we cannot access your personal data.\nPlease, kindly provide us with your name and phone number once again.</string>
+    <string name="apology_bonos">If you want to restore your bonus points from our loyalty system, please make a request to the staff. Thank you for your understanding.</string>
     <string name="noti_farewell_title">Thank you for your visit!</string>
     <string name="noti_farewell_text">We hope to see you back soon, %1$s\nYou\'ve earned %2$s bonus points</string>
     <string name="noti_puerta_title">You have entered the restaurant</string>

@@ -41,7 +41,6 @@ class FirebaseAuthSource @Inject constructor(
             fAuth.createUserWithEmailAndPassword(email, password).await()
             true
         } catch (e: Throwable) {
-            Log.d(TAG, "registerUser: the exception: ${e.cause}")
             _errorFlow.update {
                 e
             }

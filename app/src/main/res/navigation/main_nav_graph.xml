@@ -88,6 +88,14 @@
         app:enterAnim="@anim/slide_in_to_top"
         app:exitAnim="@anim/slide_out_to_top"/>
     <action
+        android:id="@+id/action_global_apologyFragment"
+        app:destination="@id/apologyFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true"
+        app:enterAnim="@anim/slide_in_to_top"
+        app:exitAnim="@anim/slide_out_to_top"/>
+    <action
         android:id="@+id/action_global_homeFragment_no_popup"
         app:destination="@+id/homeFragment"
         app:enterAnim="@anim/slide_in_to_top"
@@ -212,5 +220,9 @@
         android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas.HostFragment"
         android:label="fragment_reservas_host"
         tools:layout="@layout/fragment_reservas_host" />
+    <fragment
+        android:id="@+id/apologyFragment"
+        android:name="com.cafeyvinowinebar.cafe_y_vino_client.ui.main.apology.ApologyFragment"
+        android:label="ApologyFragment" />
 
 </navigation>
