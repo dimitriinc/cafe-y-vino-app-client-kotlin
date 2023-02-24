@@ -2,8 +2,8 @@ package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.datastore.core.DataStore
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.work.*
 import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.R
@@ -26,8 +26,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
-
-private const val TAG = "UserDataRepository"
 
 /**
  * A repository for the operations that manipulate the data stored in the user document in the 'usuarios' collection in the Firestore
@@ -338,12 +336,8 @@ class UserDataRepository @Inject constructor(
 
             if (!userSnapshot.exists()) {
 
-                Log.d(TAG, "updateUserData: snapshot doesn't exist!")
-                Log.d(TAG, "updateUserData: snapshot's ID: ${userSnapshot.id}")
-                Log.d(TAG, "updateUserData: current user's UID: ${fAuthSource.getUserObject()!!.uid}")
-
                 val intent = Intent("com.cafeyvinowinebar.RESTORE_DATA")
-                context.sendBroadcast(intent)
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
 
             } else {
 

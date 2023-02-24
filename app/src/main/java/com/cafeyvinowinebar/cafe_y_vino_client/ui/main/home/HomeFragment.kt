@@ -1,7 +1,10 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.main.home
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.*
 import android.widget.Button
@@ -14,10 +17,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import com.cafeyvinowinebar.cafe_y_vino_client.*
 import com.cafeyvinowinebar.cafe_y_vino_client.databinding.FragmentHomeBinding
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -26,11 +29,14 @@ import kotlinx.coroutines.launch
  * Directs to the nested graphs
  * Sends entry requests
  */
+
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var entryRequestDialog: AlertDialog
+
+    private var mReceiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -169,5 +175,27 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+
+                val action = intent?.action
+                if (action == "com.cafeyvinowinebar.RESTORE_DATA") {
+                    val navAction = MainNavGraphDirections.actionGlobalApologyFragment()
+                    findNavController().navigate(navAction)
+                }
+            }
+        }
+        val filter = IntentFilter()
+        filter.addAction("com.cafeyvinowinebar.RESTORE_DATA")
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mReceiver!!, filter)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mReceiver!!)
     }
 }
