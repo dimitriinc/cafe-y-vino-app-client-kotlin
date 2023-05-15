@@ -157,8 +157,10 @@ class ItemsFragment : Fragment(),
      * Add one instance of the product to the Canasta Room table
      */
     override fun onLongClick(document: DocumentSnapshot) {
-        viewModel.addProductToCanasta(document)
-        Toast.makeText(requireContext(), R.string.on_adding_item, Toast.LENGTH_SHORT).show()
+        if (viewModel.uiState.value.isPresent) {
+            viewModel.addProductToCanasta(document)
+            Toast.makeText(requireContext(), R.string.on_adding_item, Toast.LENGTH_SHORT).show()
+        }
     }
 
     /**
@@ -175,7 +177,8 @@ class ItemsFragment : Fragment(),
                 initialPosition = viewModel.uiState.value.items!!.indexOf(it)
             }
         }
-        val action = ItemsFragmentDirections.actionItemsFragmentToItemSpecsHostFragment(initialPosition)
+        val action =
+            ItemsFragmentDirections.actionItemsFragmentToItemSpecsHostFragment(initialPosition)
         findNavController().navigate(action)
     }
 
