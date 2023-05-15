@@ -44,7 +44,7 @@ class CanastaAdapter(
                 txtCanastaItem.text = item.name
                 // some items may not have icons stored for them, in this case we load a default one
                 if (item.icon == null || item.icon.isEmpty()) {
-                    imgCanasta.setImageResource(R.drawable.logo_mini)
+                    imgCanasta.setImageResource(R.drawable.ic)
                 } else {
                     Glide.with(root)
                         .load(fStorage.getImgReference(item.icon))

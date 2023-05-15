@@ -12,7 +12,6 @@ import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnItemLongClickListene
 import com.cafeyvinowinebar.cafe_y_vino_client.interfaces.OnProductClickListener
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-
 class ItemsAdapter(
     options: FirestoreRecyclerOptions<ItemMenuFirestore>,
     val listener: OnProductClickListener,
@@ -47,12 +46,12 @@ class ItemsAdapter(
                 txtItem.text = model.nombre
 
                 // some new items may not have their images yet, in that case we put a stand in in its place
-                if (model.image != null) {
+                if (model.image != null && model.image != "lg.png" && model.image.isNotEmpty()) {
                     Glide.with(root)
                         .load(fStorage.getImgReference(model.image))
                         .into(imgItem)
                 } else {
-                    imgItem.setImageResource(R.drawable.logo_stand_in)
+                    imgItem.setImageResource(R.drawable.lg)
                 }
             }
         }
@@ -67,5 +66,4 @@ class ItemsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: ItemMenuFirestore) {
         holder.bind(model)
     }
-
 }

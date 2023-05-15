@@ -1,6 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.carta.carta_display.items.item_specs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -57,13 +58,13 @@ class ItemSpecsFragment : Fragment() {
         binding.apply {
 
             // some new items may not have image in the Storage yet; in this case we give them a stand in image
-            if (currentItem.image != null) {
+            if (currentItem.image != null && currentItem.image != "lg.png" && currentItem.image.isNotEmpty()) {
                 val imgReference = menuDataRepo.getImgReference(currentItem.image)
                 Glide.with(requireContext())
                     .load(imgReference)
                     .into(imgItem)
             } else {
-                imgItem.setImageResource(R.drawable.logo_stand_in)
+                imgItem.setImageResource(R.drawable.lg)
             }
 
             // some new items also may not have a description; in this case we give them a default description
