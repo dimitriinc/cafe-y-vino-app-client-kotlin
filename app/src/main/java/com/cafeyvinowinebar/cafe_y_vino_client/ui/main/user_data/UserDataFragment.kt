@@ -1,5 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.main.user_data
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
@@ -42,7 +43,7 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
 
             }
 
-            /** for each pressed button we create an alert dialog, using the same layout resource, and configuring its edit text's hind
+            /** for each pressed button we create an alert dialog, using the same layout resource, and configuring its edit text's hint
              * and input type
              * the implementation of the positive button is slightly different, calling different view model functions
              */
@@ -56,7 +57,11 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
                     .setPositiveButton(R.string.cambiar) { _, _ ->
                         val email = editText.text.toString().trim()
                         if (email.isEmpty()) {
-                            Toast.makeText(requireContext(), R.string.user_empty_field_email, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.user_empty_field_email,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
                             viewModel.updateEmail(email)
                         }
@@ -73,7 +78,11 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
                     .setPositiveButton(R.string.cambiar) { _, _ ->
                         val nombre = editText.text.toString().trim()
                         if (nombre.isEmpty()) {
-                            Toast.makeText(requireContext(), R.string.user_empty_field_name, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.user_empty_field_name,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
                             viewModel.updateNombre(nombre)
                         }
@@ -88,15 +97,28 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
                 editText.inputType = InputType.TYPE_CLASS_PHONE
                 AlertDialog.Builder(requireContext())
                     .setView(telefonoView)
-                    .setPositiveButton(R.string.cambiar) { _,_ ->
+                    .setPositiveButton(R.string.cambiar) { _, _ ->
                         val telefono = editText.text.toString().trim()
                         if (telefono.isEmpty()) {
-                            Toast.makeText(requireContext(), R.string.user_empty_field_phone, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.user_empty_field_phone,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
                             viewModel.updateTelefono(telefono)
                         }
                     }
                     .create().show()
+            }
+
+            // set the max width of the text views with custom user data to 70% of the screen width, portrait orientation only
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                val screenWidth = resources.displayMetrics.widthPixels
+                val maxWidthPercentage = (screenWidth * 0.7).toInt()
+                txtInfoName.maxWidth = maxWidthPercentage
+                txtInfoEmail.maxWidth = maxWidthPercentage
+                txtInfoTelefono.maxWidth = maxWidthPercentage
             }
         }
 

@@ -326,7 +326,6 @@ class UserDataRepository @Inject constructor(
         }
     }
 
-    // 25749166edith
     /**
      * With a user document snapshot from the fStore flow we update the Proto DataStore object
      */
