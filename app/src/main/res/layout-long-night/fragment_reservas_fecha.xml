@@ -12,9 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/futura"
         android:text="@string/date_picker"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,21 +24,21 @@
         android:layout_width="126dp"
         android:layout_height="117dp"
         android:layout_marginTop="20dp"
+        android:src="@drawable/btn_calendar"
         app:layout_constraintEnd_toEndOf="@+id/txtDateAnouncement"
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="@+id/txtDateAnouncement"
-        app:tint="@color/cream"
         app:layout_constraintTop_toBottomOf="@+id/txtDateAnouncement"
-        android:src="@drawable/btn_calendar" />
+        app:tint="@color/cream" />
 
     <TextView
         android:id="@+id/txtDateDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/aladin"
-        android:text="TextView"
-        android:textSize="20sp"
+        android:fontFamily="@font/futura_lt"
+        android:letterSpacing=".1"
+        android:textSize="15sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/txtDateAnouncement"
         app:layout_constraintStart_toStartOf="@+id/txtDateAnouncement"
@@ -49,9 +49,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/futura"
         android:text="@string/part_of_day_picker"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/txtDateAnouncement"
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="@+id/txtDateAnouncement"
@@ -63,10 +63,10 @@
         android:layout_height="86dp"
         android:layout_marginTop="20dp"
         android:onClick="showPopup"
+        android:src="@drawable/btn_day_night"
         app:layout_constraintEnd_toEndOf="@+id/txtDateAnouncement"
         app:layout_constraintStart_toStartOf="@+id/txtDateAnouncement"
-        app:layout_constraintTop_toBottomOf="@+id/txtPartOfDay"
-        android:src="@drawable/btn_day_night" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPartOfDay" />
 
     <ImageView
         android:id="@+id/imgPartOfDayDisplay"
@@ -76,18 +76,18 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/txtDateAnouncement"
         app:layout_constraintStart_toStartOf="@+id/txtDateAnouncement"
-        app:layout_constraintTop_toBottomOf="@+id/imgDayNight"/>
+        app:layout_constraintTop_toBottomOf="@+id/imgDayNight" />
 
     <ImageView
         android:id="@+id/imgInfo"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="10dp"
-        app:tint="@color/yellow_dark"
+        android:src="@drawable/btn_info"
         app:layout_constraintBottom_toTopOf="@+id/txtDateAnouncement"
         app:layout_constraintEnd_toEndOf="@+id/txtDateAnouncement"
         app:layout_constraintHorizontal_bias="0.458"
         app:layout_constraintStart_toStartOf="@+id/txtDateAnouncement"
-        android:src="@drawable/btn_info" />
+        app:tint="@color/yellow_dark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -63,9 +63,6 @@ class GiftshopMenuFragment : DialogFragment(), OnGiftClickListener {
                         viewModel.sendGiftRequest(gift)
                     }
                 }
-                .setNegativeButton("No") { dialog, _ ->
-                    dialog.dismiss()
-                }
                 .create().show()
         }
     }

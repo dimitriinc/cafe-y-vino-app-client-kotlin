@@ -4,27 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.introduction.LoginFragment"
-    android:background="@drawable/bkg_login">
+    android:background="@drawable/bkg_login"
+    tools:context=".ui.introduction.LoginFragment">
 
     <EditText
         android:id="@+id/edtEmailLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="250dp"
-        android:background="@drawable/shape_rounded_corners_for_edt"
-        android:ems="10"
-        android:fontFamily="@font/futura"
-        android:textSize="14sp"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19999999" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edtPassLogin"
@@ -33,13 +27,8 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="250dp"
-        android:background="@drawable/shape_rounded_corners_for_edt"
-        android:ems="10"
-        android:fontFamily="@font/futura"
-        android:textSize="14sp"
         android:hint="@string/contraseña"
         android:inputType="textPassword"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtEmailLogin" />
@@ -49,11 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/pastel_dark"
-        android:fontFamily="@font/ss"
-        android:textStyle="bold"
         android:text="@string/iniciar"
-        android:textAllCaps="false"
-        android:textSize="16sp"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,9 +81,9 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/pastel_dark"
         android:fontFamily="@font/futura_lt"
-        android:textSize="12sp"
         android:text="@string/restablecer_contrasena"
         android:textAllCaps="false"
+        android:textSize="12sp"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="@+id/edtEmailLogin"
         app:layout_constraintStart_toStartOf="@+id/edtEmailLogin"

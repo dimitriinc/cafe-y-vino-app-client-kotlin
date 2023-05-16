@@ -28,7 +28,6 @@
         android:layout_marginHorizontal="10dp"
         android:backgroundTint="@color/darkest_teal"
         android:text="@string/privacy_saber"
-        android:textAllCaps="false"
         app:cornerRadius="10dp" />
 
     <LinearLayout
@@ -47,7 +46,6 @@
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/darkest_teal"
             android:text="@string/permitir"
-            android:textAllCaps="false"
             app:cornerRadius="5dp" />
 
         <com.google.android.material.button.MaterialButton
@@ -58,7 +56,6 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/pastel"
             android:text="@string/rechazar"
-            android:textAllCaps="false"
             app:cornerRadius="5dp" />
 
     </LinearLayout>

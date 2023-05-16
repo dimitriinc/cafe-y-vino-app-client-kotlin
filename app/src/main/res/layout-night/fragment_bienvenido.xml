@@ -16,7 +16,6 @@
         android:text="@string/bienvenido"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:letterSpacing=".2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -25,16 +24,11 @@
         app:layout_constraintVertical_bias="0.26" />
 
     <com.google.android.material.button.MaterialButton
-        app:cornerRadius="12dp"
         android:id="@+id/btnReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/ss"
         android:text="@string/registrarse"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:padding="12dp"
-        android:textSize="16sp"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,16 +36,12 @@
         app:layout_constraintVertical_bias="0.22000003" />
 
     <com.google.android.material.button.MaterialButton
-        app:cornerRadius="12dp"
         android:id="@+id/btnLog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:fontFamily="@font/ss"
+        android:letterSpacing="0.1"
         android:text="@string/login"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

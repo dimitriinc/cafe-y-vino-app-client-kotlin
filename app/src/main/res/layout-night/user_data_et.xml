@@ -7,9 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edtUserEt"
-        android:background="@drawable/shape_rounded_corners_for_edt"
-        android:ems="10"
-        android:padding="10dp"
         android:layout_margin="5dp"/>
 
 </RelativeLayout>

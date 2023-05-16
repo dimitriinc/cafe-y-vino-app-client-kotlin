@@ -12,13 +12,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:fontFamily="@font/aladin"
-        tools:text="TextView"
+        android:fontFamily="@font/futura"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline18"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="TextView" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -48,10 +48,10 @@
                 android:id="@+id/txtBonos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/futura_lt"
                 android:padding="10dp"
-                android:fontFamily="@font/aladin"
-                android:text="32"
-                android:textSize="32sp" />
+                android:textSize="22sp"
+                tools:text="32" />
 
         </RelativeLayout>
 

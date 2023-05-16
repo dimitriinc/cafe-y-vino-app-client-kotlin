@@ -1,11 +1,13 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -144,6 +146,10 @@ class FinFragment : Fragment() {
                             ).show()
                             return@setOnClickListener
                         }
+
+                        // hide the keyboard
+                        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        inputMethodManager.hideSoftInputFromWindow(requireView().windowToken, 0)
 
                         // set the comment
                         val comentario = binding.edtComment.text.toString().trim()

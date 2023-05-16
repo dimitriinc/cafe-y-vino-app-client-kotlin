@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.introduction.LoginFragment"
-    android:background="@drawable/bkg_login">
+    android:background="@drawable/bkg_login"
+    tools:context=".ui.introduction.LoginFragment">
 
     <EditText
         android:id="@+id/edtEmailLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="70dp"
-        android:background="@drawable/shape_rounded_corners_for_edt"
-        android:ems="10"
-        android:fontFamily="@font/futura"
-        android:textSize="14sp"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.31" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edtPassLogin"
@@ -34,16 +27,11 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="70dp"
-        android:background="@drawable/shape_rounded_corners_for_edt"
-        android:ems="10"
         android:hint="@string/contraseña"
         android:inputType="textPassword"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmailLogin"
-        android:fontFamily="@font/futura"
-        android:textSize="14sp"/>
+        app:layout_constraintTop_toBottomOf="@+id/edtEmailLogin" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
@@ -51,11 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/pastel_dark"
-        android:textStyle="bold"
-        android:fontFamily="@font/ss"
         android:text="@string/iniciar"
-        android:textAllCaps="false"
-        android:textSize="16sp"
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="@+id/btnRestablecer"
         app:layout_constraintStart_toStartOf="@+id/btnRestablecer"
@@ -96,10 +80,10 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/pastel_dark"
-        android:textSize="12sp"
         android:fontFamily="@font/futura_lt"
         android:text="@string/restablecer_contrasena"
         android:textAllCaps="false"
+        android:textSize="12sp"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

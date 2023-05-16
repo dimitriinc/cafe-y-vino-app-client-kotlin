@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.reservas.FechaFragment"
-    android:background="@drawable/bkg_reserva_fecha">
+    android:background="@drawable/bkg_reserva_fecha"
+    tools:context=".ui.reservas.FechaFragment">
 
     <TextView
         android:id="@+id/txtDateAnouncement"
@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="75dp"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/futura"
         android:text="@string/date_picker"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/imgInfo"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,9 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/aladin"
-        android:text="TextView"
-        android:textSize="24sp"
+        android:fontFamily="@font/futura_lt"
+        android:letterSpacing=".1"
+        android:textSize="15sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/txtDateAnouncement"
         app:layout_constraintStart_toStartOf="@+id/txtDateAnouncement"
@@ -49,9 +49,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="75dp"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/futura"
         android:text="@string/part_of_day_picker"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/imgInfo"
         app:layout_constraintTop_toTopOf="parent" />
 

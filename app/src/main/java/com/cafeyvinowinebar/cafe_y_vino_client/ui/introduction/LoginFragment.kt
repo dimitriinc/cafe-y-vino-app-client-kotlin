@@ -1,9 +1,11 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction
 
+import android.content.Context
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -110,6 +112,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             // get the input values and pass them to the view model to start the logging in
             btnLogin.setOnClickListener {
                 if (isOnline(requireContext())) {
+
                     val email = edtEmailLogin.text.toString().trim()
                     val password = edtPassLogin.text.toString().trim()
 
@@ -125,6 +128,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         edtPassLogin.error = getString(R.string.error_password)
                         return@setOnClickListener
                     }
+
+                    // hide the keyboard
+                    val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(requireView().windowToken, 0)
 
                     progressBarLogin.visibility = View.VISIBLE
                     viewModel.loginUser(email, password)

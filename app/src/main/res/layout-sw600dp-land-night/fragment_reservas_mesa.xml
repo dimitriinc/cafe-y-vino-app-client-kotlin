@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.reservas.MesaFragment"
-    android:background="@drawable/bkg_reserva_mesa">
+    android:background="@drawable/bkg_reserva_mesa"
+    tools:context=".ui.reservas.MesaFragment">
 
     <TextView
         android:id="@+id/txtEscogerMesa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="104dp"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/futura"
         android:text="@string/escoger_mesa"
-        android:textSize="34sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.774"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,8 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/aladin"
-        android:textSize="24sp"
+        android:fontFamily="@font/futura_lt"
+        android:textSize="17sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/txtEscogerMesa"
         app:layout_constraintStart_toStartOf="@+id/txtEscogerMesa"
@@ -54,15 +54,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.593"
-        app:tint="@color/cream"/>
+        app:tint="@color/cream" />
 
     <TextView
         android:id="@+id/txtVerSala"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/futura"
         android:text="@string/reserva_ver_plan"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/imgSala"
         app:layout_constraintStart_toStartOf="@+id/imgSala"
         app:layout_constraintTop_toBottomOf="@+id/imgSala" />
@@ -76,6 +76,6 @@
         app:layout_constraintHorizontal_bias="0.423"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/yellow_dark"
-        app:srcCompat="@drawable/btn_info" />
+        app:srcCompat="@drawable/btn_info"
+        app:tint="@color/yellow_dark" />
 </androidx.constraintlayout.widget.ConstraintLayout>

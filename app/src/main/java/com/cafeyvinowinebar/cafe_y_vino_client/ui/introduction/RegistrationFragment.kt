@@ -1,9 +1,11 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.introduction
 
+import android.content.Context
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -81,6 +83,10 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                         edtFechaNacimiento.error = getString(R.string.error_fecha_nacimiento)
                         return@setOnClickListener
                     }
+
+                    // hide the keyboard
+                    val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(requireView().windowToken, 0)
 
                     // store the data to the UI state
                     viewModel.storeFormData(email, password, name, phone, birthdate)
