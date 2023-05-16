@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:backgroundTint="@color/dark_blue"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -39,19 +39,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:fontFamily="@font/aladin"
+                android:fontFamily="@font/ss"
                 android:gravity="center"
                 android:paddingHorizontal="2dp"
-                android:text="Copa de vino"
+                tools:text="Copa de vino"
                 android:textSize="14sp"
                 android:id="@+id/txtGift"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:fontFamily="@font/aladin"
+                android:fontFamily="@font/futura_lt"
                 android:gravity="center"
-                android:text="10pts"
+                tools:text="10pts"
                 android:textSize="14sp"
                 android:id="@+id/txtGiftPrecio"
                 android:layout_below="@+id/txtGift"/>

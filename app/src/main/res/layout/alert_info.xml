@@ -10,11 +10,11 @@
         android:layout_margin="5dp"
         android:id="@+id/txtInfoMsg"
         android:background="@drawable/shape_fab_txt"
-        android:fontFamily="@font/david_libre"
+        android:fontFamily="@font/futura_lt"
         android:padding="10dp"
         android:gravity="center_horizontal"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="18sp"
+        android:textStyle="normal" />
 
 </RelativeLayout>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parentItem"
     app:cardCornerRadius="10dp"
     android:backgroundTint="@color/pastel_dark"
@@ -43,11 +43,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Gin Tonic Premium Boticario"
+                tools:text="Gin Tonic Premium Boticario"
                 android:gravity="center"
-                android:textSize="34sp"
+                android:textSize="30sp"
                 android:id="@+id/txtItem"
-                android:fontFamily="@font/aladin"
+                android:fontFamily="@font/ss"
                 android:padding="7dp"/>
 
         </RelativeLayout>

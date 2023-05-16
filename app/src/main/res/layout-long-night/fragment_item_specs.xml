@@ -24,8 +24,8 @@
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_marginTop="20dp"
-                app:cardCornerRadius="10dp"
                 android:backgroundTint="@color/for_fabs"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,32 +36,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/logo_mini" />
+                    tools:src="@drawable/lg" />
 
             </com.google.android.material.card.MaterialCardView>
 
             <ImageView
+                android:id="@+id/arrow_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_page_left"
-                app:layout_constraintTop_toBottomOf="@+id/GiImgCard"
-                app:layout_constraintStart_toStartOf="@+id/GiImgCard"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="10dp"
-                app:tint="@color/cream"
-                android:id="@+id/arrow_left"/>
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_page_left"
+                app:layout_constraintStart_toStartOf="@+id/GiImgCard"
+                app:layout_constraintTop_toBottomOf="@+id/GiImgCard"
+                app:tint="@color/cream" />
 
             <ImageView
+                android:id="@+id/arrow_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_page_right"
-                app:tint="@color/cream"
-                android:id="@+id/arrow_right"
-                app:layout_constraintTop_toBottomOf="@+id/GiImgCard"
-                app:layout_constraintEnd_toEndOf="@+id/GiImgCard"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="20dp"
-                />
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_page_right"
+                app:layout_constraintEnd_toEndOf="@+id/GiImgCard"
+                app:layout_constraintTop_toBottomOf="@+id/GiImgCard"
+                app:tint="@color/cream" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/GiDescCard"
@@ -86,6 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
+                        android:fontFamily="@font/futura_lt"
                         android:gravity="start"
                         android:textSize="18sp"
                         tools:text="sdlakfjdsklafjsldfjklsadjfksl ldskfj ksdflk jsdkf ljsdk dslkfj sdlkfj sdklf jsa
@@ -101,8 +101,8 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                app:cardCornerRadius="10dp"
                 android:backgroundTint="@color/for_fabs"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="15dp"
                 app:layout_constraintEnd_toEndOf="@+id/txtPrecio"
                 app:layout_constraintStart_toStartOf="@+id/txtPrecio"
@@ -113,12 +113,12 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
                     android:id="@+id/txtPrecioInt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/aladin"
+                    android:fontFamily="@font/futura_lt"
                     android:padding="10dp"
-                    tools:text="23"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     tools:layout_editor_absoluteX="359dp"
-                    tools:layout_editor_absoluteY="564dp" />
+                    tools:layout_editor_absoluteY="564dp"
+                    tools:text="23" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -127,9 +127,10 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:fontFamily="@font/aladin"
+                android:fontFamily="@font/ss"
                 android:text="@string/cuenta_precio"
-                android:textSize="25sp"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/txtItemName"
                 app:layout_constraintStart_toStartOf="@+id/txtItemName"
@@ -141,12 +142,13 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
-                android:fontFamily="@font/aladin"
-                tools:text="dsafdsafsa"
-                android:textSize="28sp"
+                android:fontFamily="@font/ss"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/GiImgCard"
                 app:layout_constraintStart_toStartOf="@+id/GiImgCard"
-                app:layout_constraintTop_toBottomOf="@+id/GiImgCard" />
+                app:layout_constraintTop_toBottomOf="@+id/GiImgCard"
+                tools:text="dsafdsafsa" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -237,10 +239,10 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:background="@drawable/shape_fab_txt"
-            android:fontFamily="@font/aladin"
+            android:fontFamily="@font/futura"
             android:padding="10dp"
             android:text="@string/agregar_canasta"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/fabAdd"
             app:layout_constraintEnd_toStartOf="@+id/fabAdd"
@@ -252,10 +254,10 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:background="@drawable/shape_fab_txt"
-            android:fontFamily="@font/aladin"
+            android:fontFamily="@font/futura"
             android:padding="10dp"
             android:text="@string/canasta"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/fabCanasta"
             app:layout_constraintEnd_toStartOf="@+id/fabCanasta"
@@ -267,10 +269,10 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:background="@drawable/shape_fab_txt"
-            android:fontFamily="@font/aladin"
+            android:fontFamily="@font/futura"
             android:padding="10dp"
             android:text="@string/menu"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/fabMainMenu"
             app:layout_constraintEnd_toStartOf="@+id/fabMainMenu"

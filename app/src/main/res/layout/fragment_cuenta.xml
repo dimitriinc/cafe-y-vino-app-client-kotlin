@@ -182,10 +182,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:fontFamily="@font/aladin"
+                            android:fontFamily="@font/futura"
                             android:paddingHorizontal="10dp"
                             android:text="@string/cuenta_monto"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
 
                     </com.google.android.material.card.MaterialCardView>
 
@@ -204,10 +204,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:fontFamily="@font/aladin"
+                            android:fontFamily="@font/futura"
                             android:paddingHorizontal="10dp"
                             android:text="@string/cuenta_nombre"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
 
                     </com.google.android.material.card.MaterialCardView>
 
@@ -226,10 +226,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:fontFamily="@font/aladin"
+                            android:fontFamily="@font/futura"
                             android:paddingHorizontal="10dp"
                             android:text="@string/cuenta_precio"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
 
                     </com.google.android.material.card.MaterialCardView>
 
@@ -247,10 +247,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:fontFamily="@font/aladin"
+                            android:fontFamily="@font/futura"
                             android:paddingHorizontal="10dp"
                             android:text="@string/cuenta_total"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
 
                     </com.google.android.material.card.MaterialCardView>
 
@@ -284,10 +284,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/aladin"
+                    android:fontFamily="@font/futura"
                     android:paddingHorizontal="10dp"
                     android:text="@string/cuenta_total"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -307,9 +307,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/aladin"
+                    android:fontFamily="@font/futura"
                     android:paddingHorizontal="10dp"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     tools:text="100" />
 
             </com.google.android.material.card.MaterialCardView>
@@ -326,7 +326,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/shape_fab_txt"
         android:elevation="21dp"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/futura"
         android:padding="10dp"
         android:text="@string/crypto"
         android:textSize="18sp"
@@ -342,7 +342,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/shape_fab_txt"
         android:elevation="21dp"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/futura"
         android:padding="10dp"
         android:text="@string/pedir_cuenta"
         android:textSize="18sp"
@@ -358,7 +358,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/shape_fab_txt"
         android:elevation="21dp"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/futura"
         android:padding="10dp"
         android:text="@string/pedir_cuenta_cash"
         android:textSize="18sp"
@@ -374,7 +374,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/shape_fab_txt"
         android:elevation="21dp"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/futura"
         android:padding="10dp"
         android:text="@string/pedir_cuenta_yape"
         android:textSize="18sp"
@@ -390,7 +390,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/shape_fab_txt"
         android:elevation="21dp"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/futura"
         android:padding="10dp"
         android:text="@string/pedir_cuenta_pos"
         android:textSize="18sp"

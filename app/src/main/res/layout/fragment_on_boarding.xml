@@ -37,7 +37,8 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:background="@android:color/transparent"
-        android:fontFamily="@font/wellfleet"
+        android:fontFamily="@font/ss"
+        android:textStyle="bold"
         android:text="@string/omitir" />
 
     <ImageView

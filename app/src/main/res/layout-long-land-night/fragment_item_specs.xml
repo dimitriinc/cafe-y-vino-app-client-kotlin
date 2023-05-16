@@ -4,30 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.carta.carta_display.items.item_specs.ItemSpecsFragment"
-    android:background="@drawable/bkg_item_specs">
+    android:background="@drawable/bkg_item_specs"
+    tools:context=".ui.carta.carta_display.items.item_specs.ItemSpecsFragment">
 
     <ImageView
+        android:id="@+id/arrow_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_page_left"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp"
-        app:tint="@color/cream"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="100dp"
-        android:id="@+id/arrow_left"/>
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_page_left"
+        app:tint="@color/cream" />
+
     <ImageView
+        android:id="@+id/arrow_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_page_right"
-        app:tint="@color/cream"
-        android:id="@+id/arrow_right"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="100dp"
-        />
+        android:src="@drawable/ic_page_right"
+        app:tint="@color/cream" />
 
     <ScrollView
         android:id="@+id/scroll"
@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/logo_mini" />
+                    tools:src="@drawable/lg" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -65,11 +65,11 @@
                 android:id="@+id/GiDescCard"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="100dp"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/for_fabs"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp"
-                android:layout_marginHorizontal="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtItemName">
@@ -85,6 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
+                        android:fontFamily="@font/futura_lt"
                         android:gravity="start"
                         android:textSize="18sp"
                         tools:text="sdlakfjdsklafjsldfjklsadjfksl ldskfj ksdflk jsdkf ljsdk dslkfj sdlkfj sdklf jsa
@@ -99,8 +100,8 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
                 android:id="@+id/precioCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/for_fabs"
                 android:layout_marginTop="5dp"
+                android:backgroundTint="@color/for_fabs"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="15dp"
                 app:layout_constraintEnd_toEndOf="@+id/txtPrecio"
@@ -112,12 +113,12 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
                     android:id="@+id/txtPrecioInt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/aladin"
+                    android:fontFamily="@font/futura_lt"
                     android:padding="10dp"
-                    tools:text="23"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     tools:layout_editor_absoluteX="359dp"
-                    tools:layout_editor_absoluteY="564dp" />
+                    tools:layout_editor_absoluteY="564dp"
+                    tools:text="23" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -126,9 +127,10 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/aladin"
+                android:fontFamily="@font/ss"
                 android:text="@string/cuenta_precio"
-                android:textSize="25sp"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/txtItemName"
                 app:layout_constraintStart_toStartOf="@+id/txtItemName"
@@ -140,12 +142,13 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/aladin"
-                tools:text="dsafdsafsa"
-                android:textSize="28sp"
+                android:fontFamily="@font/ss"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/GiImgCard"
                 app:layout_constraintStart_toStartOf="@+id/GiImgCard"
-                app:layout_constraintTop_toBottomOf="@+id/GiImgCard" />
+                app:layout_constraintTop_toBottomOf="@+id/GiImgCard"
+                tools:text="dsafdsafsa" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -164,6 +167,7 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/fabExpand"
             android:layout_alignEnd="@+id/fabExpand"
+            android:layout_margin="16dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_add"
@@ -171,13 +175,13 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
             app:elevation="20dp"
             app:layout_constraintBottom_toTopOf="@+id/fabExpand"
             app:layout_constraintEnd_toEndOf="@+id/fabExpand"
-            app:layout_constraintStart_toStartOf="@+id/fabExpand"
-            android:layout_margin="16dp" />
+            app:layout_constraintStart_toStartOf="@+id/fabExpand" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabCanasta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_canasta"
@@ -185,8 +189,7 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
             app:elevation="20dp"
             app:layout_constraintBottom_toTopOf="@+id/fabAdd"
             app:layout_constraintEnd_toEndOf="@+id/fabAdd"
-            app:layout_constraintStart_toStartOf="@+id/fabAdd"
-            android:layout_margin="16dp"/>
+            app:layout_constraintStart_toStartOf="@+id/fabAdd" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabExpand"
@@ -194,8 +197,8 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
             android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
             android:src="@drawable/ic_expand"
             android:visibility="gone"
             app:elevation="20dp"
@@ -208,8 +211,8 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
             android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
             android:src="@drawable/ic_home"
             android:visibility="visible"
             app:elevation="20dp"
@@ -220,6 +223,7 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
             android:id="@+id/fabMainMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_menu"
@@ -227,57 +231,55 @@ sdklfj dslkfj sdlkf dskl jdkldksjlfk jkljds f" />
             app:elevation="20dp"
             app:layout_constraintBottom_toTopOf="@+id/fabCanasta"
             app:layout_constraintEnd_toEndOf="@+id/fabCanasta"
-            app:layout_constraintStart_toStartOf="@+id/fabCanasta"
-            android:layout_margin="16dp"/>
+            app:layout_constraintStart_toStartOf="@+id/fabCanasta" />
 
         <TextView
             android:id="@+id/txtAgregar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:background="@drawable/shape_fab_txt"
+            android:fontFamily="@font/futura"
+            android:padding="10dp"
             android:text="@string/agregar_canasta"
+            android:textSize="20sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/fabAdd"
             app:layout_constraintEnd_toStartOf="@+id/fabAdd"
-            app:layout_constraintTop_toTopOf="@+id/fabAdd"
-            android:padding="10dp"
-            android:background="@drawable/shape_fab_txt"
-            android:textSize="24sp"
-            android:fontFamily="@font/aladin"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toTopOf="@+id/fabAdd" />
 
         <TextView
             android:id="@+id/txtCanasta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:background="@drawable/shape_fab_txt"
+            android:fontFamily="@font/futura"
+            android:padding="10dp"
             android:text="@string/canasta"
+            android:textSize="20sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/fabCanasta"
             app:layout_constraintEnd_toStartOf="@+id/fabCanasta"
-            app:layout_constraintTop_toTopOf="@+id/fabCanasta"
-            android:padding="10dp"
-            android:background="@drawable/shape_fab_txt"
-            android:textSize="24sp"
-            android:fontFamily="@font/aladin"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toTopOf="@+id/fabCanasta" />
 
         <TextView
             android:id="@+id/txtMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:background="@drawable/shape_fab_txt"
+            android:fontFamily="@font/futura"
+            android:padding="10dp"
             android:text="@string/menu"
+            android:textSize="20sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/fabMainMenu"
             app:layout_constraintEnd_toStartOf="@+id/fabMainMenu"
-            app:layout_constraintTop_toTopOf="@+id/fabMainMenu"
-            android:padding="10dp"
-            android:background="@drawable/shape_fab_txt"
-            android:textSize="24sp"
-            android:fontFamily="@font/aladin"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toTopOf="@+id/fabMainMenu" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </RelativeLayout>

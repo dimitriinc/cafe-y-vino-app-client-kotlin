@@ -3,6 +3,7 @@
     android:layout_width="400dp"
     android:layout_height="227dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parentMenu"
     app:cardCornerRadius="10dp"
     app:cardElevation="20dp"
@@ -17,7 +18,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@color/black"
+            tools:src="@color/black"
             android:id="@+id/imgCategory"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"/>
@@ -27,9 +28,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:fontFamily="@font/aladin"
+            android:fontFamily="@font/ss"
             android:gravity="center_horizontal"
-            android:text="Platos"
+            tools:text="Platos"
             android:textColor="@color/white"
             android:textSize="62sp"
             android:textStyle="bold" />

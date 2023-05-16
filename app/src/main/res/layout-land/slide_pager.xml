@@ -9,30 +9,30 @@
         android:id="@+id/txtSliderTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/wellfleet"
-        tools:text="TextView"
-        android:textColor="@color/white"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/futura_lt"
         android:gravity="center"
+        android:textColor="@color/white"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtSliderBody"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:text="TextView" />
 
     <TextView
         android:id="@+id/txtSliderBody"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/wellfleet"
-        tools:text="TextView"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="80dp"
+        android:fontFamily="@font/futura_lt"
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="@color/grey"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSliderTitle" />
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

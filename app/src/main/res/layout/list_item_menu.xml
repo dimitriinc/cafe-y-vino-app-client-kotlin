@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="230dp"
     android:layout_height="130dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -19,6 +21,7 @@
             android:layout_height="match_parent"
             android:id="@+id/imgCategory"
             android:adjustViewBounds="true"
+            tools:src="@drawable/bkg_cuenta"
             android:scaleType="fitXY"/>
 
         <TextView
@@ -26,9 +29,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:fontFamily="@font/aladin"
+            android:fontFamily="@font/ss"
             android:gravity="center_horizontal"
-            android:text=""
+            tools:text="Cocteles"
             android:textColor="@color/white"
             android:textSize="42sp"
             android:textStyle="bold" />

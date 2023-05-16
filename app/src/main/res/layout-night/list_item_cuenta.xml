@@ -29,10 +29,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/aladin"
+                android:fontFamily="@font/futura_lt"
                 android:paddingHorizontal="10dp"
                 tools:text="3"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -55,10 +55,10 @@
                 android:layout_gravity="start"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:fontFamily="@font/aladin"
+                android:fontFamily="@font/futura_lt"
                 android:paddingHorizontal="10dp"
                 tools:text="Gin Tonic "
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -78,10 +78,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/aladin"
+                android:fontFamily="@font/futura_lt"
                 android:paddingHorizontal="10dp"
                 tools:text="32"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -100,10 +100,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:fontFamily="@font/aladin"
+                android:fontFamily="@font/futura_lt"
                 android:paddingHorizontal="10dp"
                 tools:text="320"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
         </com.google.android.material.card.MaterialCardView>
 

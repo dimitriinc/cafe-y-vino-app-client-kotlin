@@ -9,10 +9,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtInfoMsg"
         android:background="@drawable/shape_fab_txt"
-        android:fontFamily="@font/david_libre"
+        android:fontFamily="@font/futura_lt"
         android:padding="10dp"
         android:gravity="center_horizontal"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

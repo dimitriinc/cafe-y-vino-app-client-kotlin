@@ -13,6 +13,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="materialButtonStyle">@style/CustomMaterialButton</item>
     </style>
 
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
@@ -33,4 +34,12 @@
         <item name="android:listPreferredItemHeightSmall">50dp</item>
         <item name="android:fontFamily">@font/aladin</item>
     </style>
+    <style name="CustomMaterialButton" parent="Widget.MaterialComponents.Button">
+
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/ss</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
