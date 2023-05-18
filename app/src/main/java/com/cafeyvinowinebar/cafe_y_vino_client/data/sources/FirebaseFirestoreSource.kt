@@ -70,6 +70,13 @@ class FirebaseFirestoreSource @Inject constructor(
     }
 
     /**
+     * Gets the recipient email and the app specific password to send a message with a new reservation request
+     */
+    suspend fun getEmailUtils(): DocumentSnapshot {
+        return fStore.collection("utils").document("email").get().await()
+    }
+
+    /**
      * Stores a reservation document according to its date and part of day, the id of the document is its table's number
      */
     suspend fun setReservaDoc(

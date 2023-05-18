@@ -1,5 +1,6 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.ui.reservas
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,11 @@ import com.google.firebase.Timestamp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import javax.mail.*
+import javax.mail.internet.InternetAddress
+import javax.mail.internet.MimeMessage
+import javax.mail.internet.MimeBodyPart
+import javax.mail.internet.MimeMultipart
 
 /**
  * A view model scoped to the reservas nav graph
@@ -132,6 +138,8 @@ class ReservasViewModel @Inject constructor(
             timestamp = Timestamp(Date())
         )
 
+        sendEmail(reserva)
+
         // send it for storing into the Firestore DB, suspend until the result arrives
         val reservaSent = reservasRepo.setReservaDoc(reserva)
 
@@ -168,6 +176,55 @@ class ReservasViewModel @Inject constructor(
                 pax = null
             )
         }
+    }
+
+    private suspend fun sendEmail(reserva: ReservaFirestore) {
+        val utils = utilsRepo.getEmailUtils()
+        val username = "cafeyvinobot@gmail.com"
+        val password = utils.password
+        val recipient = utils.recipient
+
+        val props = Properties().apply {
+            put("mail.smtp.auth", "true")
+            put("mail.smtp.starttls.enable", "true")
+            put("mail.smtp.host", "smtp.gmail.com")
+            put("mail.smtp.port", "587")
+        }
+
+        val session = Session.getInstance(props, object : Authenticator() {
+            override fun getPasswordAuthentication(): PasswordAuthentication {
+                return PasswordAuthentication(username, password)
+            }
+        })
+
+        try {
+            val message = MimeMessage(session).apply {
+                setFrom(InternetAddress(username))
+                setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient))
+                subject = "Nueva solicitud de reserva desde la app"
+
+                val multipart = MimeMultipart()
+
+                val htmlBodyPart = MimeBodyPart().apply {
+                    setContent("<html><body>" +
+                            "                <div style='padding:2rem;background-color:#fcfaeb;color:#160b17;border:1px solid;border-radius:50px;margin-left:auto;margin-right:auto;margin-bottom:1rem;width:fit-content;'>" +
+                            "                    <p>Nombre:  <em>${reserva.nombre}</em></p>" +
+                            "                    <p>Fecha:  <em>${reserva.fecha}</em></p>" +
+                            "                    <p>Hora:  <em>${reserva.hora}</em></p>" +
+                            "                    <p>Pax:  <em>${reserva.pax}</em></p>" +
+                            "                    <p>Comentario:  <em>${reserva.comentario}</em></p>" +
+                            "                    <p>Teléfono:  <em>${reserva.telefono}</em></p>" +
+                            "                </div>" +
+                            "</body></html>",
+                        "text/html")
+                }
+
+                multipart.addBodyPart(htmlBodyPart)
+                setContent(multipart)
+            }
+
+            Transport.send(message)
+        } catch (_: MessagingException) {}
     }
 
 

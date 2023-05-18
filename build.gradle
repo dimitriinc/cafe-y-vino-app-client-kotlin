@@ -30,6 +30,7 @@ buildscript {
         firebaseUiVersion = "8.0.1"
         glideVersion = "4.13.0"
         workVersion = "2.7.1"
+        javaMailVersion = "1.6.2"
     }
 
     dependencies {

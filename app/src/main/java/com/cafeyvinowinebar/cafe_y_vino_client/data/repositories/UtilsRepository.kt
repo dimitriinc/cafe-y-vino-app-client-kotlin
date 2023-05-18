@@ -1,6 +1,7 @@
 package com.cafeyvinowinebar.cafe_y_vino_client.data.repositories
 
 import android.util.Log
+import com.cafeyvinowinebar.cafe_y_vino_client.data.data_models.EmailUtils
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.UtilsEntryRequest
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.UtilsHappyHour
 import com.cafeyvinowinebar.cafe_y_vino_client.ui.data_models.UtilsReservas
@@ -76,13 +77,7 @@ class UtilsRepository @Inject constructor(
                 happyHours = utils.horasDeHappyHour
             )
         }
-//    {
-//        val utils = utilsDao.getUtils()[0]
-//        return UtilsHappyHour(
-//            happyDays = utils.diasDeHappyHour,
-//            happyHours = utils.horasDeHappyHour
-//        )
-//    }
+
 
     fun getUtilsForReservas(): UtilsReservas {
         val utils = utilsDao.getUtils()[0]
@@ -90,6 +85,14 @@ class UtilsRepository @Inject constructor(
             availableHoursDia = utils.horasDeReservaDia,
             availableHoursNoche = utils.horasDeReservaNoche,
             setsOfHours = utils.horasDiaNoche
+        )
+    }
+
+    suspend fun getEmailUtils(): EmailUtils {
+        val snapshot = fStoreSource.getEmailUtils()
+        return EmailUtils(
+            recipient = snapshot.getString("recipiente") ?: "elliotponsic@hotmail.fr",
+            password = snapshot.getString("pass") ?: "1234"
         )
     }
 
