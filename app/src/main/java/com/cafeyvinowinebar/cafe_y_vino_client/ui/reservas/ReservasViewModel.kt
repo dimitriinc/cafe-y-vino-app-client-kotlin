@@ -206,16 +206,18 @@ class ReservasViewModel @Inject constructor(
                 val multipart = MimeMultipart()
 
                 val htmlBodyPart = MimeBodyPart().apply {
-                    setContent("<html><body>" +
-                            "                <div style='padding:2rem;background-color:#fcfaeb;color:#160b17;border:1px solid;border-radius:50px;margin-left:auto;margin-right:auto;margin-bottom:1rem;width:fit-content;'>" +
-                            "                    <p>Nombre:  <em>${reserva.nombre}</em></p>" +
-                            "                    <p>Fecha:  <em>${reserva.fecha}</em></p>" +
-                            "                    <p>Hora:  <em>${reserva.hora}</em></p>" +
-                            "                    <p>Pax:  <em>${reserva.pax}</em></p>" +
-                            "                    <p>Comentario:  <em>${reserva.comentario}</em></p>" +
-                            "                    <p>Teléfono:  <em>${reserva.telefono}</em></p>" +
-                            "                </div>" +
-                            "</body></html>",
+                    setContent("""
+                        <html><body>
+                            <div style='padding:2rem;background-color:#fcfaeb;color:#160b17;border:1px solid;border-radius:50px;margin-left:auto;margin-right:auto;margin-bottom:1rem;width:fit-content;'>
+                                <p>Nombre:  <em>${reserva.nombre}</em></p>
+                                <p>Fecha:  <em>${reserva.fecha}</em></p>
+                                <p>Hora:  <em>${reserva.hora}</em></p>
+                                <p>Pax:  <em>${reserva.pax}</em></p>
+                                <p>Comentario:  <em>${reserva.comentario}</em></p>
+                                <p>Teléfono:  <em>${reserva.telefono}</em></p>
+                            </div>
+                        </body></html>
+                    """,
                         "text/html")
                 }
 

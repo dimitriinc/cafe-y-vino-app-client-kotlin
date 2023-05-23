@@ -50,6 +50,11 @@
         <item name="android:background">@drawable/shape_rounded_corners_for_edt</item>
     </style>
 
+    <style name="AlertDialogTheme" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="colorButtonNormal">@color/soft_light_teal</item>
+    </style>
+
+
 
 
 </resources>

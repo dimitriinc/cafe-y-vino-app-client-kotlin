@@ -15,6 +15,7 @@
         <!-- Customize your theme here. -->
         <item name="materialButtonStyle">@style/CustomMaterialButton</item>
         <item name="editTextStyle">@style/CustomEditText</item>
+        <item name="alertDialogStyle">@style/AlertDialogTheme</item>
     </style>
 
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">

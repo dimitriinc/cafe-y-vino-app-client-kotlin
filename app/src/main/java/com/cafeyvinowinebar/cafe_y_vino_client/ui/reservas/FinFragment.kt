@@ -190,25 +190,25 @@ class FinFragment : Fragment() {
 
                         // change the buttons color if the dark theme is on
                         // TODO: do it with styles better (?)
-                        if (requireContext().isDarkThemeOn()) {
-                            val buttonPositive =
-                                confirmationDialog.getButton(DialogInterface.BUTTON_POSITIVE)
-                            buttonPositive.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.soft_light_teal
-                                )
-                            )
-                            val buttonNegative =
-                                confirmationDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
-                            buttonNegative.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.soft_light_teal
-                                )
-                            )
-
-                        }
+//                        if (requireContext().isDarkThemeOn()) {
+//                            val buttonPositive =
+//                                confirmationDialog.getButton(DialogInterface.BUTTON_POSITIVE)
+//                            buttonPositive.setTextColor(
+//                                ContextCompat.getColor(
+//                                    requireContext(),
+//                                    R.color.soft_light_teal
+//                                )
+//                            )
+//                            val buttonNegative =
+//                                confirmationDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+//                            buttonNegative.setTextColor(
+//                                ContextCompat.getColor(
+//                                    requireContext(),
+//                                    R.color.soft_light_teal
+//                                )
+//                            )
+//
+//                        }
 
                     } else {
                         Toast.makeText(requireContext(), R.string.no_connection, Toast.LENGTH_SHORT)
